@@ -60,7 +60,7 @@ public class CallbackManagerImpl implements CallbackManager {
         if (callback != null) {
             return callback.onActivityResult(resultCode, data);
         }
-        
+
         return runStaticCallback(requestCode, resultCode, data);
     }
 

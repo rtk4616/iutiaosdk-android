@@ -13,14 +13,21 @@ package com.iutiao.sdk;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 
+import com.iutiao.IUTiao;
+import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+
+import java.util.concurrent.Executor;
 
 /**
  * Created by yxy on 15/11/3.
  */
 public final class IUTiaoSdk {
     private static final String TAG = IUTiaoSdk.class.getCanonicalName();
+
+    private static volatile Executor executor;
 
     private static final Object LOCK = new Object();
 
@@ -98,7 +105,19 @@ public final class IUTiaoSdk {
         IUTiaoSdk.applicationContext = applicationContext.getApplicationContext();
         // 载入默认的设置
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
+
+        iutiaoClientInitialize();
         sdkInitialized = true;
+    }
+
+    /*
+     * 初始化 request client
+     */
+    private static void iutiaoClientInitialize() {
+        // initialize iutiao client
+        (new RequestOptions.RequestOptionsBuilder()).setAppKey(getApplicationId()).build();
+        String apibase = "http://192.168.1.106";
+        IUTiao.overrideApiBase(apibase);
     }
 
     /**
@@ -142,12 +161,15 @@ public final class IUTiaoSdk {
         if (applicationName == null) {
             applicationName = ai.metaData.getString(APPLICATION_NAME_PROPERTY);
         }
-
         if (currency == null) {
             String _currency = ai.metaData.getString(CURRENCY_PROPERTY);
             Validate.isInEnum(_currency, CURRENCIES.class);
             currency = _currency;
         }
+    }
+
+    public static String getCurrency() {
+        return currency;
     }
 
     public static String getApplicationId() {

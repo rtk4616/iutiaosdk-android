@@ -10,40 +10,57 @@
 package com.iutiao.sdk;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class IUTiaoActivity extends AppCompatActivity {
+import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
+import com.iutiao.sdk.fragments.LoginFragment;
 
+public class IUTiaoActivity extends FragmentActivity {
+
+    private static String FRAGMENT_TAG = "SingleFragment";
+    private Fragment singleFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fragment);
+        setContentView(R.layout.com_iutiao_activity_layout);
+
+        Intent intent = getIntent();
+
         FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+        Fragment fragment = fm.findFragmentByTag(FRAGMENT_TAG);
 
         // attach fragment to activity
         if (fragment == null) {
-            fragment = createFragment();
-            fm.beginTransaction()
-                    .add(R.id.fragment_container, fragment)
-                    .commit();
+
+            if (IUTiaoDialogFragment.TAG.equals(intent.getAction())) {
+                IUTiaoDialogFragment dialogFragment = IUTiaoDialogFragment.newInstance();
+                dialogFragment.setRetainInstance(true);
+                dialogFragment.show(fm, FRAGMENT_TAG);
+                fragment = dialogFragment;
+            } else {
+                fragment = LoginFragment.newInstance();
+                fragment.setRetainInstance(true);
+                fm.beginTransaction()
+                        .add(R.id.com_iutiao_fragment_container, fragment, FRAGMENT_TAG)
+                        .commit();
+            }
         }
+
+        singleFragment = fragment;
     }
 
-    public Fragment createFragment() {
-        Intent i = getIntent();
-        String fragName = i.getStringExtra("frag");
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-        Fragment fragment;
-        switch (fragName) {
-            case "login":
-                break;
-            default:
+        if (singleFragment != null) {
+            singleFragment.onConfigurationChanged(newConfig);
         }
-        return null;
     }
 }

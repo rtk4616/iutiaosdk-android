@@ -19,6 +19,8 @@ import android.util.Log;
 import com.iutiao.sdk.exceptions.IUTiaoSdkNotInitializedException;
 
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by yxy on 15/11/4.
@@ -96,7 +98,7 @@ public final class Validate {
                 return;
             }
         }
-        throw new IllegalArgumentException(value + " is invalid");
+        throw new IllegalArgumentException(value + " is invalid in " + enumClass.toString());
     }
 
     public static void sdkInitialize() {
@@ -113,5 +115,17 @@ public final class Validate {
             throw new IllegalArgumentException("no App ID found, please set the APP ID.");
         }
         return id;
+    }
+
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
     }
 }
