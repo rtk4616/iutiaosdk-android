@@ -9,6 +9,9 @@
 
 package com.iutiao.sdk;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
 import java.util.Random;
 
 /**
@@ -26,6 +29,12 @@ public final class Utility {
             buffer.append(alphanumeric.charAt(idx));
         }
         return buffer.toString();
+    }
+
+
+    public static String getMyPhoneNumber() {
+        TelephonyManager mManager =(TelephonyManager) IUTiaoSdk.getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+        return mManager.getLine1Number();
     }
 
 }

@@ -34,12 +34,30 @@
         android:id="@+id/btn_signin"
         android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textColor="#1bc0ca"
-        android:text="@string/com_iutiao_forgot_password"
-        android:id="@+id/tv_forgot_pass"/>
+        android:layout_margin="10dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="#0000ee"
+            android:clickable="true"
+            android:text="@string/com_iutiao_quick_register"
+            android:id="@+id/tv_quick_register"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:textColor="#0000ee"
+            android:text="@string/com_iutiao_forgot_password"
+            android:id="@+id/tv_forgot_pass"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -4,7 +4,7 @@
     <string name="com_iutiao_login_btn">login</string>
     <string name="com_iutiao_login_username">username</string>
     <string name="com_iutiao_login_password">password</string>
-    <string name="com_iutiao_quick_register">quick register</string>
+    <string name="com_iutiao_quick_register">Quick register</string>
     <string name="com_iutiao_register_password">Password</string>
     <string name="com_iutiao_register_password_confirm">Password confirm</string>
     <string name="com_iutiao_register_username">account@example.com</string>
