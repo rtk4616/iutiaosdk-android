@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk;
+package com.iutiao.sdk.login;
 
 import com.iutiao.model.User;
 

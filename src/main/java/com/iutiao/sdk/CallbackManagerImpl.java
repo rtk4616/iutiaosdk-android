@@ -9,7 +9,15 @@
 
 package com.iutiao.sdk;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import com.iutiao.model.User;
+import com.iutiao.sdk.login.LoginManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +26,8 @@ import java.util.Map;
  * Created by yxy on 15/11/4.
  */
 public class CallbackManagerImpl implements CallbackManager {
+
+    private static final String TAG = CallbackManagerImpl.class.getSimpleName();
 
     private static Map<Integer, Callback> staticCallbacks = new HashMap<>();
 
@@ -37,6 +47,7 @@ public class CallbackManagerImpl implements CallbackManager {
     private static boolean runStaticCallback(int requestCode, int resultCode, Intent data) {
         Callback callback = getStaticCallback(requestCode);
         if (callback != null) {
+            Log.i(TAG, "global onActivityResult requestCode " + requestCode + " callback " + callback.toString());
             return callback.onActivityResult(resultCode, data);
         }
         return false;
@@ -58,6 +69,8 @@ public class CallbackManagerImpl implements CallbackManager {
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
         Callback callback = callbacks.get(requestCode);
         if (callback != null) {
+            Log.i(TAG, "onActivityResult requestCode " + requestCode + " callback " + callback.toString());
+
             return callback.onActivityResult(resultCode, data);
         }
 
@@ -78,4 +91,5 @@ public class CallbackManagerImpl implements CallbackManager {
             return IUTiaoSdk.getCallbackRequestCodeOffset() + offset;
         }
     }
+
 }

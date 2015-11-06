@@ -13,7 +13,11 @@ package com.iutiao.sdk;
  * Created by yxy on 15/11/4.
  */
 
+import android.app.Activity;
 import android.content.Intent;
+import android.widget.Button;
+
+import com.iutiao.model.User;
 
 /**
  * CallbackManager 管理所有来自 Activity 或 Fragment 的 onActivityResult() 回调方法
@@ -40,6 +44,5 @@ public interface CallbackManager {
             return new CallbackManagerImpl();
         }
     }
-
 
 }
