@@ -41,7 +41,7 @@ import java.util.HashMap;
 /**
  * Created by yxy on 15/11/4.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends Fragment implements View.OnClickListener, IUTiaoCallback<User> {
 
     public static int DIALOG_FRAGMENT = 1;
     public static String DIALOG_FRAGMENT_TAG = "com.iutiao.login.dialog";
@@ -105,41 +105,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return new LoginFragment();
     }
 
-    public static RegisterUserTask newRegisterUserTask(Context context) {
+    public RegisterUserTask newRegisterUserTask(Context context) {
         final Activity activity = (Activity) context;
-        IUTiaoCallback<User> cb = new IUTiaoCallback<User>() {
-
-            @Override
-            public void onSuccess(User user) {
-                if (user != null) {
-                    Intent i = new Intent();
-                    i.putExtra("user", APIResource.GSON.toJson(user));
-                    AccessTokenManager.getInstance().setCurrentAccessToken(user.getToken());
-                    Toast.makeText(activity, "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
-                    activity.setResult(Activity.RESULT_OK, i);
-                    activity.finish();
-                }
-            }
-
-            @Override
-            public void onError(final Exception e) {
-                Log.e(TAG, "something went wrong on create guest", e);
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity, "login failed " + e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                activity.setResult(Activity.RESULT_CANCELED);
-                activity.finish();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        };
-        return new RegisterUserTask(activity, cb);
+        return new RegisterUserTask(activity, this);
     }
 
     public void quickLogin() {
@@ -165,5 +133,24 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onSuccess(User user) {
+        Intent i = new Intent();
+        i.putExtra("user", User.GSON.toJson(user));
+        getActivity().setResult(Activity.RESULT_OK, i);
+        getActivity().finish();
 
+    }
+
+    @Override
+    public void onError(Exception e) {
+        Toast.makeText(getActivity(), "error " + e.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onCancel() {
+        Toast.makeText(getActivity(), "user canceled", Toast.LENGTH_SHORT).show();
+        getActivity().setResult(Activity.RESULT_CANCELED, null);
+        getActivity().finish();
+    }
 }

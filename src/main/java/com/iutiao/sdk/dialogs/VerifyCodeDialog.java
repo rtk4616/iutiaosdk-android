@@ -104,24 +104,7 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
     }
 
     private void quickRegister() {
-        RegisterPhoneTask task = new RegisterPhoneTask(getActivity(), new IUTiaoCallback<User>() {
-            @Override
-            public void onSuccess(User t) {
-                Toast.makeText(getActivity(), "OK", Toast.LENGTH_SHORT).show();
-                getActivity().setResult(Activity.RESULT_OK, new Intent());
-                getActivity().finish();
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-        });
+        RegisterPhoneTask task = new RegisterPhoneTask(getActivity(), (IUTiaoCallback<User>) getTargetFragment());
         verifyCode = verifyCodeEt.getText().toString().trim();
         HashMap<String, Object> p = new HashMap<>();
         p.put("phone_number", receiver);
@@ -135,6 +118,8 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
             @Override
             public void onSuccess(Object t) {
                 Log.i(TAG, "re-request sms confirmation code");
+                Toast.makeText(getActivity(), "request has been sent, please wait for the SMS", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

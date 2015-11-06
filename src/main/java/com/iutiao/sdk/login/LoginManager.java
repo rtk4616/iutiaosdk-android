@@ -97,15 +97,17 @@ public class LoginManager {
         Exception exception = null;
         boolean isCanceled = false;
         if (data != null) {
-            user = User.GSON.fromJson(data.getStringExtra("user"), User.class);
-            if (user != null) {
-                if (resultCode == Activity.RESULT_OK) {
-                    token = user.getToken();
-                    AccessTokenManager.getInstance().setCurrentAccessToken(token);
+            if (resultCode == Activity.RESULT_OK) {
+                if (data.getStringExtra("error") != null) {
+                    exception = new IUTiaoSdkException(data.getStringExtra("error"));
+                } else if (data.getStringExtra("user") != null) {
+                    user = User.GSON.fromJson(data.getStringExtra("user"), User.class);
+                    if (user != null) {
+                        token = user.getToken();
+                        AccessTokenManager.getInstance().setCurrentAccessToken(token);
+                    }
                 }
-
             }
-
         } else if (resultCode == Activity.RESULT_CANCELED) {
             isCanceled = true;
         }

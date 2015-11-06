@@ -30,7 +30,7 @@ public class RegisterUserTask extends IUTiaoRequestTask<Map<String, Object>, Use
         super(context);
     }
 
-    public RegisterUserTask(Context context, IUTiaoCallback listener) {
+    public RegisterUserTask(Context context, IUTiaoCallback<User> listener) {
         super(context, listener);
     }
 }
