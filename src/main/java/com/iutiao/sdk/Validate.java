@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.util.Patterns;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkNotInitializedException;
 
@@ -117,15 +118,12 @@ public final class Validate {
         return id;
     }
 
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
+    public static boolean isEmailValid(String input) {
+        return Patterns.EMAIL_ADDRESS.matcher(input).matches();
+    }
+
+    public static boolean isPhoneValid(String input) {
+        String exp = "(^\\+[\\d\\-]+)";
+        return input.matches(exp);
     }
 }

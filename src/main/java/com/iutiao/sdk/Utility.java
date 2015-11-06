@@ -11,6 +11,7 @@ package com.iutiao.sdk;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import android.widget.EditText;
 
 import java.util.Random;
 
@@ -37,4 +38,9 @@ public final class Utility {
         return mManager.getLine1Number();
     }
 
+    public static void checkPhoneField(EditText view) {
+        if (Validate.isPhoneValid(view.getText().toString().trim())) {
+            view.setError("invalid phone number");
+        }
+    }
 }

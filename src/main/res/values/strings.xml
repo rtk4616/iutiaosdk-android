@@ -21,4 +21,5 @@
     <string name="com_iutiao_dialog_phone_message">Please confirm your country code and enter your phone number</string>
     <string name="com_iutiao_dialog_login_title">SIGNIN</string>
     <string name="com_iutiao_dialog_login_message">Enter your credentials to continue</string>
+    <string name="com_iutiao_error_invalid_email_or_phone">Invalid Email or Phone</string>
 </resources>

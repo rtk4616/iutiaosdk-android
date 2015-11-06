@@ -139,7 +139,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
         i.putExtra("user", User.GSON.toJson(user));
         getActivity().setResult(Activity.RESULT_OK, i);
         getActivity().finish();
-
     }
 
     @Override
@@ -149,6 +148,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
 
     @Override
     public void onCancel() {
+
+        // FIXME:
         Toast.makeText(getActivity(), "user canceled", Toast.LENGTH_SHORT).show();
         getActivity().setResult(Activity.RESULT_CANCELED, null);
         getActivity().finish();

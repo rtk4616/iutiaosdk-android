@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/com_iutiao_login_username_hint"
+        android:singleLine="true"
         android:id="@+id/et_username"/>
 
     <EditText
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/com_iutiao_login_password_hint"
         android:inputType="textPassword"
+        android:singleLine="true"
         android:id="@+id/et_password"/>
 
     <Button
