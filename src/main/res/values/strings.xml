@@ -25,4 +25,6 @@
     <string name="com_iutiao_reset_password_password_hint">New Password</string>
     <string name="com_iutiao_verify_code">Code</string>
     <string name="com_iutiao_reset_password_btn_reset">Reset</string>
+    <string name="com_iutiao_profile_signout">signout</string>
+    <string name="com_iutiao_profile">profile</string>
 </resources>

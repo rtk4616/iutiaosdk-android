@@ -43,7 +43,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
     public static int DIALOG_FRAGMENT = 1;
     public static String DIALOG_FRAGMENT_TAG = "com.iutiao.login.dialog";
 
-    private static final String TAG = "LoginFragment";
+    private static final String TAG = LoginFragment.class.getSimpleName();
     Button quickLoginBtn;
     Button quickRegisterBtn;
     Button loginBtn;

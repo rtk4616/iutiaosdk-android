@@ -19,6 +19,7 @@ import android.os.Bundle;
 
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
 import com.iutiao.sdk.fragments.LoginFragment;
+import com.iutiao.sdk.fragments.ProfileFragment;
 
 public class IUTiaoActivity extends FragmentActivity {
 
@@ -44,7 +45,11 @@ public class IUTiaoActivity extends FragmentActivity {
                 dialogFragment.show(fm, FRAGMENT_TAG);
                 fragment = dialogFragment;
             } else {
-                fragment = LoginFragment.newInstance();
+                if (AccessTokenManager.getInstance().getCurrentAccessToken() != null) {
+                    fragment = ProfileFragment.newInstance();
+                } else {
+                    fragment = LoginFragment.newInstance();
+                }
                 fragment.setRetainInstance(true);
                 fm.beginTransaction()
                         .add(R.id.com_iutiao_fragment_container, fragment, FRAGMENT_TAG)
