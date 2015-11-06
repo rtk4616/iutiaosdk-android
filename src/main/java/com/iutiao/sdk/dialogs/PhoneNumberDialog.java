@@ -16,9 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +24,7 @@ import android.widget.Toast;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.Utility;
+import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.fragments.LoginFragment;
 import com.iutiao.sdk.tasks.SMSTask;
 
@@ -34,12 +33,19 @@ import java.util.HashMap;
 /**
  * Created by yxy on 15/11/4.
  */
-public class QuickRegisterDialog extends DialogFragment {
+public class PhoneNumberDialog extends DialogFragment {
 
     private TextView phonenumber;
     private Button nextBtn;
-    public static final String TAG = "QuickRegisterDialog";
+    public static final String TAG = "PhoneNumberDialog";
     public static LoginFragment fragment;
+    private String action;
+
+    public enum ACTIONS {
+        register,
+        reset_password,
+        ;
+    }
 
     @NonNull
     @Override
@@ -52,6 +58,8 @@ public class QuickRegisterDialog extends DialogFragment {
                 .setMessage(getActivity().getString(R.string.com_iutiao_dialog_phone_message))
                 .create();
         onViewCreated(view, savedInstanceState);
+        action = getArguments().getString("action");
+        Validate.isInEnum(action, ACTIONS.class);
         return d;
     }
 
@@ -77,9 +85,13 @@ public class QuickRegisterDialog extends DialogFragment {
                 SMSTask task = new SMSTask(getActivity(), new IUTiaoCallback() {
                     @Override
                     public void onSuccess(Object t) {
-                        Log.i(TAG, "sms created");
-                        fragment.showDialog(VerifyCodeDialog.newInstance(
-                                getPhoneNumber(), "register"));
+                        Log.i(TAG, "sms action " + action + " requested");
+                        if (action.equals(ACTIONS.register.name())) {
+                            fragment.showDialog(VerifyCodeDialog.newInstance(getPhoneNumber(), action));
+                        } else if (action.equals(ACTIONS.reset_password.name())) {
+                            fragment.showDialog(ResetPasswordDialog.newInstance(getPhoneNumber()));
+                        }
+//                        PhoneNumberDialog.this.dismiss();
                     }
 
                     @Override
@@ -95,16 +107,23 @@ public class QuickRegisterDialog extends DialogFragment {
                 });
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("receiver", getPhoneNumber());
-                params.put("action", "register");
+                params.put("action", action);
                 task.execute(params);
             }
         });
-
-
     }
 
-    public static QuickRegisterDialog newInstance() {
-        return new QuickRegisterDialog();
+    public static PhoneNumberDialog newInstance(String action) {
+        Bundle args = new Bundle();
+        args.putString("action", action);
+        PhoneNumberDialog dialog = new PhoneNumberDialog();
+        dialog.setArguments(args);
+        return dialog;
     }
+
+    public static PhoneNumberDialog newInstance() {
+        return newInstance(ACTIONS.register.name());
+    }
+
 
 }

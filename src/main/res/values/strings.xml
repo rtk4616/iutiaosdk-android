@@ -22,4 +22,7 @@
     <string name="com_iutiao_dialog_login_title">SIGNIN</string>
     <string name="com_iutiao_dialog_login_message">Enter your credentials to continue</string>
     <string name="com_iutiao_error_invalid_email_or_phone">Invalid Email or Phone</string>
+    <string name="com_iutiao_reset_password_password_hint">New Password</string>
+    <string name="com_iutiao_verify_code">Code</string>
+    <string name="com_iutiao_reset_password_btn_reset">Reset</string>
 </resources>

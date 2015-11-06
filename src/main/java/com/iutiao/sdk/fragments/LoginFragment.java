@@ -17,7 +17,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +24,13 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.iutiao.model.User;
-import com.iutiao.net.APIResource;
-import com.iutiao.sdk.AccessTokenManager;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.dialogs.LoginDialog;
-import com.iutiao.sdk.dialogs.QuickRegisterDialog;
+import com.iutiao.sdk.dialogs.PhoneNumberDialog;
 import com.iutiao.sdk.dialogs.RegisterDialog;
-import com.iutiao.sdk.tasks.IUTiaoRequestTask;
+import com.iutiao.sdk.dialogs.ResetPasswordDialog;
 import com.iutiao.sdk.tasks.RegisterUserTask;
 
 import java.util.HashMap;
@@ -98,7 +95,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
     }
 
     public void showQuickRegisterDialog() {
-        showDialog(QuickRegisterDialog.newInstance());
+        showDialog(PhoneNumberDialog.newInstance(PhoneNumberDialog.ACTIONS.register.name()));
+    }
+
+    public void showResetPasswordDialog() {
+        showDialog(PhoneNumberDialog.newInstance(PhoneNumberDialog.ACTIONS.reset_password.name()));
     }
 
     public static LoginFragment newInstance() {
@@ -137,6 +138,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
     public void onSuccess(User user) {
         Intent i = new Intent();
         i.putExtra("user", User.GSON.toJson(user));
+
+        // display welcome message
+        Toast.makeText(getActivity(), "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
         getActivity().setResult(Activity.RESULT_OK, i);
         getActivity().finish();
     }

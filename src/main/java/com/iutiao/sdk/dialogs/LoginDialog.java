@@ -134,6 +134,13 @@ public class LoginDialog extends DialogFragment {
             }
         });
 
+        forgotPassTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragment.showResetPasswordDialog();
+            }
+        });
+
     }
 
     public void performSignin() {
