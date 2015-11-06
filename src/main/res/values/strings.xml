@@ -2,8 +2,8 @@
     <string name="app_name">iutiao</string>
     <string name="com_iutiao_quick_login">quick login</string>
     <string name="com_iutiao_login_btn">login</string>
-    <string name="com_iutiao_login_username">username</string>
-    <string name="com_iutiao_login_password">password</string>
+    <string name="com_iutiao_login_username_hint">Email or Phone</string>
+    <string name="com_iutiao_login_password_hint">Password</string>
     <string name="com_iutiao_quick_register">Quick register</string>
     <string name="com_iutiao_register_password">Password</string>
     <string name="com_iutiao_register_password_confirm">Password confirm</string>
@@ -12,4 +12,13 @@
     <string name="com_iutiao_next">next</string>
     <string name="com_iutiao_signin">signin</string>
     <string name="com_iutiao_forgot_password">Forgot your password?</string>
+    <string name="com_iutiao_progress_loading">Please waiting ...</string>
+    <string name="com_iutiao_verify">Verify</string>
+    <string name="com_iutiao_verify_resend">Resend Code</string>
+    <string name="com_iutiao_verify_label">Please wait for the SMS and then enter the code here</string>
+    <string name="com_iutiao_verify_title">Verification</string>
+    <string name="com_iutiao_dialog_phone_title">Your phone</string>
+    <string name="com_iutiao_dialog_phone_message">Please confirm your country code and enter your phone number</string>
+    <string name="com_iutiao_dialog_login_title">SIGNIN</string>
+    <string name="com_iutiao_dialog_login_message">Enter your credentials to continue</string>
 </resources>

@@ -11,6 +11,8 @@ package com.iutiao.sdk;
 
 import android.content.Context;
 
+import com.iutiao.net.RequestOptions;
+
 /**
  * Created by yxy on 15/11/4.
  */
@@ -27,7 +29,7 @@ public final class AccessTokenManager {
         this.accessTokenCache = accessTokenCache;
     }
 
-    static AccessTokenManager getInstance() {
+    public static AccessTokenManager getInstance() {
         if (instance == null) {
             synchronized (AccessTokenManager.class) {
                 if (instance == null) {
@@ -40,17 +42,24 @@ public final class AccessTokenManager {
         return instance;
     }
     
-    void setCurrentAccessToken(String currentAccessToken) {
+    public void setCurrentAccessToken(String currentAccessToken) {
         setCurrentAccessToken(currentAccessToken, true);
     }
 
     public String getCurrentAccessToken() {
-        return currentAccessToken;
+        String token = this.currentAccessToken;
+        if (this.accessTokenCache.hasCachedAccessToken()) {
+            token = this.accessTokenCache.load();
+        }
+        return token;
     }
 
-    private void setCurrentAccessToken(String currentAccessToken, boolean saveToCache) {
+    public void setCurrentAccessToken(String currentAccessToken, boolean saveToCache) {
         String oldAccessToken = this.currentAccessToken;
         this.currentAccessToken = currentAccessToken;
+
+        // 设置 client 请求的 token
+        RequestOptions.getInstance().setToken(this.currentAccessToken);
 
         if (saveToCache) {
             if (currentAccessToken != null) {

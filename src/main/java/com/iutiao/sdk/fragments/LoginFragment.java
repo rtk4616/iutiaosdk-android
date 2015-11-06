@@ -9,20 +9,34 @@
 
 package com.iutiao.sdk.fragments;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.iutiao.model.User;
+import com.iutiao.net.APIResource;
+import com.iutiao.sdk.AccessTokenManager;
+import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
+import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.dialogs.LoginDialog;
 import com.iutiao.sdk.dialogs.QuickRegisterDialog;
 import com.iutiao.sdk.dialogs.RegisterDialog;
+import com.iutiao.sdk.tasks.IUTiaoRequestTask;
+import com.iutiao.sdk.tasks.RegisterUserTask;
+
+import java.util.HashMap;
 
 /**
  * Created by yxy on 15/11/4.
@@ -63,7 +77,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         registerBtn.setOnClickListener(this);
     }
 
-    private void showDialog(DialogFragment dialog) {
+    public void showDialog(DialogFragment dialog) {
         dialog.setTargetFragment(this, DIALOG_FRAGMENT);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment frag = getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG);
@@ -91,8 +105,50 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         return new LoginFragment();
     }
 
+    public static RegisterUserTask newRegisterUserTask(Context context) {
+        final Activity activity = (Activity) context;
+        IUTiaoCallback<User> cb = new IUTiaoCallback<User>() {
+
+            @Override
+            public void onSuccess(User user) {
+                if (user != null) {
+                    Intent i = new Intent();
+                    i.putExtra("user", APIResource.GSON.toJson(user));
+                    AccessTokenManager.getInstance().setCurrentAccessToken(user.getToken());
+                    Toast.makeText(activity, "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
+                    activity.setResult(Activity.RESULT_OK, i);
+                    activity.finish();
+                }
+            }
+
+            @Override
+            public void onError(final Exception e) {
+                Log.e(TAG, "something went wrong on create guest", e);
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(activity, "login failed " + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                activity.setResult(Activity.RESULT_CANCELED);
+                activity.finish();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        };
+        return new RegisterUserTask(activity, cb);
+    }
+
     public void quickLogin() {
-        getActivity().finish();
+        RegisterUserTask task = newRegisterUserTask(getActivity());
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("username", Utility.generateRandomString(16));
+        param.put("password", Utility.generateRandomString(16));
+        param.put("is_guest", true);
+        task.execute(param);
     }
 
     @Override
@@ -108,4 +164,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             showRegisterDialog();
         }
     }
+
+
 }

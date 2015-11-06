@@ -9,7 +9,10 @@
 
 package com.iutiao.sdk.dialogs;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -33,10 +36,16 @@ public class LoginDialog extends DialogFragment {
         return new LoginDialog();
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.com_iutiao_dialog_login, container, false);
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View view = getActivity().getLayoutInflater().inflate(R.layout.com_iutiao_dialog_login, null);
+        onViewCreated(view, savedInstanceState);
+        return builder.setView(view)
+                .setMessage(getActivity().getString(R.string.com_iutiao_dialog_login_message))
+                .setTitle(getActivity().getString(R.string.com_iutiao_dialog_login_title))
+                .create();
     }
 
     @Override
