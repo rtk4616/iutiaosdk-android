@@ -11,6 +11,7 @@ package com.iutiao.sdk.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,10 +37,10 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
 
     String receiver;
     String action;
-    String verifyCode;
     Button actionBtn;
     Button resendCodeBtn;
     EditText verifyCodeEt;
+    private CountDownTask countDownTask;
     private static final String TAG = VerifyCodeDialog.class.getSimpleName();
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -56,7 +57,69 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
 
         resendCodeBtn.setOnClickListener(this);
         actionBtn.setOnClickListener(this);
+        countDownTask = new CountDownTask(resendCodeBtn);
+        countDownTask.execute();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        Log.i(TAG, "cancel countdown task");
+        if (countDownTask != null) {
+            if (!countDownTask.isCancelled()) {
+                countDownTask.cancel(true);
+            }
+        }
+    }
+
+    private class CountDownTask extends AsyncTask<Void, Integer, Void> {
+        private int i=60;
+        private Button btn;
+
+        public CountDownTask(Button btn) {
+            this.btn = btn;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            this.btn.setEnabled(false);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            this.btn.setEnabled(true);
+            this.btn.setText(getActivity().getString(R.string.com_iutiao_verify_resend));
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            setCountdown(values[0]);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (i > 0) {
+                if (isCancelled()) {
+                    return null;
+                }
+                try {
+                    Thread.sleep(1000 * 1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                i--;
+                publishProgress(i);
+            }
+            return null;
+        }
+
+        private void setCountdown(Integer value) {
+            btn.setText(String.format("%d s", value));
+        }
+    }
+
+
 
     public static VerifyCodeDialog newInstance(String receiver, String action) {
         Bundle args = new Bundle();
@@ -115,6 +178,8 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
     }
 
     public void resendCode() {
+        countDownTask = new CountDownTask(resendCodeBtn);
+        countDownTask.execute();
         SMSTask task = new SMSTask(getActivity(), new IUTiaoCallback() {
             @Override
             public void onSuccess(Object t) {
