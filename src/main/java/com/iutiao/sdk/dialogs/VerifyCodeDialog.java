@@ -29,6 +29,7 @@ import com.iutiao.sdk.tasks.RegisterPhoneTask;
 import com.iutiao.sdk.tasks.SMSTask;
 
 import java.util.HashMap;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by yxy on 15/11/6.
@@ -54,11 +55,9 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
         resendCodeBtn = (Button) view.findViewById(R.id.btn_resend);
         verifyCodeEt = (EditText) view.findViewById(R.id.et_code);
 
-
         resendCodeBtn.setOnClickListener(this);
         actionBtn.setOnClickListener(this);
-        countDownTask = new CountDownTask(resendCodeBtn);
-        countDownTask.execute();
+        startCountDown();
     }
 
     @Override
@@ -178,8 +177,7 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
     }
 
     public void resendCode() {
-        countDownTask = new CountDownTask(resendCodeBtn);
-        countDownTask.execute();
+
         SMSTask task = new SMSTask(getActivity(), new IUTiaoCallback() {
             @Override
             public void onSuccess(Object t) {
@@ -204,5 +202,12 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
             put("action", action);
         }};
         task.execute(p);
+        startCountDown();
+    }
+
+    public void startCountDown() {
+        // execute parallel
+        countDownTask = new CountDownTask(resendCodeBtn);
+        countDownTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }
