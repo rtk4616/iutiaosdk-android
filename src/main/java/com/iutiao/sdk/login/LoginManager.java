@@ -11,16 +11,19 @@ package com.iutiao.sdk.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.iutiao.exception.UTiaoException;
 import com.iutiao.model.User;
+import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.AccessTokenManager;
 import com.iutiao.sdk.CallbackManager;
 import com.iutiao.sdk.CallbackManagerImpl;
 import com.iutiao.sdk.IUTiaoActivity;
 import com.iutiao.sdk.IUTiaoCallback;
+import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 
@@ -32,6 +35,7 @@ import java.util.logging.LogManager;
 public class LoginManager {
 
     private static volatile LoginManager instance;
+    private static final String TAG = LoginManager.class.getSimpleName();
 
     public static void registerLoginCallback(
             final Activity activity,
@@ -72,7 +76,11 @@ public class LoginManager {
     }
 
     public void logOut() {
+
+        Log.i(TAG, "user logout");
+        RequestOptions.getInstance().clearToken();
         AccessTokenManager.getInstance().setCurrentAccessToken(null);
+        UserManager.getInstance().clearProfileCache();
     }
 
     public static LoginManager getInstance() {
@@ -102,10 +110,6 @@ public class LoginManager {
                     exception = new IUTiaoSdkException(data.getStringExtra("error"));
                 } else if (data.getStringExtra("user") != null) {
                     user = User.GSON.fromJson(data.getStringExtra("user"), User.class);
-                    if (user != null) {
-                        token = user.getToken();
-                        AccessTokenManager.getInstance().setCurrentAccessToken(token);
-                    }
                 }
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -126,5 +130,16 @@ public class LoginManager {
                 callback.onSuccess(user);
             }
         }
+    }
+
+    public void onLogin(User user) {
+
+        Validate.notNull(user.getToken(), "access token");
+        // 缓存用户信息
+        UserManager.getInstance().setCurrentUser(user);
+        // 缓存 access_token
+        AccessTokenManager.getInstance().setCurrentAccessToken(user.getToken());
+        // 设置 client 请求的 token
+        RequestOptions.getInstance().setToken(user.getToken());
     }
 }

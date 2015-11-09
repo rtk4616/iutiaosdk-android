@@ -24,13 +24,17 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.iutiao.model.User;
+import com.iutiao.net.RequestOptions;
+import com.iutiao.sdk.AccessTokenManager;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
+import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.dialogs.LoginDialog;
 import com.iutiao.sdk.dialogs.PhoneNumberDialog;
 import com.iutiao.sdk.dialogs.RegisterDialog;
 import com.iutiao.sdk.dialogs.ResetPasswordDialog;
+import com.iutiao.sdk.login.LoginManager;
 import com.iutiao.sdk.tasks.RegisterUserTask;
 
 import java.util.HashMap;
@@ -38,17 +42,14 @@ import java.util.HashMap;
 /**
  * Created by yxy on 15/11/4.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener, IUTiaoCallback<User> {
+public class LoginFragment extends BaseFragment implements View.OnClickListener, IUTiaoCallback<User> {
 
-    public static int DIALOG_FRAGMENT = 1;
-    public static String DIALOG_FRAGMENT_TAG = "com.iutiao.login.dialog";
 
     private static final String TAG = LoginFragment.class.getSimpleName();
     Button quickLoginBtn;
     Button quickRegisterBtn;
     Button loginBtn;
     Button registerBtn;
-
 
     @Nullable
     @Override
@@ -74,17 +75,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
         registerBtn.setOnClickListener(this);
     }
 
-    public void showDialog(DialogFragment dialog) {
-        dialog.setTargetFragment(this, DIALOG_FRAGMENT);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment frag = getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG);
-
-        if (frag != null) {
-            ft.remove(frag);
-        }
-        ft.addToBackStack(null);
-        dialog.show(ft, DIALOG_FRAGMENT_TAG);
-    }
 
     public void showLoginDialog() {
         showDialog(LoginDialog.newInstance());
@@ -139,8 +129,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener, IUT
         Intent i = new Intent();
         i.putExtra("user", User.GSON.toJson(user));
 
+        LoginManager.getInstance().onLogin(user);
         // display welcome message
         Toast.makeText(getActivity(), "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
+
         getActivity().setResult(Activity.RESULT_OK, i);
         getActivity().finish();
     }

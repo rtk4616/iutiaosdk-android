@@ -16,7 +16,9 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
 import com.iutiao.sdk.fragments.LoginFragment;
 import com.iutiao.sdk.fragments.ProfileFragment;
@@ -25,6 +27,7 @@ public class IUTiaoActivity extends FragmentActivity {
 
     private static String FRAGMENT_TAG = "SingleFragment";
     private Fragment singleFragment;
+    private static final String TAG = IUTiaoActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +42,16 @@ public class IUTiaoActivity extends FragmentActivity {
         // attach fragment to activity
         if (fragment == null) {
 
+            String token = RequestOptions.getInstance().getToken();
+
+            Log.i(TAG, "token " + token);
             if (IUTiaoDialogFragment.TAG.equals(intent.getAction())) {
                 IUTiaoDialogFragment dialogFragment = IUTiaoDialogFragment.newInstance();
                 dialogFragment.setRetainInstance(true);
                 dialogFragment.show(fm, FRAGMENT_TAG);
                 fragment = dialogFragment;
             } else {
-                if (AccessTokenManager.getInstance().getCurrentAccessToken() != null) {
+                if (token != null) {
                     fragment = ProfileFragment.newInstance();
                 } else {
                     fragment = LoginFragment.newInstance();

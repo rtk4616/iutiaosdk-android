@@ -38,7 +38,6 @@ public final class IUTiaoSdk {
     private static volatile String currency;
     private static volatile boolean isDebugEnabled = BuildConfig.DEBUG;
     private static final int MAX_REQUEST_CODE_RANGE = 100;
-    private static final UserManager userManager = UserManager.getInstance();
 
     /**
      * The key for the application ID in the Android manifest.
@@ -107,8 +106,8 @@ public final class IUTiaoSdk {
         // 载入默认的设置
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
 
-        iutiaoClientInitialize();
         sdkInitialized = true;
+        iutiaoClientInitialize();
     }
 
     /*
@@ -116,8 +115,13 @@ public final class IUTiaoSdk {
      */
     private static void iutiaoClientInitialize() {
         // initialize iutiao client
-        // 设置 api_key
-        (new RequestOptions.RequestOptionsBuilder()).setAppKey(getApplicationId()).build();
+        // 设置 api_key, access_token
+
+        String token = AccessTokenManager.getInstance().getCurrentAccessToken();
+        (new RequestOptions.RequestOptionsBuilder())
+                .setAppKey(getApplicationId())
+                .setToken(token)
+                .build();
     }
 
     public static void setDebugMode() {
@@ -210,9 +214,5 @@ public final class IUTiaoSdk {
     public interface InitializeCallback {
         // sdk 初始化完成后调用
         void onInitialized();
-    }
-
-    public static int getLoginRequestCode() {
-        return CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode();
     }
 }

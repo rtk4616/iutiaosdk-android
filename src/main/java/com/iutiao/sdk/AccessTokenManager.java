@@ -58,9 +58,6 @@ public final class AccessTokenManager {
         String oldAccessToken = this.currentAccessToken;
         this.currentAccessToken = currentAccessToken;
 
-        // 设置 client 请求的 token
-        RequestOptions.getInstance().setToken(this.currentAccessToken);
-
         if (saveToCache) {
             if (currentAccessToken != null) {
                 accessTokenCache.save(currentAccessToken);
