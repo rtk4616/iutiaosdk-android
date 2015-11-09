@@ -12,6 +12,7 @@ package com.iutiao.sdk.fragments;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 
 import com.iutiao.model.User;
 import com.iutiao.sdk.IFragment;
@@ -29,10 +30,14 @@ public abstract class BaseFragment extends Fragment implements IFragment {
         dialog.setTargetFragment(this, DIALOG_FRAGMENT);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment frag = getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG);
+
+
         if (frag != null) {
             ft.remove(frag);
+            Log.i("BaseFragment", "prev fragment " + frag + " will be dismissed");
+            ((DialogFragment) frag).dismiss();
         }
-        ft.addToBackStack(null);
+//        ft.addToBackStack(null);
         dialog.show(ft, DIALOG_FRAGMENT_TAG);
     }
 
