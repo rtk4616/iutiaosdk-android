@@ -21,11 +21,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.iutiao.sdk.IFragment;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.Validate;
-import com.iutiao.sdk.fragments.LoginFragment;
 import com.iutiao.sdk.tasks.SMSTask;
 
 import java.util.HashMap;
@@ -38,12 +38,13 @@ public class PhoneNumberDialog extends DialogFragment {
     private TextView phonenumber;
     private Button nextBtn;
     public static final String TAG = "PhoneNumberDialog";
-    public static LoginFragment fragment;
+    public static IFragment fragment;
     private String action;
 
     public enum ACTIONS {
         register,
         reset_password,
+        bind_phone,
         ;
     }
 
@@ -70,7 +71,7 @@ public class PhoneNumberDialog extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fragment = (LoginFragment) getTargetFragment();
+        fragment = (IFragment) getTargetFragment();
 
         phonenumber = (TextView) view.findViewById(R.id.et_phone);
         final String myPhoneNumber = Utility.getMyPhoneNumber();
@@ -86,10 +87,10 @@ public class PhoneNumberDialog extends DialogFragment {
                     @Override
                     public void onSuccess(Object t) {
                         Log.i(TAG, "sms action " + action + " requested");
-                        if (action.equals(ACTIONS.register.name())) {
-                            fragment.showDialog(VerifyCodeDialog.newInstance(getPhoneNumber(), action));
-                        } else if (action.equals(ACTIONS.reset_password.name())) {
+                        if (action.equals(ACTIONS.reset_password.name())) {
                             fragment.showDialog(ResetPasswordDialog.newInstance(getPhoneNumber()));
+                        } else {
+                            fragment.showDialog(VerifyCodeDialog.newInstance(getPhoneNumber(), action));
                         }
 //                        PhoneNumberDialog.this.dismiss();
                     }

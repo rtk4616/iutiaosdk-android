@@ -37,10 +37,8 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:text="@string/com_iutiao_profile_signout"
-            android:id="@+id/btn_signout"
-            />
+            android:id="@+id/btn_signout"/>
     </LinearLayout>
 
 </LinearLayout>

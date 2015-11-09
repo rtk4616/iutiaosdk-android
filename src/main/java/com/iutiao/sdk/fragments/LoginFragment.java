@@ -24,11 +24,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.iutiao.model.User;
-import com.iutiao.net.RequestOptions;
-import com.iutiao.sdk.AccessTokenManager;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
-import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.dialogs.LoginDialog;
 import com.iutiao.sdk.dialogs.PhoneNumberDialog;

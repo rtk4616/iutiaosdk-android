@@ -26,6 +26,7 @@ import com.iutiao.sdk.R;
 import com.iutiao.sdk.tasks.ResetPasswordTask;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by yxy on 15/11/6.
@@ -107,13 +108,15 @@ public class ResetPasswordDialog extends VerifyCodeDialog {
 
             }
         });
-        HashMap<String, Object> param = new HashMap<>();
-        param.put("phone_number", receiver);
-        param.put("code", getVerifyCode());
-        param.put("password", getInputPassword());
-        Log.i("FFF", param.toString());
+        task.execute(getParams());
+    }
 
-        task.execute(param);
+
+    @Override
+    protected Map<String, Object> getParams() {
+        Map<String, Object> params = super.getParams();
+        params.put("password", getInputPassword());
+        return params;
     }
 
     private String getInputPassword() {

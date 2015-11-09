@@ -22,13 +22,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.iutiao.model.OKEntity;
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
+import com.iutiao.sdk.UserManager;
+import com.iutiao.sdk.tasks.BindPhoneTask;
 import com.iutiao.sdk.tasks.RegisterPhoneTask;
 import com.iutiao.sdk.tasks.SMSTask;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -157,10 +161,44 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_action) {
-            quickRegister();
+            if (action.equals("register")) {
+                quickRegister();
+            } else if (action.equals("bind_phone")) {
+                bindPhone();
+            }
         } else if (v.getId() == R.id.btn_resend) {
             resendCode();
         }
+    }
+
+    protected Map<String, Object> getParams() {
+        HashMap<String, Object> p = new HashMap<>();
+        p.put("phone_number", receiver);
+        p.put("code", getVerifyCode());
+        return p;
+    }
+
+    private void bindPhone() {
+        BindPhoneTask task = new BindPhoneTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+            @Override
+            public void onSuccess(OKEntity t) {
+                Toast.makeText(getActivity(), "Profile updated", Toast.LENGTH_SHORT).show();
+                VerifyCodeDialog.this.dismiss();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(getActivity(), "error: " + e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+        });
+        Map<String, Object> p = getParams();
+        p.put("id", UserManager.getInstance().getCurrentUser().getUid());
+        task.execute(p);
     }
 
     public String getVerifyCode() {
@@ -169,11 +207,7 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
 
     private void quickRegister() {
         RegisterPhoneTask task = new RegisterPhoneTask(getActivity(), (IUTiaoCallback<User>) getTargetFragment());
-        HashMap<String, Object> p = new HashMap<>();
-        p.put("phone_number", receiver);
-        p.put("code", getVerifyCode());
-        Log.i(TAG, "params" + p.toString());
-        task.execute(p);
+        task.execute(getParams());
     }
 
     public void resendCode() {

@@ -28,4 +28,10 @@
     <string name="com_iutiao_profile_signout">signout</string>
     <string name="com_iutiao_profile">profile</string>
     <string name="com_iutiao_profile_login">Login</string>
+    <string name="com_iutiao_profile_nickname">Nickname</string>
+    <string name="com_iutiao_profile_uid">Uid</string>
+    <string name="com_iutiao_profile_balance">Balance</string>
+    <string name="com_iutiao_profile_bind_phone">bind phone</string>
+    <string name="com_iutiao_phone_bound">Phone Associated</string>
+    <string name="com_iutiao_phone_to_bind">Associate Phone</string>
 </resources>

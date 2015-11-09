@@ -14,12 +14,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 import com.iutiao.model.User;
+import com.iutiao.sdk.IFragment;
 import com.iutiao.sdk.IUTiaoCallback;
 
 /**
  * Created by yxy on 15/11/9.
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements IFragment {
 
     public static int DIALOG_FRAGMENT = 1;
     public static String DIALOG_FRAGMENT_TAG = "com.iutiao.login.dialog";
@@ -28,7 +29,6 @@ public abstract class BaseFragment extends Fragment {
         dialog.setTargetFragment(this, DIALOG_FRAGMENT);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         Fragment frag = getFragmentManager().findFragmentByTag(DIALOG_FRAGMENT_TAG);
-
         if (frag != null) {
             ft.remove(frag);
         }
