@@ -14,9 +14,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +27,6 @@ import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.dialogs.LoginDialog;
 import com.iutiao.sdk.dialogs.PhoneNumberDialog;
 import com.iutiao.sdk.dialogs.RegisterDialog;
-import com.iutiao.sdk.dialogs.ResetPasswordDialog;
 import com.iutiao.sdk.login.LoginManager;
 import com.iutiao.sdk.tasks.RegisterUserTask;
 

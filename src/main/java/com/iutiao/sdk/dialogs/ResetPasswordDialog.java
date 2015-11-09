@@ -11,7 +11,6 @@ package com.iutiao.sdk.dialogs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -20,12 +19,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.iutiao.model.OKEntity;
-import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.tasks.ResetPasswordTask;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
