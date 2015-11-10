@@ -116,11 +116,7 @@ public final class IUTiaoSdk {
 
     private static void upayInitialize() {
         // 初始化 upay 支付
-        String appkey = "10000038";
-        String secret = "616669C4C8B420311B313991A868ACC8";
-        String buildDate = "20151109";
-        String channelKey = null;
-        Upay up = Upay.initInstance(getApplicationContext(), appkey, secret, channelKey, buildDate, new UpayInitCallback() {
+        Upay up = Upay.initInstance(getApplicationContext(), null, null, null, null, new UpayInitCallback() {
             @Override
             public void onInitResult(int i, String s) {
                 Log.i(TAG, "upay init result " + i + " response " + s);
@@ -193,6 +189,7 @@ public final class IUTiaoSdk {
             Validate.isInEnum(_currency, CURRENCIES.class);
             currency = _currency;
         }
+
     }
 
     public static String getCurrency() {

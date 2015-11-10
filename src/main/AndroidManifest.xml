@@ -31,6 +31,14 @@
         android:supportsRtl="true" >
         <activity android:name=".IUTiaoActivity" >
         </activity>
+
+        <!--upay begin -->
+        <meta-data android:name="UPAY_APPKEY" android:value="10000038"/>
+        <meta-data android:name="UPAY_APPSECRET" android:value="616669C4C8B420311B313991A868ACC8"/>
+        <meta-data android:name="UPAY_CHANNELKEY" android:value="upay_zte"/>
+        <meta-data android:name="UPAY_BUILDDATE" android:value="20151110"/>
+        <!--upay end-->
+
     </application>
 
 </manifest>
