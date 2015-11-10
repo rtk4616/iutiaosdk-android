@@ -80,6 +80,7 @@ public class ProfileFragment extends BaseFragment {
 
                     @Override
                     public void onError(Exception e) {
+                        Log.e(TAG, "fetch user profile", e);
                         Toast.makeText(getActivity(), "error " + e.toString(), Toast.LENGTH_SHORT).show();
                     }
 

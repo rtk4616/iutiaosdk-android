@@ -123,10 +123,13 @@ public class LoginManager {
     private void finishLogin(User user, Exception exception, boolean isCanceled, IUTiaoCallback<User> callback) {
         if (callback != null) {
             if (isCanceled) {
+                Log.d(TAG, "login canceled");
                 callback.onCancel();
             } else if (exception != null) {
+                Log.e(TAG, "login failed", exception);
                 callback.onError(exception);
             } else if (user != null) {
+                Log.i(TAG, "login succeed");
                 callback.onSuccess(user);
             }
         }
