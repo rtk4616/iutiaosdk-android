@@ -1,0 +1,92 @@
+{
+  "window-no-title": true,
+  "window-full-screen": true,
+  "content-view": {
+    "type": "relative-layout",
+    "width": "fill",
+    "height": "fill",
+    "background": "",
+    "children": [
+      {
+        "type": "relative-layout",
+        "id": "outBackground",
+        "width": "wrap",
+        "height": "wrap",
+        "align": "hcenter vcenter",
+        "margin": "auto 20dp auto 20dp",
+        "padding": "0.7dp 0.7dp",
+        "background": "#e0e0e0",
+        "children": [
+          {
+            "type": "linear-layout",
+            "id": "container",
+            "width": "300dp",
+            "height": "wrap",
+            "align": "hcenter vcenter",
+            "margin": "auto auto auto auto",
+            "padding": "9dp",
+            "background": "#6c6c6c",
+            "orientation": "horizontal",
+            "children": [
+        
+                            {
+                                "id": "progressLoad",
+                                "type": "progressbar",
+                                "width": "40dp",
+                                "height": "40dp",
+                                "align": "below container",
+                                "margin": "3dp auto auto 2dp",
+                                "background": "",
+                                "image-scaleType": "",
+                                "indeterminateDrawable": "upay_dialog_icon",
+                                "visibility": "visible"
+                            },
+                            {
+                                "id": "textPrompt",
+                                "type": "text",
+                                "width": "wrap",
+                                "height": "wrap",
+                                "align": "right-of progressLoad below container",
+                                "margin": "auto auto auto auto",
+                                "text": "$progress_text",
+                                "gravity":"center",
+                                "background": "",
+                                "text-color": "#ffffff",
+                                "text-size": "14px",
+                                "visibility": "visible"
+                            },
+              {
+                "type": "text",
+                "id": "textWarn",
+                "width": "wrap",
+                "height": "wrap",
+                "text": "$alert_text",
+                "text-size": "15px",
+                "align": "auto auto",
+                "text-color": "#64737e",
+                "margin": "15dp 10dp auto 10dp"
+              },
+              {
+                "type": "text",
+                "id": "textHelp",
+                "width": "wrap",
+                "height": "wrap",
+                "text": "$help_text",
+                "text-size": "15px",
+                "align": "auto auto",
+                "margin": "10dp 10dp 10dp 10dp",
+                "text-color": "#089afc",
+                "single-line": true,
+                "ellipsize": "marquee",
+                "marqueerepeatlimit": "-1",
+                "focusable": true,
+                "focusableintouchmode": true,
+                "scrollhorizontally": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

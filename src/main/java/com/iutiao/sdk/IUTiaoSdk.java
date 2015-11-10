@@ -14,10 +14,13 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.upay.billing.sdk.Upay;
+import com.upay.billing.sdk.UpayInitCallback;
 
 import java.util.concurrent.Executor;
 
@@ -108,6 +111,22 @@ public final class IUTiaoSdk {
 
         sdkInitialized = true;
         iutiaoClientInitialize();
+        upayInitialize();
+    }
+
+    private static void upayInitialize() {
+        // 初始化 upay 支付
+        String appkey = "10000038";
+        String secret = "616669C4C8B420311B313991A868ACC8";
+        String buildDate = "20151109";
+        String channelKey = null;
+        Upay up = Upay.initInstance(getApplicationContext(), appkey, secret, channelKey, buildDate, new UpayInitCallback() {
+            @Override
+            public void onInitResult(int i, String s) {
+                Log.i(TAG, "upay init result " + i + " response " + s);
+            }
+        });
+
     }
 
     /*

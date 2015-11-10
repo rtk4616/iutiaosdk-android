@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pay_by_mobile">Paga con Mobile</string>
+    <string name="charge_amount">Charge Importo:</string>
+	<string name="product_name">Nome del prodotto:</string>
+	<string name="initializing_please_wait">App inizializzazione, Vi preghiamo di attendere</string>
+	<string name="accept_and_buy">Accettare &amp; acquistare</string>
+	<string name="sufficient_balance">Si prega di garantire una sufficiente equilibrio cellulare prima di effettuare l'acquisto.</string>
+	<string name="wait">Attendere per il pagamento di completare prima di premere alcun tasto .....</string>
+	<string name="product_description">Descrizione Del Prodotto:</string>
+	<string name="thank_you">Grazie per aver scelto upay.</string>
+	<string name="customer_support">Eventuali domande tecniche, indica al team di assistenza clienti.</string>
+	<string name="contact_provider">Come contattare provider di pagamento . . .</string>
+	<string name="make_payment">Effettuare il pagamento. . .</string>
+	<string name="process_payment">Payment Processing . . .</string>
+	<string name="await_result">In attesa di pagamento Risultato . . .</string>
+	<string name="confirm_result">La conferma del pagamento Risultato . . .</string>
+</resources>

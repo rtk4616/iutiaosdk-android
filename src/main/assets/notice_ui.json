@@ -1,0 +1,81 @@
+{
+	"window-no-title": true,
+	"window-full-screen": true,
+	"content-view": {
+    	"type": "relative-layout",
+		"width": "fill",
+		"height": "fill",
+		"children": [
+		    {
+		        "type": "image",
+		        "id": "background",
+		        "width": "fill",
+		        "height": "80dp",
+		        "background": "#33FF0000",
+		        "align": "auto auto",
+		        "margin": "auto auto auto auto"
+		    },
+		    {
+		    	"type": "relative-layout",
+		    	"orientation": "vertical",
+		        "id": "container",
+		        "width": "220dp",
+		        "height": "wrap",
+		        "background": "test_round_corner",
+		        "align": "hcenter vcenter",
+		        "padding": "5dp 5dp 5dp 5dp",
+		        "margin": "auto 20dp auto 20dp",
+		        "children": [
+				    {
+				        "id": "label",
+				        "type": "text",
+				        "width": "fill",
+				        "height": "wrap",
+				        "align": "auto auto",
+				        "margin": "10dp 8dp auto 8dp",
+				        "padding": "5dp 10dp 5dp 10dp",
+				        "text": "这是一大段话\n这里测试一下\n分段显示，超长的文本啊超长的文本啊超长的文本啊超长的文本啊超长的文本啊超长的文本啊",
+				        "text-color": "#089afc",
+				        "text-size": "13sp",
+				        "visibility": "visible"
+				    },
+				    {
+				        "id": "check",
+				        "type": "checkbox",
+				        "width": "wrap",
+				        "height": "wrap",
+				        "checked": true,
+				        "align": "below label",
+				        "text-color": "#089afc",
+				        "text-size": "10sp"
+				    },
+				    {
+				        "id": "tip",
+				        "type": "text",
+				        "width": "fill",
+				        "height": "wrap",
+				        "align": "align-baseline check right-of check",
+				        "text": "下次不再提示",
+				        "single-line": true,
+				        "text-color": "#089afc",
+				        "text-size": "10sp"
+				    },
+				    {
+				        "type": "button",
+				        "id": "okButton",
+				        "width": "wrap",
+				        "height": "wrap",
+				        "align": "below check hcenter",
+				        "padding": "15dp",
+				        "margin": "4dp auto auto auto",
+				        "text": "我知道了",
+				        "result-code": -1,
+				        "background": "upay_pay_ok",
+				        "text-color": "#ffffff",
+				        "text-size": "13sp"
+				    }
+		        ]
+		    }
+		]
+	}
+}

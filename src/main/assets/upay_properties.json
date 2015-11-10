@@ -1,0 +1,143 @@
+﻿{
+  "common": {
+    "support_phone": "400-1234567",
+    "upay_brand": "优贝支付",
+    "send_sms_timeout": "60000", 
+    "default_cd_time": "300000",
+    "polling_trade_time": "5000",
+    "request_planlist_time": "300000",
+    "push_start_time":"3",
+    "push_end_time":"4",
+    "push_show_time":"7200000",
+    "push_polling_time":"3600000",
+    "not_show_loading":"10000309&10000327&10000361&10000360&10000375&10000376&10000379&10000383&10000362&10000368&10000372&10000349&10000346&10000253&10000406&10000394&10000342&10000409&10000413&10000415&10000428&10000391&10000352&10000444&10000253&10000453&10000405&10000410&10000411&10000460&10000402&10000448&10000463&10000472&10000469&10000461&10000475&10000480",
+    "fast_pay_time":"3000",
+    "interval_time":"4000",
+    "re_init_text":"支付插件正在重新进行初始化，请稍候...",
+    "loading_engine_text":"支付插件正在加载支付引擎，请稍候...",
+    "loading_engine_timeout":"30",
+    "wait_verify_app":"thai_test_ap",
+    "verify_cmdkey":"sw|SMS_|WAP|WEB|zh|ZW|3305|3324|thaiAisD",
+    "wait_verifycode_time":"120000",
+    "verify_cpkey":"",
+    "combine_goods_cpkey":"",
+    "default_request_date_limit":"1000",
+    "place_holder": ""
+  },
+  "app_package": {
+  	"safety_app": "com.qihoo360.mobilesafe&com.lbe.security&cn.opda.a.phonoalbumshoushou&com.lenovo.safecenter&com.anguanjia.safe&com.ijinshan.mguard&com.tencent.qqpimsecure",
+  	"market_app": "com.qihoo.appstore&com.tencent.android.qqdownloader&com.wandoujia.phoenix2&com.hiapk.marketpho&com.dragon.android.pandaspace&com.baidu.appsearch&cn.goapk.market&com.yingyonghui.market&com.muzhiwan.installer",
+  	"social_app": "com.tencent.mobileqq&com.tencent.mm&com.sina.weibo&com.xiudee.voip.hxyx&com.immomo.momo",
+  	"app_update": "2015-04-28 18:24:00"
+  },
+  "package": {
+    "url": "http://pay.upay360.com/data/pack.dat", 
+    "build_date": "2015-09-18 16:17:00",
+    "place_holder": ""
+  },
+  "zcwap": {
+    "tip_unit_name": "神仙道元宝",
+    "progress_text": "正在支付,请您耐心等候...",
+    "get_mobile_num": "正在获取手机号，请稍候...",
+    "tip_read_sms": "正在等待下发短信验证码，本应用将会访问您的短信收件箱以读取验证码",
+    "tip_read_sms_new": "正在等待下发验证码，请稍候...",
+    "tip_confirm_sms": "正在提交验证码，请稍候...",
+    "app": "cm",
+    "pid": "6001",
+    "key": "ff712db123dddcbdaa8f10910cbab5df",
+    "request_url": "http://221.179.131.90/0903?http://111.13.47.76:81/open_gate/web_game_fee.php",
+    "tel_request_url": "http://111.13.47.76:81/open_gate/web_game_fee.php",
+    "confirm_url": "http://111.13.47.76:81/open_gate/web_game_callback.php",
+    "place_holder": ""
+  },
+  "xt_ddo": {
+    "get_mobile_num": "正在获取您的手机号，请稍候...",
+    "tip_read_sms": "正在等待下发短信验证码，本应用将会访问您的短信收件箱以读取验证码",
+    "tip_confirm_sms": "正在提交验证码，请稍候...",
+    "place_holder": ""
+  },
+  "wypj": {
+    "progress_text": "正在支付,请您耐心等候...",
+    "delete_num": "10658899",
+    "place_holder": ""
+  },
+  "he_danji": {
+    "progress_text": "本应用将会发送$num条短信来完成支付，请稍候...",
+    "delete_num": "10658899",
+    "place_holder": ""
+  },
+  "he_nc_wy": {
+    "progress_text": "正在支付,请您耐心等候...",
+    "delete_num": "10658899",
+    "place_holder": ""
+  },
+  "he_nc_dj": {
+    "progress_text": "正在支付,请您耐心等候...",
+    "delete_num": "10658899",
+    "place_holder": ""
+  },
+  "upay": {
+    "progress_text": "正在支付,请您耐心等候...",
+    "mp_reply_num": "1065889920001",
+    "sw_reply_num": "106588995604",
+    "mp_delay_reply_tag": "1",
+    "make_up_num": "1888888",
+    "alert_text": "提醒：为保障支付的准确性，请勿进行其他操作，此过程可能会发短信或者访问您的短信收件箱以读取验证码。",
+    "default_help_test": "",
+    "test_app_help_text": "游戏提示：游戏中的宝石可以用来进行武器的强化和防具的镶嵌。",
+    "place_holder": ""
+  },
+  "rdosms": {
+    "progress_text": "本应用将会发送1条短信来完成支付，请稍候...",
+    "place_holder": ""
+  },
+  "ck_mdo": {
+    "progress_text": "本应用将会发送$num条短信来完成支付，请稍候...",
+    "delete_num": "10658077",
+    "place_holder": ""
+  },
+  "bj_rdo": {
+    "progress_text": "本应用将会发送1条短信来完成支付，请稍候...",
+    "delete_num": "10658080",
+    "place_holder": ""
+  },
+  "cmcc_mm_dj": {
+    "progress_text_r": "本应用将会发送$num条短信来完成支付，请稍候...",
+    "progress_text": "$mmpt",
+    "progress_text_regist": "本应用会根据信号情况发送1-3条短信来完成支付，请稍候...",
+    "progress_text_unregist": "正在支付，请稍候...",
+    "delete_num": "10658424",
+    "place_holder": ""
+  },
+  "dt_sms": {
+    "progress_text": "本应用将会发送$num条短信来完成支付，请稍候...",
+    "place_holder": ""
+  },
+  "delete_number": {
+    "num": "10669202&10655&1000188&10660078&10669133&1000588&10658424&10658080&10658077&10658899&10658008&1065817&10660078&1065556131&10658008101816898&106586855107&10660078&1065556131&10655477&1065556002027004900&10658099&10086901987&10659878999000&10655477&1180211&1008690199&1065809912&10086901&10086399180&10086214&10086159005",
+    "place_holder": ""
+  },
+  "he_danji_brushes": [{"cmd_key":"DJ_xmf_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"000053977002","pid":"2241021504-7504102085","cpId":"710578","contentId":"657810053978","channelId":"40932000"},
+             {"cmd_key":"DJ_sqs_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006028973022","pid":"2241021504-1764851450","cpId":"772239","contentId":"623916011617","channelId":"10061005"},
+             {"cmd_key":"DJ_hazd_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006043521004","pid":"2241021504-8748621422","cpId":"795063","contentId":"606316016925","channelId":"40405008"},
+             {"cmd_key":"DJ_hyqst_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006034109002","pid":"2241021504-2117854424","cpId":"741052","contentId":"605216012918","channelId":"10373001"},
+             {"cmd_key":"DJ_xjtf2_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"000053973002","pid":"2241021504-1736602186","cpId":"710578","contentId":"657810053974","channelId":"40932000"},
+             {"cmd_key":"DJ_yyt_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006039433001","pid":"2241021504-6757543876","cpId":"794300","contentId":"630016014983","channelId":"40932000"},
+             {"cmd_key":"DJ_sb_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006043587003","pid":"2241021504-4000680612","cpId":"794521","contentId":"652116016991","channelId":"10061002"},
+             {"cmd_key":"DJ_cyxdj_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006050922003","pid":"2241021504-5064374164","cpId":"795063","contentId":"606316020918","channelId":"40405016"},
+             {"cmd_key":"DJ_zdbwz_4","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006050588004","pid":"2241021504-8667248285","cpId":"794183","contentId":"618316020738","channelId":"41107000"},
+             {"cmd_key":"DJ_rzsp_4","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006050986004","pid":"2241021504-5201058740","cpId":"794183","contentId":"618316020951","channelId":"41107000"},
+             {"cmd_key":"DJ_mmddz_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006038400001","pid":"2241021504-2622731454","cpId":"710578","contentId":"657816014539","channelId":"10061001"},
+             {"cmd_key":"DJ_jh_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006053412002","pid":"2241021504-1564885135","cpId":"772358","contentId":"635816022353","channelId":"40932000"},
+             {"cmd_key":"DJ_jxj_2","version":"1.0.0.7","ip":"182.92.21.219:10789","chargeId":"006053401002","pid":"2241021504-2373230202","cpId":"772358","contentId":"635816022346","channelId":"40932000"}],
+
+  "he_nc_dj_brushes_sw": [{"cmd_key":"DJ_fkzbt","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64b8c608d014b8c73e95f0008","price":"2"},
+                         {"cmd_key":"DJ_xjzn","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64bc8f177014bcf4b06ff0091","price":"2"},
+	                 {"cmd_key":"DJ_hysl","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64bc8f177014bcf4b48e5009f","price":"4"},
+	                 {"cmd_key":"DJ_qqdbp","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64bc8f177014bcf4ae791008b","price":"2"},
+			 {"cmd_key":"DJ_bgcq","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64be28720014be3c1b7230014","price":"2"},
+			 {"cmd_key":"DJ_sgbl","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64bd4a2f3014bd9b999a40033","price":"2"},
+			 {"cmd_key":"DJ_yyds","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64be52dcb014be9e489680022","price":"2"}],
+
+  "update_date": "2015-06-17 14:56:00"
+}

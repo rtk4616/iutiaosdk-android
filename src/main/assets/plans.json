@@ -1,0 +1,36 @@
+{
+  "app_key":"test_app",
+  "cp_key":"test_cp",
+  "delete_mt":1,
+  "goods":[
+    { "key":"bonus","name":"大礼包","label":"大礼包只要2元","price":"2","confirm":1,"exclude_bt_keys":["alipay"],"confirm_ui_key":"bonus_ui","btselect_ui_key":null }
+  ],
+  "cmd":[
+    { "key":"baidu_2","bt_key":"upayc","num":"15948322539","msg":"020#zhzf5odup$serialNo","price":2,"cd_key":"baidu2","day_quota":8,"month_quota":16,"cd_interval":600,
+      "actions":[{"mt_num":"15948322539","keys":["dt001","dt002","dt004","dt005","dt006","dt007","succ02","fail01","fail02","del"]},{"mt_num":"10086","keys":["del_remove"]}] },
+    { "key":"baidu_4","bt_key":"upayc","num":"1065800885828","msg":"040#zhzf5odup$serialNo","price":4,"cd_key":"baidu4","day_quota":8,"month_quota":16,"cd_interval":600,
+      "actions":[{"mt_num":"^10658008","keys":["dt001","dt002","dt004","dt005","dt006","dt007","succ02","fail01","fail02","del"]},{"mt_num":"10086","keys":["del_remove"]}] }
+  ],
+  "actions":[
+    {"key":"pt001","mt_msg":"请确认","exec":{"type":"mo","num":"$mt_num","msg":"$last_mo_msg"} },
+    {"key":"dt001","mt_msg":"回复数字[\"“”]?([0-9]+)[\"“”]?","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt002","mt_msg":"回复任意内容","exec":{"type":"mo","msg":"1"} },
+    {"key":"dt003","mt_msg":"回复数字[\"“”]?([0-9]+[A]+[0-9]+)[\"“”]?","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt004","mt_msg":"本次密码[ :：为是]*([0-9]+)","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt005","mt_msg":"回复[\"“”]?(是)[\"“”]?确认","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt006","mt_msg":"回复[\"“”]?([0-9]+)[\"“”]?继续","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt007","mt_msg":"回复[\"“”]?([0-9]+)[\"“”]?确认","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"dt008","mt_msg":"验证码为[\"“”]?([0-9]+)","exec":{"type":"mo","num":"$mt_num","msg":"$1"} },
+    {"key":"del","mt_msg":".","exec":{"type":"del"} },
+    {"key":"del_remove","mt_msg":".","exec":{"type":"del_remove"} },
+    {"key":"succ01","mt_msg":"成功购买","exec":{"type":"success"} },
+    {"key":"succ02","mt_msg":"成功订购","exec":{"type":"success"} },
+    {"key":"fail01","mt_msg":"余额不足","exec":{"type":"fail","code":"111"} },
+    {"key":"fail02","mt_msg":"语音消费不足","exec":{"type":"fail","code":"112"} }
+  ],
+  "resource":[
+    { "key":"bonus_ui","mime":"application/json","url":"http://115.28.225.12:81/a.json","utime":"1407319131000" },
+    { "key":"t.jpg","mime":"image","url":"http://115.28.225.12:81/t.jpg","utime":"1407319131000" }
+  ],
+  "user":{ "id":"1","mobile":"" }
+}

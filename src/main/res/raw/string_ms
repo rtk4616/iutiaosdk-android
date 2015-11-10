@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pay_by_mobile">Bayar dengan Telefon</string>
+    <string name="charge_amount">caj Jumlah:</string>
+	<string name="product_name">Nama Produk:</string>
+	<string name="initializing_please_wait">App Memulakan , Sila tunggu</string>
+	<string name="accept_and_buy">Terima &amp; beli</string>
+	<string name="sufficient_balance">Sila memastikan keseimbangan bimbit yang mencukupi sebelum membuat pembelian.</string>
+	<string name="wait">Sila tunggu pembayaran selesai sebelum menekan mana-mana kekunci .....</string>
+	<string name="product_description">Penerangan Produk:</string>
+	<string name="thank_you">Terima kasih kerana menggunakan Upay berurus.</string>
+	<string name="customer_support">Sebarang pertanyaan teknikal, sila mengarahkan mereka kepada pasukan sokongan pelanggan.</string>
+	<string name="contact_provider">Menghubungi Pembekal Pembayaran. . .</string>
+	<string name="make_payment">Membuat Pembayaran. . .</string>
+	<string name="process_payment">Pemprosesan Pembayaran. . .</string>
+	<string name="await_result">Menunggu Keputusan Pembayaran. . .</string>
+	<string name="confirm_result">Mengesahkan Keputusan Pembayaran. . .</string>
+</resources>

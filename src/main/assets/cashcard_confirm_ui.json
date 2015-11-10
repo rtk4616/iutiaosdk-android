@@ -1,0 +1,186 @@
+{
+    "window-no-title": true,
+    "window-full-screen": true,
+    "content-view": {
+        "type": "relative-layout",
+        "width": "fill",
+        "height": "fill",
+        "children": [
+            {
+                "type": "scroll-view",
+                "id": "scroll",
+                "width": "wrap",
+                "height": "wrap",
+                "background": "#ffffff",
+                "align": "hcenter vcenter",
+                "margin": "auto 20dp auto 20dp",
+                "children": [
+                    {
+                        "type": "relative-layout",
+                        "id": "container",
+                        "width": "wrap",
+                        "height": "wrap",
+                        "background": "",
+                        "align": "auto auto",
+                        "margin": "auto auto 20dp auto",
+                        "children": [
+                            {
+                                "type": "image",
+                                "id": "img_title",
+                                "width": "fill",
+                                "height": "40dp",
+                                "background": "upay_top_",
+                                "align": "auto auto",
+                                "margin": "auto auto auto auto",
+                                "image-scaleType": "fit-xy"
+                            },
+                            {
+                                "id": "img_logo",
+                                "type": "image",
+                                "width": "50dp",
+                                "height": "30dp",
+                                "align": "hcenter auto",
+                                "margin": "5dp auto auto auto",
+                                "background": "upay_logo",
+                                "image-scaleType": "matrix",
+                                "image-src": "",
+                                "visibility": "visible"
+                            },
+                            {
+                                "type": "button",
+                                "id": "cancelButton",
+                                "width": "35dp",
+                                "height": "25dp",
+                                "align": "right auto",
+                                "margin": "8dp 10dp auto auto",
+                                "text": "",
+                                "result-code": "canceled",
+                                "background": "upay_backout",
+                                "text-color": "",
+                                "text-size": ""
+                            },
+                            {
+                                "id": "label",
+                                "type": "text",
+                                "width": "fill",
+                                "height": "wrap",
+                                "align": "below img_title",
+                                "margin": "auto auto auto auto",
+                                "padding": "5dp auto 5dp 20dp",
+                                "text": "Please choose the voucher type",
+                                "background": "upay_md_bg",
+                                "text-color": "#089afc",
+                                "text-size": "16px",
+                                "visibility": "visible"
+                            },
+                            {
+                            	"type": "linear-layout",
+		                        "id": "layout_cashcard",
+		                        "width": "wrap",
+		                        "height": "wrap",
+		                        "background": "",
+		                        "align": "below label hcenter",
+		                        "margin": "10dp 20dp auto 20dp",
+		                        "children": [
+		                        	{
+		                            	"type": "relative-layout",
+				                        "id": "layout_ais",
+				                        "width": "120dp",
+				                        "height": "80dp",
+				                        "background": "img_ais_up",
+				                        "align": "below label",
+				                        "margin": "auto 10dp auto auto",
+				                        "children": [
+				                        	{
+				                        		"id": "img_ais",
+				                                "type": "image",
+				                                "width": "35dp",
+				                                "height": "35dp",
+				                                "margin": "auto auto auto atuo",
+				                                "padding": "2dp 2dp 2dp 2dp",
+				                                "align": "hcenter vcenter",
+				                                "background": "",
+				                                "image-src": "select_ok",
+				                                "visibility": "gone"
+				                        	}
+				                        ]
+				                    },
+				                    {
+		                            	"type": "relative-layout",
+				                        "id": "layout_trueMoney",
+				                        "width": "120dp",
+				                        "height": "80dp",
+				                        "background": "img_truemoney_up",
+				                        "align": "below label",
+				                        "margin": "auto 10dp auto auto",
+				                        "children": [
+				                        	{
+				                        		"id": "img_trueMoney",
+				                                "type": "image",
+				                                "width": "35dp",
+				                                "height": "35dp",
+				                                "margin": "auto auto auto atuo",
+				                                "background": "",
+				                                "padding": "2dp 2dp 2dp 2dp",
+				                                "align": "hcenter vcenter",
+				                                "image-src": "select_ok",
+				                                "visibility": "gone"
+				                        	}
+				                        ]
+				                    }
+		                        ]
+                            },
+                            {
+                            	"type": "linear-layout",
+				                "id": "layout_edit",
+				                "width": "fill",
+				                "height": "wrap",
+				                "background": "",
+				                "align": "below layout_cashcard",
+				                "margin": "10dp 20dp auto 20dp",
+				                "visibility": "gone",
+				                "children": [
+				                	{
+		                            	"id": "editText_cashcard",
+		                            	"type": "edit-text",
+		                            	"width": "fill",
+		                            	"height": "wrap",
+		                            	"background": "input",
+		                            	"weight": 1,
+		                            	"margin": "auto atuo auto atuo",
+		                            	"hint": ""
+		                            },
+		                            {
+				                        "id": "img_error",
+				                        "type": "image",
+				                        "width": "20dp",
+				                        "height": "20dp",
+				                        "margin": "auto auto auto 5dp",
+				                        "background": "",
+				                        "layout-gravity": "center",
+				                        "image-src": "edit_error",
+				                        "visibility": "gone"
+				                    }
+				                ]
+                            },
+                            {
+                                "type": "button",
+                                "id": "okButton",
+                                "width": "fill",
+                                "height": "wrap",
+                                "align": "below layout_edit",
+                                "margin": "10dp 20dp auto 20dp",
+                                "text": "Top up",
+                                "result-code": "ok",
+                                "background": "upay_pay_ok",
+                                "text-color": "#ffffff",
+                                "text-size": "20px",
+                                "visibility": "gone"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

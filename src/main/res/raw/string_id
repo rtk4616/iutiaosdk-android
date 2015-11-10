@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pay_by_mobile">Bayar melalui Seluler</string>
+    <string name="charge_amount">biaya Jumlah:</string>
+	<string name="product_name">Nama Produk:</string>
+	<string name="initializing_please_wait">App menginisialisasi , Tunggu</string>
+	<string name="accept_and_buy">menerima &amp; membeli</string>
+	<string name="sufficient_balance">Pastikan saldo ponsel yang cukup sebelum melakukan pembelian .</string>
+	<string name="wait">Silahkan tunggu pembayaran untuk menyelesaikan sebelum menekan tombol apapun .....</string>
+	<string name="product_description">Deskripsi Produk:</string>
+	<string name="thank_you">Terima kasih telah menggunakan upay.</string>
+	<string name="customer_support">Pertanyaan teknis, silahkan langsung ke tim dukungan pelanggan .</string>
+	<string name="contact_provider">Menghubungi Provider Pembayaran . . .</string>
+	<string name="make_payment">Membuat Pembayaran . . .</string>
+	<string name="process_payment">Pengolahan Pembayaran . . .</string>
+	<string name="await_result">Menunggu Hasil Pembayaran . . .</string>
+	<string name="confirm_result">Mengkonfirmasi Hasil Pembayaran . . .</string>
+</resources>
