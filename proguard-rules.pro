@@ -15,3 +15,9 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-libraryjars libs/Upay_Sdk_2.0.jar
+-keep class com.upay.billing.** { *; }
+-dontwarn com.upay.billing.**
+-keep class cn.cmqame.sdk.** { *; }
+-dontwarn cn.cmqame.sdk.**
