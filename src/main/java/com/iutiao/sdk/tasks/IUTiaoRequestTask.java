@@ -12,6 +12,7 @@ package com.iutiao.sdk.tasks;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
@@ -28,6 +29,7 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
     private IUTiaoCallback listener;
     private Exception e;
     private Context context;
+    private static final String TAG = IUTiaoRequestTask.class.getSimpleName();
 
     protected abstract Result parse(Params params) throws Exception;
 
@@ -80,8 +82,10 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
     protected void onPostExecute(Result result) {
         dismissProgress();
         if (e != null) {
+            Log.e(TAG, "Request failed", e);
             this.listener.onError(e);
         } else {
+            Log.i(TAG, "Request success");
             this.listener.onSuccess(result);
         }
     }

@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.iutiao.net.RequestOptions;
+import com.iutiao.sdk.fragments.ChargeFragment;
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
 import com.iutiao.sdk.fragments.LoginFragment;
 import com.iutiao.sdk.fragments.ProfileFragment;
@@ -51,7 +52,14 @@ public class IUTiaoActivity extends FragmentActivity {
                 fragment = dialogFragment;
             } else {
                 if (token != null) {
-                    fragment = ProfileFragment.newInstance();
+                    String frag = intent.getStringExtra("fragment");
+                    if (frag != null) {
+                        if (frag.equals("charge")) {
+                            fragment = ChargeFragment.newInstance();
+                        }
+                    } else {
+                        fragment = ProfileFragment.newInstance();
+                    }
                 } else {
                     fragment = LoginFragment.newInstance();
                 }

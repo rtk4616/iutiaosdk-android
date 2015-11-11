@@ -42,12 +42,16 @@ public final class IUTiaoSdk {
     private static volatile boolean isDebugEnabled = BuildConfig.DEBUG;
     private static final int MAX_REQUEST_CODE_RANGE = 100;
 
+    private static volatile String upayAppkey;
+
     /**
      * The key for the application ID in the Android manifest.
      */
     public static final String APPLICATION_ID_PROPERTY = "com.iutiao.sdk.ApplicationId";
     public static final String APPLICATION_NAME_PROPERTY = "com.iutiao.sdk.ApplicationName";
     public static final String CURRENCY_PROPERTY = "com.iutiao.sdk.currency";
+
+    public static final String UPAY_APPKEY_PROPERTY = "UPAY_APPKEY";
 
     public enum CURRENCIES {
         rub
@@ -119,10 +123,13 @@ public final class IUTiaoSdk {
         Upay up = Upay.initInstance(getApplicationContext(), null, null, null, null, new UpayInitCallback() {
             @Override
             public void onInitResult(int i, String s) {
-                Log.i(TAG, "upay init result " + i + " response " + s);
+                if (i == 200) {
+                    Log.i(TAG, "upay initialized successful, result " + i + " response " + s);
+                } else {
+                    throw new IUTiaoSdkException(String.format("upay initialized failed, status_code: %d reason: %s", i, s));
+                }
             }
         });
-
     }
 
     /*
@@ -188,6 +195,10 @@ public final class IUTiaoSdk {
             String _currency = ai.metaData.getString(CURRENCY_PROPERTY);
             Validate.isInEnum(_currency, CURRENCIES.class);
             currency = _currency;
+        }
+
+        if (upayAppkey == null) {
+            upayAppkey = String.valueOf(ai.metaData.getInt(UPAY_APPKEY_PROPERTY));
         }
 
     }

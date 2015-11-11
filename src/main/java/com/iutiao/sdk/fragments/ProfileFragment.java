@@ -21,11 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.iutiao.model.OKEntity;
 import com.iutiao.model.User;
-import com.iutiao.sdk.AccessTokenManager;
 import com.iutiao.sdk.IUTiaoCallback;
-import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.dialogs.ProfileDialog;
@@ -36,18 +33,13 @@ import com.iutiao.sdk.tasks.UserProfileTask;
  * Created by yxy on 15/11/7.
  */
 
-/**
- * IUTiaoCallback<OKEntity> 绑定手机后的回调
- */
 public class ProfileFragment extends BaseFragment {
 
     private Button signOutBtn;
     private Button profileBtn;
     private Button loginBtn;
 
-    public static final UserManager userManager = UserManager.getInstance();
-    public static final AccessTokenManager accessTokenManager = AccessTokenManager.getInstance();
-    private static final String TAG = ProfileFragment.class.getSimpleName();
+    public static final UserManager userManager = UserManager.getInstance();private static final String TAG = ProfileFragment.class.getSimpleName();
 
     @Nullable
     @Override
@@ -62,8 +54,6 @@ public class ProfileFragment extends BaseFragment {
 
         if (!userManager.hasCacahedUserProfile()) {
             Log.w(TAG, "user profile missing, may be a bug when cache user profile?");
-//            UserProfileTask task = new UserProfileTask(getActivity(), new I);
-//            task.execute();
         }
 
         profileBtn = (Button) view.findViewById(R.id.btn_profile);
