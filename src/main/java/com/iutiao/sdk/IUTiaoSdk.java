@@ -203,6 +203,10 @@ public final class IUTiaoSdk {
 
     }
 
+    public static String getUpayAppkey() {
+        return upayAppkey;
+    }
+
     public static String getCurrency() {
         return currency;
     }
@@ -241,5 +245,10 @@ public final class IUTiaoSdk {
     public interface InitializeCallback {
         // sdk 初始化完成后调用
         void onInitialized();
+    }
+
+    public static void onDestory() {
+        Upay upay = Upay.getInstance(getUpayAppkey());
+        upay.exit();
     }
 }
