@@ -20,6 +20,14 @@ import java.util.Map;
  * Created by yxy on 15/11/11.
  */
 public class ChargeTask extends IUTiaoRequestTask<Map<String, Object>, Charge> {
+    private String action;
+    public static final String ACTION_CREATE = "create";
+    public static final String ACTION_UPDATE = "update";
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+
     public ChargeTask(Context context) {
         super(context);
     }
@@ -30,6 +38,12 @@ public class ChargeTask extends IUTiaoRequestTask<Map<String, Object>, Charge> {
 
     @Override
     protected Charge parse(Map<String, Object> stringObjectMap) throws Exception {
+        if (action != null) {
+            if (action == ACTION_UPDATE) {
+                return Charge.update((String) stringObjectMap.get("orderid"), stringObjectMap);
+            }
+        }
         return Charge.create(stringObjectMap);
     }
+
 }
