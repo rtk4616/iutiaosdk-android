@@ -35,10 +35,10 @@
     <string name="com_iutiao_phone_bound">Phone Associated</string>
     <string name="com_iutiao_phone_to_bind">Associate Phone</string>
     <string name="com_iutiao_charge_title">Please chose charge amount</string>
-    <string name="com_iutiao_charge_convert_desc">1U = 1RMB</string>
+    <string name="com_iutiao_charge_convert_desc">1U ~= 1RMB</string>
     <string name="com_iutiao_confirm">Confirm</string>
     <string name="com_iutiao_charge_amount_hint">Amount</string>
-    <string name="com_iutiao_charge_1u">1U (1RMB)</string>
-    <string name="com_iutiao_charge_5u">5U (5RMB)</string>
-    <string name="com_iutiao_charge_10u">10U (10RMB)</string>
+    <string name="com_iutiao_charge_1u">1U</string>
+    <string name="com_iutiao_charge_5u">5U</string>
+    <string name="com_iutiao_charge_10u">35U</string>
 </resources>
