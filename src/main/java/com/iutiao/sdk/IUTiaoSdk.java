@@ -13,8 +13,13 @@ package com.iutiao.sdk;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.PixelFormat;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
@@ -116,6 +121,7 @@ public final class IUTiaoSdk {
         sdkInitialized = true;
         iutiaoClientInitialize();
         upayInitialize();
+//        initFloatView();
     }
 
     private static void upayInitialize() {
@@ -148,6 +154,7 @@ public final class IUTiaoSdk {
 
     public static void setDebugMode() {
         IUTiao.setDebugMode();
+//        IUTiao.overrideApiBase("http://192.168.1.200:8000");
     }
 
     /**
@@ -250,5 +257,40 @@ public final class IUTiaoSdk {
     public static void onDestory() {
         Upay upay = Upay.getInstance(getUpayAppkey());
         upay.exit();
+    }
+
+    private static WindowManager windowManager;
+    private static WindowManager.LayoutParams windownLayoutParams;
+
+    public static void initFloatView() {
+        windowManager = (WindowManager) getApplicationContext().getSystemService("window");
+        // 设置 LayoutParams（全局变量）相关参数
+        windownLayoutParams = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.TYPE_PHONE
+        );
+        windownLayoutParams.format = PixelFormat.RGBA_8888;
+        windownLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+
+        windownLayoutParams.x = 400;
+        windownLayoutParams.y = 400;
+        windownLayoutParams.width = 80;
+        windownLayoutParams.height = 80;
+        createFloatView();
+
+    }
+
+
+    public static void createFloatView() {
+        ImageView img = new ImageView(getApplicationContext());
+        img.setImageResource(R.drawable.ic_launcher);
+        img.setAlpha(80);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "floatable clickable");
+            }
+        });
+        windownLayoutParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
+        windowManager.addView(img, windownLayoutParams);
     }
 }
