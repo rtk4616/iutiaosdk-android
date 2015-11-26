@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
 
     <application
         android:allowBackup="true"
@@ -38,6 +39,9 @@
         <meta-data android:name="UPAY_CHANNELKEY" android:value="upay_zte"/>
         <meta-data android:name="UPAY_BUILDDATE" android:value="20151110"/>
         <!--upay end-->
+
+        <service android:name="com.upay.billing.sdk.LocalService">
+        </service>
 
     </application>
 
