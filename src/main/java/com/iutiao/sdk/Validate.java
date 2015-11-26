@@ -118,8 +118,12 @@ public final class Validate {
         return id;
     }
 
-    public static boolean isEmailValid(String input) {
-        return Patterns.EMAIL_ADDRESS.matcher(input).matches();
+    private static final String EMAIL_PATTERN = "/^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$/\n";
+
+    public static boolean isEmailValid(String email) {
+        Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     public static boolean isPhoneValid(String input) {
