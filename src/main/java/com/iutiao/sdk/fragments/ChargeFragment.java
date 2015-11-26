@@ -23,29 +23,52 @@ import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.R;
-import com.iutiao.sdk.Validate;
+import com.iutiao.sdk.payment.IPayment;
+import com.iutiao.sdk.payment.PaymentCallback;
+import com.iutiao.sdk.payment.PaymentResponseWrapper;
+import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.tasks.ChargeTask;
-import com.upay.billing.sdk.Upay;
-import com.upay.billing.sdk.UpayCallback;
 
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.UUID;
 
 /**
  * Created by yxy on 15/11/11.
  */
-public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charge>, View.OnClickListener {
+public class ChargeFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
 
     private Button confirmBtn;
     private EditText amountET;
     private static final String TAG = ChargeFragment.class.getSimpleName();
     private String payItem = "rub_35";
     private String orderid;
-    private String tradeId;
+    private IPayment payment;
 
-    private static Upay upay;
+    private Map<String, Object> paymentArguments = new HashMap<>();
+
+    public Map<String, Object> getPaymentArguments() {
+        return paymentArguments;
+    }
+
+    public void setPaymentArguments(Map<String, Object> paymentArguments) {
+        this.paymentArguments = paymentArguments;
+    }
+
+    public void initPaymentArguments() {
+        this.paymentArguments.put("activity", getActivity());
+        this.paymentArguments.put("currency", getCurrency());
+        this.paymentArguments.put("pay_method", getPayMethod());
+        this.paymentArguments.put("orderid", newOrderid());
+        this.paymentArguments.put("amount", getAmount());
+        if (getPayItem() != null && !getPayItem().equals("")) {
+            this.paymentArguments.put("pay_item", getPayItem());
+        }
+    }
+
+    public enum PAY_METHODS {
+        upay,
+    }
 
     public static ChargeFragment newInstance() {
         return new ChargeFragment();
@@ -58,7 +81,11 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
     }
 
     private String getAmount() {
-        return amountET.getText().toString().trim();
+        String amount = amountET.getText().toString().trim();
+        if (amount.equals("")) {
+            amount = "0";
+        }
+        return amount;
     }
 
     private void setAmount(String amount) {
@@ -90,8 +117,6 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        upay = Upay.getInstance(null);
-
         confirmBtn = (Button) view.findViewById(R.id.btn_confirm);
         amountET = (EditText) view.findViewById(R.id.et_amount);
 
@@ -99,42 +124,28 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
             @Override
             public void onClick(View v) {
                 setPayItem("rub_35");
-
+                initPaymentArguments();
                 createChargeOrder();
-
             }
         });
         
     }
 
-    public String getTradeId() {
-        return tradeId;
-    }
-
-    public void setTradeId(String tradeId) {
-        this.tradeId = tradeId;
-    }
-
     public void createChargeOrder() {
-        ChargeTask task = new ChargeTask(getActivity(), (IUTiaoCallback<Charge>) ChargeFragment.this);
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("pay_method", getPayMethod());
-        params.put("currency", getCurrency());
-        params.put("trade_id", getTradeId());
-        params.put("orderid", newOrderid());
-        params.put("pay_item", getPayItem());
-        task.execute(params);
-    }
-
-    public void updateChargeOrder(Map<String, Object> params) {
-        ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback() {
+        ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
             @Override
-            public void onSuccess(Object t) {
-
+            public void onSuccess(Charge t) {
+                if (getPayMethod().equals("upay")) {
+                    payment = new UPayPayment((PaymentCallback) ChargeFragment.this);
+                    paymentArguments.put("payitem", getPayItem());
+                    payment.setPaymentArguments(getPaymentArguments());
+                }
+                payment.pay();
             }
 
             @Override
             public void onError(Exception e) {
+                Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
 
             }
 
@@ -143,9 +154,10 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
 
             }
         });
-        task.setAction(task.ACTION_UPDATE);
-        task.execute(params);
+
+        task.execute(paymentArguments);
     }
+
 
     @Override
     public void onClick(View v) {
@@ -159,12 +171,6 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
         }
     }
 
-    @Override
-    public void onSuccess(Charge charge) {
-        UPayPayment payment = new UPayPayment();
-        payment.pay();
-    }
-
     public String getPayItem() {
         return payItem;
     }
@@ -173,116 +179,29 @@ public class ChargeFragment extends BaseFragment implements IUTiaoCallback<Charg
         this.payItem = payItem;
     }
 
-    public interface PaymentCallback {
-        void onSuccess(Map<String, Object> data);
-        void onError(Map<String, Object> data);
-        void onCancel(Map<String, Object> data);
-    }
-
-    private class UPayPayment implements PaymentCallback {
-
-        PaymentCallback listener;
-
-        public UPayPayment() {
-            listener = this;
-        }
-
-        @Override
-        public void onSuccess(Map<String, Object> data) {
-            // 查询订单到账通知
-            // 结束当前 activity
-            updateChargeOrder(data);
-//            getActivity().setResult();
-            getActivity().finish();
-        }
-
-        @Override
-        public void onError(Map<String, Object> data) {
-            // 订单出错
-            updateChargeOrder(data);
-        }
-
-        @Override
-        public void onCancel(Map<String, Object> data) {
-            // 取消订单
-            updateChargeOrder(data);
-        }
-
-        public Map<String, Object> upayResponseData = new Hashtable<>();
-
-        public void pay() {
-
-            // 启动 upay 扣费界面
-            upay.pay(getActivity(), getPayItem(), getOrderid(), new UpayCallback() {
-                @Override
-                public void onPaymentResult(String goodsKey, String tradeId, int resultCode, String errorMsg, String extra) {
-                    Log.i(TAG, String.format("pyamentResult goodsKey: %s tradeId: %s resultCode: %d errorMsg: %s extra: %s",
-                            goodsKey, tradeId, resultCode, errorMsg, extra));
-                    upayResponseData.put("goodsKey", goodsKey);
-                    upayResponseData.put("trade_id", tradeId);
-                    upayResponseData.put("resultCode", resultCode);
-                    if (errorMsg != null && !errorMsg.equals("")) {
-                        upayResponseData.put("errorMsg", errorMsg);
-                    }
-                    upayResponseData.put("extra", extra);
-                    upayResponseData.put("orderid", getOrderid());
-                    Log.i(TAG, upayResponseData.toString());
-
-                    //支付操作成功
-                    switch (resultCode) {
-                        case 200:
-                            Log.i(TAG, "payment done, waiting for charging ...");
-                            break;
-                        case 110:
-                            Log.i(TAG, "user cancel");
-                            upayResponseData.put("status", "canceled");
-                            listener.onCancel(upayResponseData);
-                            break;
-                        default:
-                            Log.i(TAG, "payment failed");
-                            upayResponseData.put("status", "failed");
-                            listener.onError(upayResponseData);
-                    }
-
-                }
-
-                @Override
-                public void onTradeProgress(String goodsKey, String tradeId, int price, int paid, String extra, int resultCode) {
-
-                    upayResponseData.put("goodsKey", goodsKey);
-                    upayResponseData.put("trade_id", tradeId);
-                    upayResponseData.put("resultCode", resultCode);
-                    upayResponseData.put("price", price);
-                    upayResponseData.put("paid", paid);
-                    upayResponseData.put("extra", extra);
-                    upayResponseData.put("orderid", getOrderid());
-                    upayResponseData.put("status", "paid");
-
-                    Log.i(TAG, upayResponseData.toString());
-
-                    listener.onSuccess(upayResponseData);
-                }
-
-            });
-        }
-    }
-
-
-
-    @Override
-    public void onError(Exception e) {
-        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onCancel() {
-
-    }
-
     @Override
     public void onDestroy() {
-        upay.exit();
-        upay = null;
+        if (payment != null) {
+            payment.onDestroy();
+        }
+        payment = null;
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onPaymentSuccess(PaymentResponseWrapper result) {
+        Log.i(TAG, "payment success");
+        Toast.makeText(getActivity(), "payment succeed", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentError(PaymentResponseWrapper result) {
+        Toast.makeText(getActivity(), "payment failed due to " + result.error.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPaymentCancel(PaymentResponseWrapper result) {
+        Toast.makeText(getActivity(), "payment canceled", Toast.LENGTH_SHORT).show();
     }
 }
