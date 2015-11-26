@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.iutiao.net.RequestOptions;
+import com.iutiao.sdk.fragments.BuyFragment;
 import com.iutiao.sdk.fragments.ChargeFragment;
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
 import com.iutiao.sdk.fragments.LoginFragment;
@@ -56,6 +58,8 @@ public class IUTiaoActivity extends FragmentActivity {
                     if (frag != null) {
                         if (frag.equals("charge")) {
                             fragment = ChargeFragment.newInstance();
+                        } else if (frag.equals("buy")) {
+                            fragment = BuyFragment.newInstance();
                         }
                     } else {
                         fragment = ProfileFragment.newInstance();
@@ -80,5 +84,11 @@ public class IUTiaoActivity extends FragmentActivity {
         if (singleFragment != null) {
             singleFragment.onConfigurationChanged(newConfig);
         }
+    }
+
+    public static Intent newIntent(Context ctx, String fragment) {
+        Intent intent = new Intent(ctx, IUTiaoActivity.class);
+        intent.putExtra("fragment", fragment);
+        return intent;
     }
 }
