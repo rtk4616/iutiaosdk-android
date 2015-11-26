@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015, prchance, Inc. All rights reserved.
+  ~
+  ~ You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+  ~ copy, modify, and distribute this software in source code or binary form for use
+  ~ in connection with the web services and APIs provided by PRCHANCE.
+  ~
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/com_iutiao_buy_consumable_product_title"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/com_iutiao_buy_consumable_product_gold_5"
+        android:id="@+id/btn_gold_5"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/com_iutiao_buy_consumable_product_gold_10"
+        android:id="@+id/btn_gold_10"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/com_iutiao_buy_consumable_product_gold_15"
+        android:id="@+id/btn_gold_15"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/com_iutiao_buy_unconsumable_product_title"
+        android:id="@+id/textView4"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/com_iutiao_buy_unconsumable_product_unlock"
+        android:id="@+id/btn_unlock"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/com_iutiao_buy_unconsumable_product_armour"
+        android:id="@+id/btn_armour"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>
