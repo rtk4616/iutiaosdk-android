@@ -46,7 +46,6 @@ public class IUTiaoActivity extends FragmentActivity {
 
             String token = RequestOptions.getInstance().getToken();
 
-            Log.i(TAG, "token " + token);
             if (IUTiaoDialogFragment.TAG.equals(intent.getAction())) {
                 IUTiaoDialogFragment dialogFragment = IUTiaoDialogFragment.newInstance();
                 dialogFragment.setRetainInstance(true);

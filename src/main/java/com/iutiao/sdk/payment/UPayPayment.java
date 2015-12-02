@@ -12,14 +12,10 @@ package com.iutiao.sdk.payment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
-import com.iutiao.sdk.fragments.ChargeFragment;
 import com.iutiao.sdk.tasks.ChargeTask;
-import com.upay.billing.sdk.Upay;
-import com.upay.billing.sdk.UpayCallback;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -113,6 +109,8 @@ public class UPayPayment implements IPayment {
                         setPaymentResult(new PaymentResponseWrapper(upayResponseData, new Exception((String) upayResponseData.get("errorMsg"))));
                         listener.onPaymentError(getPaymentResult());
                 }
+
+                // 更新订单信息
                 updateUpayChargeOrder();
             }
 
@@ -158,6 +156,9 @@ public class UPayPayment implements IPayment {
         }
     }
 
+    /*
+     ** 可以由 upay 返回的结果，更新充值订单的状态信息
+     */
     public void updateUpayChargeOrder() {
         ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
             @Override

@@ -17,11 +17,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="payment method"
+        android:id="@+id/textView" />
+
+    <RadioGroup
+        android:id="@+id/payment_method"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/upay"
+            android:checked="true"
+            android:id="@+id/paymethod_upay" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/com_iutiao_charge_title"
         android:id="@+id/textView2"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_marginBottom="16dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -38,20 +58,9 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/com_iutiao_charge_1u"
-                android:id="@+id/btn_1u"/>
+                android:text="@string/com_iutiao_charge_2u"
+                android:id="@+id/btn_2u"/>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/com_iutiao_charge_5u"
-                android:id="@+id/btn_5u"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/com_iutiao_charge_10u"
-                android:id="@+id/btn_10u"/>
         </LinearLayout>
 
         <LinearLayout
@@ -60,23 +69,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button4"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button5"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button6"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -92,19 +84,11 @@
         android:layout_marginBottom="8dp"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/com_iutiao_charge_convert_desc"
-        android:id="@+id/textView"
-        android:layout_gravity="center_horizontal"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/com_iutiao_confirm"
-        android:id="@+id/btn_confirm"
+        android:text="@string/com_iutiao_payment"
+        android:id="@+id/btn_payment"
         android:layout_margin="16dp"
         android:layout_gravity="center_horizontal"/>
 

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.iutiao.model.Charge;
@@ -34,16 +35,35 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * 充值U币
+ *
+ * paymethod: {"currency": {"35ub"}}
+ * {"upay": {"rub": {"1u": "1u", "3u": "3u"}}}
+ * {"Paypal": {"rub": {"1u": "13.0", }}}
  * Created by yxy on 15/11/11.
  */
 public class ChargeFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
 
-    private Button confirmBtn;
-    private EditText amountET;
     private static final String TAG = ChargeFragment.class.getSimpleName();
-    private String payItem = "rub_35";
+
+    private String payItem;
     private String orderid;
     private IPayment payment;
+    private String payMethod;
+    private String defaultPayMethod = "upay";
+
+    // ui related
+    private RadioGroup payMethodRG;
+    private Button paymentBtn;
+    private EditText amountET;
+
+    public void setPayMethod(String payMethod) {
+        this.payMethod = payMethod;
+    }
+
+    public enum PAY_METHODS {
+        upay,
+    }
 
     private Map<String, Object> paymentArguments = new HashMap<>();
 
@@ -51,24 +71,19 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         return paymentArguments;
     }
 
-    public void setPaymentArguments(Map<String, Object> paymentArguments) {
-        this.paymentArguments = paymentArguments;
-    }
-
     public void initPaymentArguments() {
         this.paymentArguments.put("activity", getActivity());
         this.paymentArguments.put("currency", getCurrency());
-        this.paymentArguments.put("pay_method", getPayMethod());
+
+        String paymethod = getPayMethod();
+        this.paymentArguments.put("pay_method", paymethod);
         this.paymentArguments.put("orderid", newOrderid());
         this.paymentArguments.put("amount", getAmount());
-        if (getPayItem() != null && !getPayItem().equals("")) {
+        if (paymethod.equals("upay") && getPayItem() != null && !getPayItem().equals("")) {
             this.paymentArguments.put("pay_item", getPayItem());
         }
     }
 
-    public enum PAY_METHODS {
-        upay,
-    }
 
     public static ChargeFragment newInstance() {
         return new ChargeFragment();
@@ -82,7 +97,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
 
     private String getAmount() {
         String amount = amountET.getText().toString().trim();
-        if (amount.equals("")) {
+        if (chooseUpay()) {
             amount = "0";
         }
         return amount;
@@ -93,7 +108,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     }
 
     private String getPayMethod() {
-        return "upay";
+        return payMethod;
     }
 
     private String getCurrency() {
@@ -117,27 +132,40 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        confirmBtn = (Button) view.findViewById(R.id.btn_confirm);
+        setPayMethod(defaultPayMethod);
+
+        paymentBtn = (Button) view.findViewById(R.id.btn_payment);
         amountET = (EditText) view.findViewById(R.id.et_amount);
 
-        confirmBtn.setOnClickListener(new View.OnClickListener() {
+        paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPayItem("rub_35");
                 initPaymentArguments();
                 createChargeOrder();
             }
         });
-        
+
+        payMethodRG = (RadioGroup) view.findViewById(R.id.payment_method);
+
+        payMethodRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == R.id.paymethod_upay) {
+                    setPayMethod("upay");
+                }
+            }
+        });
+
+        view.findViewById(R.id.btn_2u).setOnClickListener(this);
+
     }
 
     public void createChargeOrder() {
         ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
             @Override
             public void onSuccess(Charge t) {
-                if (getPayMethod().equals("upay")) {
+                if (chooseUpay()) {
                     payment = new UPayPayment((PaymentCallback) ChargeFragment.this);
-                    paymentArguments.put("payitem", getPayItem());
                     payment.setPaymentArguments(getPaymentArguments());
                 }
                 payment.pay();
@@ -158,17 +186,16 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         task.execute(paymentArguments);
     }
 
+    private boolean chooseUpay() {
+        return getPayMethod().equals("upay");
+    }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-        if (id == R.id.btn_1u) {
-            setAmount("1");
-        } else if (id == R.id.btn_10u) {
-            setAmount("10");
-        } else if (id == R.id.btn_5u) {
-            setAmount("5");
+        if (chooseUpay()) {
+            payItem = ((Button) v).getText().toString();
         }
+        amountET.setText(((Button) v).getText().toString());
     }
 
     public String getPayItem() {
@@ -187,7 +214,6 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         payment = null;
         super.onDestroy();
     }
-
 
     @Override
     public void onPaymentSuccess(PaymentResponseWrapper result) {

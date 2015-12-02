@@ -32,7 +32,7 @@
   },
   "package": {
     "url": "http://pay.upay360.com/data/pack.dat", 
-    "build_date": "2015-09-18 16:17:00",
+    "build_date": "2015-11-24 12:17:00",
     "place_holder": ""
   },
   "zcwap": {
@@ -139,5 +139,5 @@
 			 {"cmd_key":"DJ_sgbl","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64bd4a2f3014bd9b999a40033","price":"2"},
 			 {"cmd_key":"DJ_yyds","url":"http://114.215.101.100:8080/s/cmgame/getSms/8a2321e64be52dcb014be9e489680022","price":"2"}],
 
-  "update_date": "2015-06-17 14:56:00"
+  "update_date": "2015-11-24 13:36:00"
 }

@@ -1,0 +1,153 @@
+{
+    "window-no-title": true,
+    "window-full-screen": true,
+    "content-view": {
+        "type": "relative-layout",
+        "width": "fill",
+        "height": "fill",
+        "children": [
+            {
+                "type": "scroll-view",
+                "id": "scroll",
+                "width": "wrap",
+                "height": "wrap",
+                "background": "#ffffff",
+                "align": "hcenter vcenter",
+                "margin": "auto 20dp auto 20dp",
+                "children": [
+                    {
+                        "type": "relative-layout",
+                        "id": "container",
+                        "width": "wrap",
+                        "height": "wrap",
+                        "background": "",
+                        "align": "auto auto",
+                        "margin": "auto auto 20dp auto",
+                        "children": [
+                            {
+                                "type": "image",
+                                "id": "img_title",
+                                "width": "fill",
+                                "height": "40dp",
+                                "background": "upay_top_",
+                                "align": "auto auto",
+                                "margin": "auto auto auto auto",
+                                "image-scaleType": "fit-xy"
+                            },
+                            {
+                                "id": "img_logo",
+                                "type": "image",
+                                "width": "50dp",
+                                "height": "30dp",
+                                "align": "hcenter auto",
+                                "margin": "5dp auto auto auto",
+                                "background": "upay_logo",
+                                "image-scaleType": "matrix",
+                                "image-src": "",
+                                "visibility": "visible"
+                            },
+                            {
+                                "type": "button",
+                                "id": "cancelButton",
+                                "width": "35dp",
+                                "height": "25dp",
+                                "align": "right auto",
+                                "margin": "8dp 10dp auto auto",
+                                "text": "",
+                                "result-code": "canceled",
+                                "background": "upay_backout",
+                                "text-color": "",
+                                "text-size": ""
+                            },
+                            {
+                                "type": "relative-layout",
+                                "id": "layout_img_malay",
+                                "width": "fill",
+                                "height": "warp",
+                                "background": "",
+                                "align": "below img_title",
+                                "margin": "10dp 20dp auto 20dp",
+                                "visibility": "visible",
+                                "children": [
+                                    {
+                                        "type": "image",
+                                        "id": "mala_cash_card",
+                                        "width": "140dp",
+                                        "height": "100dp",
+                                        "align": "hcenter auto",
+                                        "margin": "auto auto auto atuo",
+                                        "padding": "2dp 2dp 2dp 2dp",
+                                        "image-src": "game_on",
+                                        "weight": 1,
+                                        "background": "",
+                                        "visibility": "visible"
+                                    },
+                                    {
+                                        "id": "label",
+                                        "type": "text",
+                                        "width": "fill",
+                                        "height": "wrap",
+                                        "align": "below mala_cash_card",
+                                        "padding": "auto auto auto auto",
+                                        "text": "Please input cashcard pin",
+                                        "background": "",
+                                        "text-color": "#000000",
+                                        "text-size": "20px",
+                                        "visibility": "visible"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "linear-layout",
+                                "id": "layout_edit",
+                                "width": "fill",
+                                "height": "wrap",
+                                "background": "",
+                                "align": "below layout_img_malay",
+                                "margin": "10dp 20dp auto 20dp",
+                                "visibility": "visible",
+                                "children": [
+                                    {
+                                        "id": "editText_cashcard",
+                                        "type": "edit-text",
+                                        "width": "fill",
+                                        "height": "40dp",
+                                        "background": "upay_bottom_bg_all",
+                                        "weight": 1,
+                                        "margin": "auto atuo auto atuo",
+                                        "hint": ""
+                                    },
+                                    {
+                                        "id": "img_error",
+                                        "type": "image",
+                                        "width": "20dp",
+                                        "height": "20dp",
+                                        "margin": "auto auto auto 5dp",
+                                        "background": "",
+                                        "layout-gravity": "center",
+                                        "image-src": "edit_error",
+                                        "visibility": "gone"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "button",
+                                "id": "okButton",
+                                "width": "fill",
+                                "height": "wrap",
+                                "align": "below layout_edit",
+                                "margin": "10dp 20dp auto 20dp",
+                                "text": "Top up",
+                                "result-code": "ok",
+                                "background": "upay_pay_ok",
+                                "text-color": "#ffffff",
+                                "text-size": "20px",
+                                "visibility": "visible"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

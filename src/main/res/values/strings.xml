@@ -49,4 +49,7 @@
     <string name="com_iutiao_buy_unconsumable_product_unlock">Unlock All (1u)</string>
     <string name="com_iutiao_buy_unconsumable_product_armour">Armour (0.5u)</string>
     <string name="choose_paymethod_title">Choose payment method</string>
+    <string name="com_iutiao_charge_2u">2U</string>
+    <string name="upay">upay</string>
+    <string name="com_iutiao_payment">Pay</string>
 </resources>
