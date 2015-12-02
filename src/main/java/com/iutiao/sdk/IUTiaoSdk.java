@@ -154,7 +154,7 @@ public final class IUTiaoSdk {
 
     public static void setDebugMode() {
         IUTiao.setDebugMode();
-//        IUTiao.overrideApiBase("http://192.168.1.200:8000");
+        IUTiao.overrideApiBase("http://192.168.1.200:8000");
     }
 
     /**

@@ -16,6 +16,8 @@ import android.util.Log;
 import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.tasks.ChargeTask;
+import com.upay.billing.sdk.Upay;
+import com.upay.billing.sdk.UpayCallback;
 
 import java.util.Hashtable;
 import java.util.Map;
