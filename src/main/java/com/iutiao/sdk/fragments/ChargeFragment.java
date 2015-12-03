@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -37,10 +38,6 @@ import java.util.UUID;
 /**
  * 充值U币
  *
- * paymethod: {"currency": {"35ub"}}
- * {"upay": {"rub": {"1u": "1u", "3u": "3u"}}}
- * {"Paypal": {"rub": {"1u": "13.0", }}}
- * Created by yxy on 15/11/11.
  */
 public class ChargeFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
 
@@ -82,11 +79,24 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         if (paymethod.equals("upay") && getPayItem() != null && !getPayItem().equals("")) {
             this.paymentArguments.put("pay_item", getPayItem());
         }
+
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.getString("app_orderid") != null) {
+            this.paymentArguments.put("pay_app_orderid", arguments.getString("app_orderid"));
+        }
     }
 
 
     public static ChargeFragment newInstance() {
         return new ChargeFragment();
+    }
+
+    public static ChargeFragment newInstance(Intent intent) {
+        ChargeFragment fragment = newInstance();
+        Bundle args = new Bundle();
+        args.putString("app_orderid", intent.getStringExtra("app_orderid"));
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Nullable

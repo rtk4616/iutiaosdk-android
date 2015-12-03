@@ -55,8 +55,12 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
 
     private void showProgress() {
         this.progressBar.setCancelable(false);
-        this.progressBar.setMessage(this.context.getString(R.string.com_iutiao_progress_loading));
+        this.progressBar.setMessage(this.context.getString(getProgressMessage()));
         this.progressBar.show();
+    }
+
+    protected int getProgressMessage() {
+        return R.string.com_iutiao_progress_loading;
     }
 
     private void dismissProgress() {

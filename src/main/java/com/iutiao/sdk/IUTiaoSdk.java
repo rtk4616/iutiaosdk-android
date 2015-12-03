@@ -22,11 +22,18 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.iutiao.IUTiao;
+import com.iutiao.model.AppOrder;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.iutiao.sdk.model.OrderInfo;
+import com.iutiao.sdk.tasks.AppOrderTask;
+import com.iutiao.sdk.util.TextUtils;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayInitCallback;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -279,7 +286,6 @@ public final class IUTiaoSdk {
 
     }
 
-
     public static void createFloatView() {
         ImageView img = new ImageView(getApplicationContext());
         img.setImageResource(R.drawable.ic_launcher);
@@ -293,4 +299,5 @@ public final class IUTiaoSdk {
         windownLayoutParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
         windowManager.addView(img, windownLayoutParams);
     }
+
 }

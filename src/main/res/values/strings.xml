@@ -52,4 +52,6 @@
     <string name="com_iutiao_charge_2u">2U</string>
     <string name="upay">upay</string>
     <string name="com_iutiao_payment">Pay</string>
+    <string name="com_iutiao_progress_loading_create_app_order">Creating order, please waiting ...</string>
+    <string name="com_iutiao_progress_loading_retrieve_app_order">Retrieving order, please waiting ...</string>
 </resources>

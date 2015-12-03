@@ -33,6 +33,8 @@ public class IUTiaoActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.com_iutiao_activity_layout);
 
         Intent intent = getIntent();
