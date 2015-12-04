@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk.model;
 
+import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.util.TextUtils;
 
 import java.util.HashMap;
@@ -134,5 +135,10 @@ public class OrderInfo {
             }
         }
         return params;
+    }
+
+    public boolean validate() {
+        // TODO 订单校验参数
+        return true;
     }
 }

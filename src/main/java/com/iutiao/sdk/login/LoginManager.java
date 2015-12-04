@@ -80,7 +80,7 @@ public class LoginManager {
         Log.i(TAG, "user logout");
         RequestOptions.getInstance().clearToken();
         AccessTokenManager.getInstance().setCurrentAccessToken(null);
-        UserManager.getInstance().clearProfileCache();
+        UserManager.getInstance().clearCache();
     }
 
     public static LoginManager getInstance() {

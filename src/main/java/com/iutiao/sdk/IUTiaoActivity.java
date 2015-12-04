@@ -30,6 +30,28 @@ public class IUTiaoActivity extends FragmentActivity {
     private Fragment singleFragment;
     private static final String TAG = IUTiaoActivity.class.getSimpleName();
 
+    public static Intent newChargeIntent(Context ctx) {
+        Intent i = newIntent(ctx);
+        i.putExtra("fragment", "charge");
+        return i;
+    }
+
+    public static Intent newChargeIntent(Context ctx, String appOrderId) {
+        Intent i = newChargeIntent(ctx);
+        i.putExtra("app_orderid", appOrderId);
+        return i;
+    }
+
+    public static Intent newProfileIntent(Context ctx) {
+        Intent i = newIntent(ctx);
+        i.putExtra("fragment", "profile");
+        return i;
+    }
+
+    public static Intent newIntent(Context ctx) {
+        return new Intent(ctx, IUTiaoActivity.class);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +79,7 @@ public class IUTiaoActivity extends FragmentActivity {
                     String frag = intent.getStringExtra("fragment");
                     if (frag != null) {
                         if (frag.equals("charge")) {
-                            fragment = ChargeFragment.newInstance();
+                            fragment = ChargeFragment.newInstance(getIntent());
                         }
                     } else {
                         fragment = ProfileFragment.newInstance();

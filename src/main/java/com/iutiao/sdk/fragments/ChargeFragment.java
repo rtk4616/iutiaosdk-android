@@ -79,13 +79,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         if (paymethod.equals("upay") && getPayItem() != null && !getPayItem().equals("")) {
             this.paymentArguments.put("pay_item", getPayItem());
         }
-
-        Bundle arguments = getArguments();
-        if (arguments != null && arguments.getString("app_orderid") != null) {
-            this.paymentArguments.put("pay_app_orderid", arguments.getString("app_orderid"));
-        }
     }
-
 
     public static ChargeFragment newInstance() {
         return new ChargeFragment();
@@ -93,9 +87,6 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
 
     public static ChargeFragment newInstance(Intent intent) {
         ChargeFragment fragment = newInstance();
-        Bundle args = new Bundle();
-        args.putString("app_orderid", intent.getStringExtra("app_orderid"));
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -215,6 +206,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     public void setPayItem(String payItem) {
         this.payItem = payItem;
     }
+
 
     @Override
     public void onDestroy() {

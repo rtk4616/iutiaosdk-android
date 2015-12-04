@@ -10,14 +10,14 @@
 package com.iutiao.sdk;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.iutiao.model.User;
+import com.iutiao.sdk.util.CacheSharedPreference;
 
 /**
  * Created by yxy on 15/11/4.
  */
-public final class UserManager {
+public final class UserManager extends CacheSharedPreference {
 
     private User currentUser;
     private final String CACHED_PROFILE_KEY =
@@ -25,15 +25,15 @@ public final class UserManager {
     static final String SHARED_PREFERENCES_NAME =
             "com.iutiao.UserManager.SharedPreferences";
     private static UserManager instance;
-    private final SharedPreferences sharedPreferences;
 
-    public UserManager(SharedPreferences sharedPreferences) {
-        this.sharedPreferences = sharedPreferences;
+    @Override
+    protected String getCacheKey() {
+        return this.CACHED_PROFILE_KEY;
     }
 
     public UserManager() {
-        this(IUTiaoSdk.getApplicationContext()
-                        .getSharedPreferences(UserManager.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE));
+        super(IUTiaoSdk.getApplicationContext()
+                .getSharedPreferences(UserManager.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE));
     }
 
     public static UserManager getInstance() {
@@ -60,25 +60,16 @@ public final class UserManager {
     }
 
     public User loadProfile() {
-        return User.GSON.fromJson(getCachedUserProfile(), User.class);
-    }
-
-    public String getCachedUserProfile() {
-        return sharedPreferences.getString(CACHED_PROFILE_KEY, null);
+        return User.GSON.fromJson(getCachedContent(), User.class);
     }
 
     public void cacheUserProfile(User user) {
         Validate.notNull(user, "user");
-        sharedPreferences.edit().putString(CACHED_PROFILE_KEY, user.GSON.toJson(user)).apply();
-    }
-
-    public void clearProfileCache() {
-        sharedPreferences.edit().remove(CACHED_PROFILE_KEY);
+        cache(User.GSON.toJson(user));
     }
 
     public boolean hasCacahedUserProfile() {
-        return sharedPreferences.contains(CACHED_PROFILE_KEY);
+        return hasCache();
     }
-
 
 }
