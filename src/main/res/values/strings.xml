@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">iutiao</string>
-    <string name="com_iutiao_quick_login">quick login</string>
-    <string name="com_iutiao_login_btn">login</string>
+    <string name="com_iutiao_quick_login">Quick login</string>
+    <string name="com_iutiao_login_btn">Login</string>
     <string name="com_iutiao_login_username_hint">Email or Phone</string>
     <string name="com_iutiao_login_password_hint">Password</string>
     <string name="com_iutiao_quick_register">Quick register</string>
     <string name="com_iutiao_register_password">Password</string>
     <string name="com_iutiao_register_password_confirm">Password confirm</string>
     <string name="com_iutiao_register_username">account@example.com</string>
-    <string name="com_iutiao_register">register</string>
+    <string name="com_iutiao_register">Register</string>
     <string name="com_iutiao_next">next</string>
-    <string name="com_iutiao_signin">signin</string>
+    <string name="com_iutiao_signin">Signin</string>
     <string name="com_iutiao_forgot_password">Forgot your password?</string>
     <string name="com_iutiao_progress_loading">Please waiting ...</string>
     <string name="com_iutiao_verify">Verify</string>
@@ -25,29 +25,23 @@
     <string name="com_iutiao_reset_password_password_hint">New Password</string>
     <string name="com_iutiao_verify_code">Code</string>
     <string name="com_iutiao_reset_password_btn_reset">Reset</string>
-    <string name="com_iutiao_profile_signout">signout</string>
-    <string name="com_iutiao_profile">profile</string>
+    <string name="com_iutiao_profile_signout">Signout</string>
+    <string name="com_iutiao_profile">Profile</string>
     <string name="com_iutiao_profile_login">Login</string>
     <string name="com_iutiao_profile_nickname">Nickname</string>
-    <string name="com_iutiao_profile_uid">Uid</string>
+    <string name="com_iutiao_profile_uid">uid</string>
     <string name="com_iutiao_profile_balance">Balance</string>
-    <string name="com_iutiao_profile_bind_phone">bind phone</string>
+    <string name="com_iutiao_profile_bind_phone">Bind phone</string>
     <string name="com_iutiao_phone_bound">Phone Associated</string>
     <string name="com_iutiao_phone_to_bind">Associate Phone</string>
     <string name="com_iutiao_charge_title">Please chose charge amount</string>
     <string name="com_iutiao_charge_convert_desc">1U ~= 1RMB</string>
     <string name="com_iutiao_confirm">Confirm</string>
-    <string name="com_iutiao_charge_amount_hint">Amount</string>
+    <string name="com_iutiao_charge_amount_hint"></string>
     <string name="com_iutiao_charge_1u">1U</string>
     <string name="com_iutiao_charge_5u">5U</string>
     <string name="com_iutiao_charge_10u">35U</string>
-    <string name="com_iutiao_buy_consumable_product_title">Buy Consumable Product</string>
-    <string name="com_iutiao_buy_consumable_product_gold_5">Gold 5 (5u)</string>
-    <string name="com_iutiao_buy_consumable_product_gold_10">Gold 10 (10u)</string>
-    <string name="com_iutiao_buy_consumable_product_gold_15">Gold 15 (15u)</string>
-    <string name="com_iutiao_buy_unconsumable_product_title">Buy UnConsumable Product</string>
-    <string name="com_iutiao_buy_unconsumable_product_unlock">Unlock All (1u)</string>
-    <string name="com_iutiao_buy_unconsumable_product_armour">Armour (0.5u)</string>
+
     <string name="choose_paymethod_title">Choose payment method</string>
     <string name="com_iutiao_charge_2u">2U</string>
     <string name="upay">upay</string>
