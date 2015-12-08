@@ -9,12 +9,10 @@
 
 package com.iutiao.sdk;
 
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -22,18 +20,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.iutiao.IUTiao;
-import com.iutiao.model.AppOrder;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
-import com.iutiao.sdk.model.OrderInfo;
-import com.iutiao.sdk.tasks.AppOrderTask;
-import com.iutiao.sdk.util.TextUtils;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayInitCallback;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -133,7 +124,7 @@ public final class IUTiaoSdk {
 
     private static void upayInitialize() {
         // 初始化 upay 支付
-        Upay up = Upay.initInstance(getApplicationContext(), null, null, null, null, new UpayInitCallback() {
+        Upay.initInstance(getApplicationContext(), null, null, null, null, new UpayInitCallback() {
             @Override
             public void onInitResult(int i, String s) {
                 if (i == 200) {
@@ -143,6 +134,7 @@ public final class IUTiaoSdk {
                 }
             }
         });
+        Log.i(TAG, "upay initialize successful");
     }
 
     /*
@@ -157,6 +149,7 @@ public final class IUTiaoSdk {
                 .setAppKey(getApplicationId())
                 .setToken(token)
                 .build();
+        Log.i(TAG, "iutiao client initialize successful");
     }
 
     public static void setDebugMode() {

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iutiao.model.Charge;
@@ -52,7 +53,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     // ui related
     private RadioGroup payMethodRG;
     private Button paymentBtn;
-    private EditText amountET;
+    private TextView amount;
 
     public void setPayMethod(String payMethod) {
         this.payMethod = payMethod;
@@ -97,7 +98,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     }
 
     private String getAmount() {
-        String amount = amountET.getText().toString().trim();
+        String amount = this.amount.getText().toString().trim();
         if (chooseUpay()) {
             amount = "0";
         }
@@ -105,7 +106,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     }
 
     private void setAmount(String amount) {
-        amountET.setText(amount);
+        this.amount.setText(amount);
     }
 
     private String getPayMethod() {
@@ -136,7 +137,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         setPayMethod(defaultPayMethod);
 
         paymentBtn = (Button) view.findViewById(R.id.btn_payment);
-        amountET = (EditText) view.findViewById(R.id.et_amount);
+        amount = (TextView) view.findViewById(R.id.et_amount);
 
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +197,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         if (chooseUpay()) {
             payItem = ((Button) v).getText().toString();
         }
-        amountET.setText(((Button) v).getText().toString());
+        amount.setText(((Button) v).getText().toString());
     }
 
     public String getPayItem() {

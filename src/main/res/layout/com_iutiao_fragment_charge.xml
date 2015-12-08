@@ -10,6 +10,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:layout_margin="8dp"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -18,6 +19,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="payment method"
+        android:layout_marginBottom="8dp"
         android:id="@+id/textView" />
 
     <RadioGroup
@@ -47,6 +49,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:layout_gravity="center_horizontal">
 
         <LinearLayout
@@ -69,27 +72,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="null"
+                android:id="@+id/button" />
+
         </LinearLayout>
     </LinearLayout>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/com_iutiao_charge_amount_hint"
         android:inputType="number"
+        android:text=""
         android:id="@+id/et_amount"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        />
+        android:textAlignment="center"
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/com_iutiao_payment"
         android:id="@+id/btn_payment"
-        android:layout_margin="16dp"
         android:layout_gravity="center_horizontal"/>
 
 </LinearLayout>
