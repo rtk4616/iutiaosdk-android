@@ -1,3 +1,5 @@
+#!bin/sh
+
 rsync -av ~/Downloads/upay/armeabi/ src/main/jniLibs/armeabi/
 rsync -av ~/Downloads/upay/assets/ src/main/assets/
 rsync -av ~/Downloads/upay/pics/ src/main/res/drawable-xhdpi/
