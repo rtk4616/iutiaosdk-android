@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2015, prchance, Inc. All rights reserved.
+  ~
+  ~ You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+  ~ copy, modify, and distribute this software in source code or binary form for use
+  ~ in connection with the web services and APIs provided by PRCHANCE.
+  ~
+  -->
+
+<resources>
+    <string name="app_name">iutiao</string>
+  <string name="choose_paymethod_title">选择支付方式</string>
+  <string name="com_iutiao_buy_consumable_product_gold_10">一堆金币10 (10U)</string>
+  <string name="com_iutiao_buy_consumable_product_title">购买可消耗物品</string>
+  <string name="com_iutiao_buy_unconsumable_product_title">购买不可消耗物品</string>
+  <string name="com_iutiao_buy_unconsumable_product_armour">金丝大环刀 (3U)</string>
+  <string name="com_iutiao_buy_unconsumable_product_unlock">解锁全部关卡 (30U)</string>
+  <string name="com_iutiao_confirm">确认</string>
+  <string name="com_iutiao_dialog_login_message">输入您的个人信息并继续</string>
+  <string name="com_iutiao_dialog_login_title">登入</string>
+  <string name="com_iutiao_dialog_phone_message">请确认您的国家代码然后输入你的手机号码</string>
+  <string name="com_iutiao_dialog_phone_title">您的手机号码</string>
+  <string name="com_iutiao_error_invalid_email_or_phone">无效的邮箱地址或手机</string>
+  <string name="com_iutiao_forgot_password">忘记了密码？</string>
+  <string name="com_iutiao_login_btn">登录</string>
+  <string name="com_iutiao_login_password_hint">密码</string>
+  <string name="com_iutiao_login_username_hint">邮箱或手机</string>
+  <string name="com_iutiao_next">下一步</string>
+  <string name="com_iutiao_payment">支付</string>
+  <string name="com_iutiao_phone_bound">手机已经被关联</string>
+  <string name="com_iutiao_phone_to_bind">关联手机</string>
+  <string name="com_iutiao_profile">个人信息</string>
+  <string name="com_iutiao_profile_balance">余额</string>
+  <string name="com_iutiao_profile_bind_phone">绑定手机</string>
+  <string name="com_iutiao_profile_login">登录</string>
+  <string name="com_iutiao_profile_nickname">昵称</string>
+  <string name="com_iutiao_profile_signout">登出</string>
+  <string name="com_iutiao_progress_loading">正在处理， 请等待...</string>
+  <string name="com_iutiao_progress_loading_create_app_order">创建订单中，请等待...</string>
+  <string name="com_iutiao_progress_loading_retrieve_app_order">获取订单中，请等待...</string>
+  <string name="com_iutiao_quick_login">快速登录</string>
+  <string name="com_iutiao_quick_register">快速注册</string>
+  <string name="com_iutiao_register">注册</string>
+  <string name="com_iutiao_register_password">密码</string>
+  <string name="com_iutiao_register_password_confirm">确认密码</string>
+  <string name="com_iutiao_reset_password_btn_reset">重置</string>
+  <string name="com_iutiao_reset_password_password_hint">新密码</string>
+  <string name="com_iutiao_signin">登入</string>
+  <string name="com_iutiao_verify">确认</string>
+  <string name="com_iutiao_verify_code">验证码</string>
+  <string name="com_iutiao_verify_label">验证短信已经发送到您的手机，请查收。</string>
+  <string name="com_iutiao_verify_resend">重发验证码</string>
+  <string name="com_iutiao_verify_title">验证</string>
+  <string name="upay">upay</string>
+  <string name="com_iutiao_register_username">account@example.com</string>
+  <string name="com_iutiao_profile_uid">uid</string>
+  <string name="com_iutiao_charge_title">选择您想要充值的金额</string>
+  <string name="com_iutiao_charge_convert_desc">1U ~= 1RMB</string>
+  <string name="com_iutiao_charge_amount_hint"></string>
+  <string name="com_iutiao_buy_consumable_product_gold_15">一堆金币15 (15U)</string>
+  <string name="com_iutiao_charge_10u">35U</string>
+  <string name="com_iutiao_charge_1u">1U</string>
+  <string name="com_iutiao_charge_2u">2U</string>
+  <string name="com_iutiao_charge_5u">5U</string>
+  <string name="com_iutiao_buy_consumable_product_gold_5">一堆金币5 (5U)</string>
+</resources>
