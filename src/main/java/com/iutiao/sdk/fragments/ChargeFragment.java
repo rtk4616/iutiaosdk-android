@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -211,8 +210,10 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
 
     @Override
     public void onDestroy() {
+        Log.d(TAG, "onDestroy called.");
         if (payment != null) {
-            payment.onDestroy();
+            Log.d(TAG, "payment finished, try to clean.");
+            payment.onFinish();
         }
         payment = null;
         super.onDestroy();
