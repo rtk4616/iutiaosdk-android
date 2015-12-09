@@ -151,8 +151,9 @@ public class UPayPayment implements IPayment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onFinish() {
         if (upay != null) {
+            Log.i(TAG, "destroy upay instance.");
             upay.exit();
             upay = null;
         }

@@ -17,5 +17,5 @@ import java.util.Map;
 public interface IPayment {
     public void pay();
     public void setPaymentArguments(Map<String, Object> arguments);
-    public void onDestroy();
+    public void onFinish();
 }
