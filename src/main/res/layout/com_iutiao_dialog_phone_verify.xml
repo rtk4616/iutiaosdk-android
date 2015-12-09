@@ -23,7 +23,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/com_iutiao_reset_password_btn_reset"
+        android:text="@string/com_iutiao_reset_password_btn_verify"
         android:id="@+id/btn_action"
         android:layout_gravity="center_horizontal"/>
 

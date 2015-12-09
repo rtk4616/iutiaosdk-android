@@ -64,4 +64,6 @@
   <string name="com_iutiao_charge_2u">2U</string>
   <string name="com_iutiao_charge_5u">5U</string>
   <string name="com_iutiao_buy_consumable_product_gold_5">一堆金币5 (5U)</string>
+  <string name="com_iutiao_reset_password_btn_verify">验证</string>
+  <string name="com_iutiao_charge_pay_method">请选择支付方式</string>
 </resources>

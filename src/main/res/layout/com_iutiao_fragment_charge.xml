@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="payment method"
+        android:text="@string/com_iutiao_charge_pay_method"
         android:layout_marginBottom="8dp"
         android:id="@+id/textView" />
 

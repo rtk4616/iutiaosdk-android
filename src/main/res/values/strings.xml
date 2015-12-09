@@ -24,7 +24,7 @@
     <string name="com_iutiao_error_invalid_email_or_phone">Invalid Email or Phone</string>
     <string name="com_iutiao_reset_password_password_hint">New Password</string>
     <string name="com_iutiao_verify_code">Code</string>
-    <string name="com_iutiao_reset_password_btn_reset">Reset</string>
+    <string name="com_iutiao_reset_password_btn_reset">Reset Password</string>
     <string name="com_iutiao_profile_signout">Signout</string>
     <string name="com_iutiao_profile">Profile</string>
     <string name="com_iutiao_profile_login">Login</string>
@@ -34,7 +34,7 @@
     <string name="com_iutiao_profile_bind_phone">Bind phone</string>
     <string name="com_iutiao_phone_bound">Phone Associated</string>
     <string name="com_iutiao_phone_to_bind">Associate Phone</string>
-    <string name="com_iutiao_charge_title">Please chose charge amount</string>
+    <string name="com_iutiao_charge_title">Please choose charge amount</string>
     <string name="com_iutiao_charge_convert_desc">1U ~= 1RMB</string>
     <string name="com_iutiao_confirm">Confirm</string>
     <string name="com_iutiao_charge_amount_hint"></string>
@@ -48,4 +48,6 @@
     <string name="com_iutiao_payment">Pay</string>
     <string name="com_iutiao_progress_loading_create_app_order">Creating order, please waiting ...</string>
     <string name="com_iutiao_progress_loading_retrieve_app_order">Retrieving order, please waiting ...</string>
+    <string name="com_iutiao_reset_password_btn_verify">Verify</string>
+    <string name="com_iutiao_charge_pay_method">Choose you payment method</string>
 </resources>
