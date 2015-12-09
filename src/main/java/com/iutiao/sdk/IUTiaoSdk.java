@@ -109,6 +109,7 @@ public final class IUTiaoSdk {
                 callback.onInitialized();
             }
         }
+
         Validate.notNull(applicationContext, "applicationContext");
         Validate.hasInternetPermissions(applicationContext, false);
 
@@ -116,15 +117,17 @@ public final class IUTiaoSdk {
         // 载入默认的设置
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
 
+        if (!isInitialized()) {
+            upayInitialize();
+        }
+
         sdkInitialized = true;
         iutiaoClientInitialize();
-        upayInitialize();
-//        initFloatView();
     }
 
     private static void upayInitialize() {
         // 初始化 upay 支付
-        Upay.initInstance(getApplicationContext(), null, null, null, null, new UpayInitCallback() {
+        Upay.initInstance(applicationContext, null, null, null, null, new UpayInitCallback() {
             @Override
             public void onInitResult(int i, String s) {
                 if (i == 200) {
@@ -134,7 +137,7 @@ public final class IUTiaoSdk {
                 }
             }
         });
-        Log.i(TAG, "upay initialize successful");
+        Log.i(TAG, "upay initialized successful");
     }
 
     /*
@@ -149,7 +152,7 @@ public final class IUTiaoSdk {
                 .setAppKey(getApplicationId())
                 .setToken(token)
                 .build();
-        Log.i(TAG, "iutiao client initialize successful");
+        Log.i(TAG, "iutiao client initialized successful");
     }
 
     public static void setDebugMode() {
@@ -210,7 +213,7 @@ public final class IUTiaoSdk {
 
     }
 
-    public static String getUpayAppkey() {
+    protected static String getUpayAppkey() {
         return upayAppkey;
     }
 
@@ -252,11 +255,6 @@ public final class IUTiaoSdk {
     public interface InitializeCallback {
         // sdk 初始化完成后调用
         void onInitialized();
-    }
-
-    public static void onDestory() {
-        Upay upay = Upay.getInstance(getUpayAppkey());
-        upay.exit();
     }
 
     private static WindowManager windowManager;
