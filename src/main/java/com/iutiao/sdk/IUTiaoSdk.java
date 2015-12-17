@@ -273,22 +273,22 @@ public final class IUTiaoSdk {
         windownLayoutParams.y = 400;
         windownLayoutParams.width = 80;
         windownLayoutParams.height = 80;
-        createFloatView();
+//        createFloatView();
 
     }
 
-    public static void createFloatView() {
-        ImageView img = new ImageView(getApplicationContext());
-        img.setImageResource(R.drawable.ic_launcher);
-        img.setAlpha(80);
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "floatable clickable");
-            }
-        });
-        windownLayoutParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-        windowManager.addView(img, windownLayoutParams);
-    }
+//    public static void createFloatView() {
+//        ImageView img = new ImageView(getApplicationContext());
+//        img.setImageResource(R.drawable.ic_launcher);
+//        img.setAlpha(80);
+//        img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "floatable clickable");
+//            }
+//        });
+//        windownLayoutParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
+//        windowManager.addView(img, windownLayoutParams);
+//    }
 
 }

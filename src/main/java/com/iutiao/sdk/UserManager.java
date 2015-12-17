@@ -10,9 +10,20 @@
 package com.iutiao.sdk;
 
 import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
+import com.iutiao.exception.APIConnectionException;
+import com.iutiao.exception.APIException;
+import com.iutiao.exception.UTiaoException;
+import com.iutiao.model.AppOrder;
 import com.iutiao.model.User;
+import com.iutiao.sdk.login.LoginManager;
 import com.iutiao.sdk.util.CacheSharedPreference;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executor;
 
 /**
  * Created by yxy on 15/11/4.
@@ -25,6 +36,12 @@ public final class UserManager extends CacheSharedPreference {
     static final String SHARED_PREFERENCES_NAME =
             "com.iutiao.UserManager.SharedPreferences";
     private static UserManager instance;
+    final static String TAG = UserManager.class.getSimpleName();
+
+    public interface Callback {
+        void onSuccess(User user);
+        void onError(UTiaoException e);
+    }
 
     @Override
     protected String getCacheKey() {
@@ -72,4 +89,56 @@ public final class UserManager extends CacheSharedPreference {
         return hasCache();
     }
 
+    public static void create(Map<String, Object> params, final Callback callback) {
+        create(params, null, callback);
+    }
+
+    public static void create(final Map<String, Object> params, Executor executor, final Callback callback) {
+
+        AsyncTask<Void, Void, ResponseWrapper> task = new AsyncTask<Void, Void, ResponseWrapper>() {
+            @Override
+            protected ResponseWrapper doInBackground(Void... args) {
+                try {
+                    User user = User.create(params);
+                    return new ResponseWrapper(user, null);
+                } catch (UTiaoException e) {
+                    return new ResponseWrapper(null, e);
+                } catch (Exception e) {
+                    Log.e(TAG, "create user failed", e);
+                    return new ResponseWrapper(null, new APIException(e.getMessage(), null, 800, e));
+                }
+            }
+
+            @Override
+            protected void onPostExecute(ResponseWrapper result) {
+                taskPostExecution(result, callback);
+            }
+        };
+        executeTask(executor, task);
+    }
+
+    private static void executeTask(Executor executor, AsyncTask<Void, Void, ResponseWrapper> task) {
+        if (executor != null) {
+            task.executeOnExecutor(executor);
+        } else {
+            task.execute();
+        }
+    }
+
+    private static void taskPostExecution(ResponseWrapper result, Callback callback) {
+        if (result.model != null) {
+            User user = (User) result.model;
+            callback.onSuccess(user);
+        } else {
+            callback.onError(result.exception);
+        }
+    }
+
+    public static void createGuest(final Callback callback) {
+        HashMap<String, Object> params = new HashMap<>();
+        params.put("username", Utility.generateRandomString(16));
+        params.put("password", Utility.generateRandomString(16));
+        params.put("is_guest", true);
+        create(params, callback);
+    }
 }

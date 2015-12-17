@@ -80,9 +80,9 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="iutiao" level="project" />
     <orderEntry type="library" exported="" name="Upay_Oversea_Sdk_obfuscated_2.3.1_Sandbox" level="project" />
     <orderEntry type="library" exported="" name="support-v4-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
+    <orderEntry type="library" exported="" name="iutiao" level="project" />
   </component>
 </module>

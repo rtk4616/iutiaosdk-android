@@ -24,9 +24,13 @@ import com.iutiao.sdk.CallbackManagerImpl;
 import com.iutiao.sdk.IUTiaoActivity;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.UserManager;
+import com.iutiao.sdk.Utility;
 import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.iutiao.sdk.tasks.RegisterUserTask;
+import com.iutiao.sdk.tasks.UserProfileTask;
 
+import java.util.HashMap;
 import java.util.logging.LogManager;
 
 /**
@@ -79,7 +83,7 @@ public class LoginManager {
 
         Log.i(TAG, "user logout");
         RequestOptions.getInstance().clearToken();
-        AccessTokenManager.getInstance().setCurrentAccessToken(null);
+        AccessTokenManager.getInstance().clearCache();
         UserManager.getInstance().clearCache();
     }
 
@@ -137,6 +141,7 @@ public class LoginManager {
 
     public void onLogin(User user) {
 
+        Log.i(TAG, "onLogin user " + user);
         Validate.notNull(user.getToken(), "access token");
         // 缓存用户信息
         UserManager.getInstance().setCurrentUser(user);
@@ -144,5 +149,30 @@ public class LoginManager {
         AccessTokenManager.getInstance().setCurrentAccessToken(user.getToken());
         // 设置 client 请求的 token
         RequestOptions.getInstance().setToken(user.getToken());
+    }
+
+    public static void silentLogin(final IUTiaoCallback<User> callback) {
+        if (UserManager.getInstance().hasCache()) {
+            Log.d(TAG, "use cached user profile");
+            User user = UserManager.getInstance().loadProfile();
+            user.setToken(AccessTokenManager.getInstance().getCurrentAccessToken());
+            LoginManager.getInstance().onLogin(user);
+            callback.onSuccess(user);
+        } else {
+            Log.i(TAG, "Create a guest");
+            UserManager.createGuest(new UserManager.Callback() {
+
+                @Override
+                public void onSuccess(User user) {
+                    LoginManager.getInstance().onLogin(user);
+                    callback.onSuccess(user);
+                }
+
+                @Override
+                public void onError(UTiaoException e) {
+                    callback.onError(e);
+                }
+            });
+        }
     }
 }

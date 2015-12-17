@@ -67,4 +67,8 @@ public final class AccessTokenManager {
             }
         }
     }
+
+    public void clearCache() {
+        accessTokenCache.clear();
+    }
 }

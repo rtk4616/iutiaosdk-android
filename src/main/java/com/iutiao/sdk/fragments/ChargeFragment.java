@@ -158,6 +158,9 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
         });
 
         view.findViewById(R.id.btn_2u).setOnClickListener(this);
+        view.findViewById(R.id.btn_5u).setOnClickListener(this);
+        view.findViewById(R.id.btn_13u).setOnClickListener(this);
+        view.findViewById(R.id.btn_17u).setOnClickListener(this);
 
     }
 

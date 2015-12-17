@@ -38,6 +38,6 @@ public abstract class CacheSharedPreference {
     }
 
     public void clearCache() {
-        this.sharedPreferences.edit().remove(getCacheKey());
+        this.sharedPreferences.edit().remove(getCacheKey()).apply();
     }
 }

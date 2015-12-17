@@ -55,16 +55,6 @@ public class AppOrderManager extends CacheSharedPreference {
         return instance;
     }
 
-    public static class ResponseWrapper<T extends UTiaoObject> {
-        public T model;
-        public UTiaoException exception;
-
-        public ResponseWrapper(T model, UTiaoException exception) {
-            this.model = model;
-            this.exception = exception;
-        }
-    }
-
     public interface Callback {
         void onSuccess(AppOrder order);
         void onError(UTiaoException exception);
@@ -97,8 +87,6 @@ public class AppOrderManager extends CacheSharedPreference {
 
     private static void taskPostExecution(ResponseWrapper result, Callback callback) {
         if (result.model != null) {
-            AppOrder order = (AppOrder) result.model;
-
             callback.onSuccess((AppOrder) result.model);
         } else {
             callback.onError(result.exception);

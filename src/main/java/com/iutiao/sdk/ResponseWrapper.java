@@ -9,17 +9,19 @@
 
 package com.iutiao.sdk;
 
+import com.iutiao.exception.UTiaoException;
 import com.iutiao.model.UTiaoObject;
 
 /**
  * Created by yxy on 15/12/3.
  */
-public class ResponseWrapper {
-    public UTiaoObject obj;
-    public Exception exception;
 
-    public ResponseWrapper(UTiaoObject obj, Exception exception) {
-        this.obj = obj;
+public class ResponseWrapper<T extends UTiaoObject> {
+    public T model;
+    public UTiaoException exception;
+
+    public ResponseWrapper(T model, UTiaoException exception) {
+        this.model = model;
         this.exception = exception;
     }
 }
