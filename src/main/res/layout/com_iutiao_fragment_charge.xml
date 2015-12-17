@@ -61,8 +61,15 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/com_iutiao_charge_2u"
+                android:text="2U"
                 android:id="@+id/btn_2u"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="13U"
+                android:id="@+id/btn_13u"/>
+
 
         </LinearLayout>
 
@@ -75,8 +82,15 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="null"
-                android:id="@+id/button" />
+                android:text="5U"
+                android:id="@+id/btn_5u" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="17U"
+                android:id="@+id/btn_17u"/>
+
 
         </LinearLayout>
     </LinearLayout>
