@@ -110,6 +110,10 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         this.paymentArguments.put("pay_item", getPayItem());
     }
 
+    /*
+     * new a UUID string and set it as new orderid
+     *
+     */
     public String newOrderid() {
         setOrderid(UUID.randomUUID().toString());
         return getOrderid();
@@ -129,7 +133,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     }
 
     private void updateUI() {
-        balanceTextView.setText("$ " + UserManager.getInstance().loadProfile().getBalance());
+        // update balance
+        balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
+                UserManager.getInstance().loadProfile().getBalance()));
     }
 
     @Override
@@ -270,5 +276,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         });
 
         task.execute(paymentArguments);
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy called.");
+        if (payment != null) {
+            Log.d(TAG, "payment finished, try to clean.");
+            payment.onFinish();
+        }
+        payment = null;
+        super.onDestroy();
     }
 }

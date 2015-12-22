@@ -34,6 +34,7 @@ import com.iutiao.sdk.tasks.ChargeTask;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.zip.Inflater;
 
 /**
  * 充值U币
@@ -157,10 +158,12 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
             }
         });
 
-        view.findViewById(R.id.btn_2u).setOnClickListener(this);
-        view.findViewById(R.id.btn_5u).setOnClickListener(this);
-        view.findViewById(R.id.btn_13u).setOnClickListener(this);
-        view.findViewById(R.id.btn_17u).setOnClickListener(this);
+        LayoutInflater inflater = getLayoutInflater(savedInstanceState);
+
+//        view.findViewById(R.id.btn_2u).setOnClickListener(this);
+//        view.findViewById(R.id.btn_5u).setOnClickListener(this);
+//        view.findViewById(R.id.btn_13u).setOnClickListener(this);
+//        view.findViewById(R.id.btn_17u).setOnClickListener(this);
 
     }
 

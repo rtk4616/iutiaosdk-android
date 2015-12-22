@@ -16,13 +16,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.iutiao.net.RequestOptions;
-import com.iutiao.sdk.fragments.ChargeFragment;
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
 import com.iutiao.sdk.fragments.LoginFragment;
 import com.iutiao.sdk.fragments.ProfileFragment;
+import com.iutiao.sdk.fragments.UPayPaymentFragment;
 
 public class IUTiaoActivity extends FragmentActivity {
 
@@ -79,7 +78,9 @@ public class IUTiaoActivity extends FragmentActivity {
                     String frag = intent.getStringExtra("fragment");
                     if (frag != null) {
                         if (frag.equals("charge")) {
-                            fragment = ChargeFragment.newInstance(getIntent());
+//                            fragment = ChargeFragment.newInstance(getIntent());
+                            //FIXME: hard code here.
+                            fragment = UPayPaymentFragment.newInstance();
                         }
                     } else {
                         fragment = ProfileFragment.newInstance();
