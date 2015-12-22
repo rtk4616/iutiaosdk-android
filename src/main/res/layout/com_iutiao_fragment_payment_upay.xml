@@ -1,5 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<!--
+  ~ Copyright (c) 2015, prchance, Inc. All rights reserved.
+  ~
+  ~ You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+  ~ copy, modify, and distribute this software in source code or binary form for use
+  ~ in connection with the web services and APIs provided by PRCHANCE.
+  ~
+  -->
+
+<RelativeLayout
+    android:layout_margin="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/com_iutiao_reload_your_balance"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/com_iutiao_your_balance"
+                    android:layout_gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/tv_balance_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$ 12,223.00"
+                    android:textColor="#008A00"
+                    android:layout_marginLeft="4dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_gravity="center"
+                    android:id="@+id/tv_balance" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gv_upay_items"
+            android:columnWidth="90dp"
+            android:numColumns="auto_fit"
+            android:horizontalSpacing="10dp"
+            android:verticalSpacing="10dp"
+            android:stretchMode="columnWidth"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            style="@style/btn_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="pay"
+            android:layout_gravity="bottom"
+            android:id="@+id/btn_payment" />
+
+        <TextView
+            android:layout_marginTop="16dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#767676"
+            android:id="@+id/tv_payment_desc"
+            android:text="@string/com_iutiao_payment_description"
+            android:autoLink="web"
+            android:textSize="14sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </RelativeLayout>
