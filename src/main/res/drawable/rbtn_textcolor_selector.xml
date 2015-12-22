@@ -8,11 +8,8 @@
   ~
   -->
 
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid
-        android:color="#ff6143b5" />
-    <corners
-        android:radius="2dp"/>
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_checked="true" android:color="#fff" />
+    <item android:color="#ff1c5fab" />
+</selector>
