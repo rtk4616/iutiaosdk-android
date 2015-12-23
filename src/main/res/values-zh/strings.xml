@@ -69,4 +69,5 @@
   <string name="com_iutiao_your_balance">您的当前余额: </string>
   <string name="com_iutiao_reload_your_balance">为您的账户充值</string>
   <string name="com_iutiao_payment_description">When you reload your balance, you are purchasing U Coin in the selected amount that will be automatically added to your Balance. View <a href="http://www.iutiao.com/ucoin/terms/">Terms and Conditions.</a></string>
+  <string name="com_iutiao_refresh">刷新</string>
 </resources>
