@@ -78,6 +78,7 @@ public class UPayPayment implements IPayment {
     @Override
     public void pay() {
 
+        tradeNotified = false;
         // 启动 upay 扣费界面
         upay.pay(getActivity(), getPayItem(), getOrderid(), new UpayCallback() {
             @Override
@@ -130,10 +131,10 @@ public class UPayPayment implements IPayment {
 
                 Log.d(TAG, upayResponseData.toString());
                 setPaymentResult(new PaymentResponseWrapper(upayResponseData, null));
+                listener.onPaymentSuccess(getPaymentResult());
 
                 // 通常这里会被调用多次，而更新订单信息，我们只需要做一次就好了。
                 if (!tradeNotified) {
-                    listener.onPaymentSuccess(getPaymentResult());
                     tradeNotified = true;
                     updateUpayChargeOrder();
                 }

@@ -60,7 +60,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private Button paymentBtn;
     private TextView balanceTextView;
     private TextView paymentDescTextView;
-    private Button refreshBtn;
+//    private Button refreshBtn;
 
     private List<UPayItem> upayItems;
     final private String payMethod = "upay";
@@ -156,6 +156,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     public void onPaymentSuccess(PaymentResponseWrapper result) {
         Log.i(TAG, "payment succeed.");
         Toast.makeText(getActivity(), "payment succeed", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "current balance " + getCurrentBalance() + " payitem " + getPayItem() + " ucoin " + getUCoin(getPayItem()));
         setCurrentBalance(getCurrentBalance() + getUCoin(getPayItem()));
         updateUI();
     }
@@ -198,13 +199,13 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         balanceTextView = (TextView) view.findViewById(R.id.tv_balance);
         paymentDescTextView = (TextView) view.findViewById(R.id.tv_payment_desc);
 
-        refreshBtn = (Button) view.findViewById(R.id.btn_refresh);
-        refreshBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateBalance();
-            }
-        });
+//        refreshBtn = (Button) view.findViewById(R.id.btn_refresh);
+//        refreshBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                updateBalance();
+//            }
+//        });
 
         upayItemsGV = (GridView) view.findViewById(R.id.gv_upay_items);
         upayItemAdapter = new UPayItemAdapter(getActivity());
