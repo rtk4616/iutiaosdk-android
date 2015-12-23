@@ -9,45 +9,34 @@
 
 package com.iutiao.sdk.fragments;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.database.DataSetObserver;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iutiao.model.Charge;
+import com.iutiao.model.UPayItem;
+import com.iutiao.model.UPayItemCollection;
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
-import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.tasks.ChargeTask;
+import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
 
 import java.util.HashMap;
@@ -63,14 +52,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     private final static String TAG = UPayPayment.class.getSimpleName();
 
-    private List<RadioButton> upayItemViews;
-    private IPayment payment;
-
-    private GridView UpayItemsGV;
+    private List<String> upayItems;
+    private GridView upayItemsGV;
     private Button paymentBtn;
     private TextView balanceTextView;
     private TextView paymentDescTextView;
     final private String payMethod = "upay";
+    private UPayItemAdapter upayItemAdapter;
+    private List<RadioButton> upayItemViews;
+
+    private IPayment payment;
 
     private String orderid;
     private String payItem;
@@ -112,7 +103,6 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     /*
      * new a UUID string and set it as new orderid
-     *
      */
     public String newOrderid() {
         setOrderid(UUID.randomUUID().toString());
@@ -122,12 +112,13 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Override
     public void onClick(View v) {
         RadioButton rb = (RadioButton) v;
-        Toast.makeText(getActivity(), "clicked " + rb.getText().toString(), Toast.LENGTH_SHORT).show();
         for (RadioButton btn: upayItemViews) {
             if (!btn.equals(rb)) {
                 btn.setChecked(false);
             } else {
-                setPayItem(btn.getText().toString());
+                String item = btn.getText().toString();
+                setPayItem(item);
+                Log.d(TAG, "clicked " + item);
             }
         }
     }
@@ -180,21 +171,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        upayItemViews = new LinkedList<>();
 
-        LinkedList<String> items = new LinkedList<>();
-        items.add("2U");
-        items.add("5U");
-        items.add("13U");
-        items.add("17U");
+        upayItemViews = new LinkedList<RadioButton>();
+        initUPayItems();
 
         balanceTextView = (TextView) view.findViewById(R.id.tv_balance);
         paymentDescTextView = (TextView) view.findViewById(R.id.tv_payment_desc);
-//        paymentDescTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        UpayItemsGV = (GridView) view.findViewById(R.id.gv_upay_items);
-        UpayItemsGV.setAdapter(new UPayItemAdapter());
-
+        upayItemsGV = (GridView) view.findViewById(R.id.gv_upay_items);
+        upayItemAdapter = new UPayItemAdapter(getActivity());
+        upayItemsGV.setAdapter(upayItemAdapter);
         paymentBtn = (Button) view.findViewById(R.id.btn_payment);
         paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,25 +190,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             }
         });
 
-        for (int i=0; i<items.size(); i++) {
-            RadioButton rb = newUpayItemView(items.get(i).toString(), this);
-            upayItemViews.add(rb);
-        }
-
         payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
         updateUI();
-    }
-
-    private RadioButton newUpayItemView(String payItem, View.OnClickListener listener) {
-        RadioButton rb = new RadioButton(getActivity());
-        rb.setText(payItem);
-        rb.setButtonDrawable(null);
-        Drawable d = ContextCompat.getDrawable(getActivity(), R.drawable.rbtn_selector);
-        rb.setBackground(d);
-        rb.setGravity(Gravity.CENTER);
-        rb.setPadding(10, 10, 10, 10);
-        rb.setOnClickListener(listener);
-        return rb;
     }
 
     public String getAmount() {
@@ -231,17 +200,20 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     private class UPayItemAdapter extends BaseAdapter {
 
-        public UPayItemAdapter() {
+        private Context context;
+
+        public UPayItemAdapter(Context context) {
+            this.context = context;
         }
 
         @Override
         public int getCount() {
-            return upayItemViews.size();
+            return upayItems.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return upayItemViews.get(position);
+            return upayItems.get(position);
         }
 
         @Override
@@ -251,10 +223,24 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return upayItemViews.get(position);
+            Log.i(TAG, "position " + position + " convertView " + convertView);
+            RadioButton v;
+            if (convertView == null) {
+                Log.i(TAG, "inflate upay item view");
+                v = (RadioButton) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_item, parent, false);
+                v.setText(upayItems.get(position));
+                v.setOnClickListener(UPayPaymentFragment.this);
+                upayItemViews.add(v);
+            } else {
+                v = (RadioButton) convertView;
+            }
+            return v;
         }
     }
 
+    /*
+     * 创建充值订单
+     */
     public void createChargeOrder() {
         ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
             @Override
@@ -280,12 +266,49 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     @Override
     public void onDestroy() {
-        Log.d(TAG, "onDestroy called.");
         if (payment != null) {
             Log.d(TAG, "payment finished, try to clean.");
             payment.onFinish();
         }
         payment = null;
         super.onDestroy();
+    }
+
+    /*
+     * 初始化 upay 计费代码条目
+     */
+    private void initUPayItems() {
+        upayItems = new LinkedList<>();
+        UPayItemCollectionTask task = new UPayItemCollectionTask(getActivity(), new IUTiaoCallback<UPayItemCollection>() {
+            @Override
+            public void onSuccess(UPayItemCollection collection) {
+                for (UPayItem item : collection.getResults()) {
+                   upayItems.add(item.getItemId());
+                }
+                Log.i(TAG, "Got upay items " + upayItems.toString());
+                upayItemAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // 读取默认的upay 计费代码
+                Log.e(TAG, "fetch upay items faield", e);
+                upayItems = defaultUPayItems();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
+        task.execute();
+//        upayItems = defaultUPayItems();
+    }
+
+    private List<String> defaultUPayItems() {
+        List<String> items = new LinkedList<>();
+        items.add("2U");
+        items.add("5U");
+        items.add("13U");
+        return items;
     }
 }
