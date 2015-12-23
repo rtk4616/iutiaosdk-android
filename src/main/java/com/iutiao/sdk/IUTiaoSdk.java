@@ -155,9 +155,8 @@ public final class IUTiaoSdk {
         Log.i(TAG, "iutiao client initialized successful");
     }
 
-    public static void setDebugMode() {
-        IUTiao.setDebugMode();
-        IUTiao.overrideApiBase("http://192.168.1.200:8000");
+    public static void setSandBoxMode() {
+        IUTiao.setSandBoxMode();
     }
 
     /**
