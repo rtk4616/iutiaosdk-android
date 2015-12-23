@@ -228,8 +228,13 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             if (convertView == null) {
                 Log.i(TAG, "inflate upay item view");
                 v = (RadioButton) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_item, parent, false);
-                v.setText(upayItems.get(position));
-                v.setOnClickListener(UPayPaymentFragment.this);
+                String item = upayItems.get(position);
+                v.setText(item);
+                v.setOnClickListener((View.OnClickListener) UPayPaymentFragment.this);
+                if (position == 0) {
+                    v.setChecked(true);
+                    setPayItem(item);
+                }
                 upayItemViews.add(v);
             } else {
                 v = (RadioButton) convertView;
@@ -301,7 +306,6 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             }
         });
         task.execute();
-//        upayItems = defaultUPayItems();
     }
 
     private List<String> defaultUPayItems() {
