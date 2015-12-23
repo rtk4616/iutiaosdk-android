@@ -80,10 +80,11 @@ public class UPayPayment implements IPayment {
 
         tradeNotified = false;
         // 启动 upay 扣费界面
+        Log.i(TAG, String.format("Payment[upay]. trying to purchase item %s, orderid %s ", getPayItem(), getOrderid()));
         upay.pay(getActivity(), getPayItem(), getOrderid(), new UpayCallback() {
             @Override
             public void onPaymentResult(String goodsKey, String tradeId, int resultCode, String errorMsg, String extra) {
-                Log.d(TAG, String.format("pyamentResult goodsKey: %s tradeId: %s resultCode: %d errorMsg: %s extra: %s",
+                Log.i(TAG, String.format("pyamentResult goodsKey: %s tradeId: %s resultCode: %d errorMsg: %s extra: %s",
                         goodsKey, tradeId, resultCode, errorMsg, extra));
                 upayResponseData.put("goodsKey", goodsKey);
                 upayResponseData.put("trade_id", tradeId);
@@ -98,16 +99,18 @@ public class UPayPayment implements IPayment {
                 //支付操作成功
                 switch (resultCode) {
                     case 200:
-                        Log.d(TAG, "payment done, waiting for charging ...");
+                        Log.i(TAG, "-- payment done, waiting for charging ...");
+                        // 直接发货
+                        listener.onPaymentSuccess(getPaymentResult());
                         break;
                     case 110:
-                        Log.d(TAG, "user cancel");
+                        Log.i(TAG, "user canceled");
                         upayResponseData.put("status", "canceled");
                         setPaymentResult(new PaymentResponseWrapper(upayResponseData, null));
                         listener.onPaymentCancel(getPaymentResult());
                         break;
                     default:
-                        Log.d(TAG, "payment failed");
+                        Log.i(TAG, "payment failed");
                         upayResponseData.put("status", "failed");
                         setPaymentResult(new PaymentResponseWrapper(upayResponseData, new Exception((String) upayResponseData.get("errorMsg"))));
                         listener.onPaymentError(getPaymentResult());
@@ -131,7 +134,6 @@ public class UPayPayment implements IPayment {
 
                 Log.d(TAG, upayResponseData.toString());
                 setPaymentResult(new PaymentResponseWrapper(upayResponseData, null));
-                listener.onPaymentSuccess(getPaymentResult());
 
                 // 通常这里会被调用多次，而更新订单信息，我们只需要做一次就好了。
                 if (!tradeNotified) {

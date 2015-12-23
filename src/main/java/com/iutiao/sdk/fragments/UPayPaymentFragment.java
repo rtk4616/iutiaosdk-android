@@ -154,10 +154,11 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     @Override
     public void onPaymentSuccess(PaymentResponseWrapper result) {
-        Log.i(TAG, "payment succeed.");
-        Toast.makeText(getActivity(), "payment succeed", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "current balance " + getCurrentBalance() + " payitem " + getPayItem() + " ucoin " + getUCoin(getPayItem()));
-        setCurrentBalance(getCurrentBalance() + getUCoin(getPayItem()));
+        Double ucoin = getUCoin(getPayItem());
+        Double balance = getCurrentBalance() + ucoin;
+        Log.i(TAG, String.format("Payment successful. Item %s purchased, cost %.2f ucoin, current balance are %.2f",
+                getPayItem(), ucoin, balance));
+        setCurrentBalance(balance);
         updateUI();
     }
 
