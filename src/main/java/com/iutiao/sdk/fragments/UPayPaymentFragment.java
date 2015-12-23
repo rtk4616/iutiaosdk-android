@@ -39,6 +39,9 @@ import com.iutiao.sdk.tasks.ChargeTask;
 import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,10 +62,12 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private TextView paymentDescTextView;
     private Button refreshBtn;
 
-    private List<String> upayItems;
+    private List<UPayItem> upayItems;
     final private String payMethod = "upay";
     private UPayItemAdapter upayItemAdapter;
     private List<RadioButton> upayItemViews;
+    private Double currentBalance;
+    private boolean firstTime = true;
 
     private IPayment payment;
 
@@ -115,21 +120,19 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Override
     public void onClick(View v) {
         RadioButton rb = (RadioButton) v;
+        setPayItem(rb.getText().toString());
         for (RadioButton btn: upayItemViews) {
             if (!btn.equals(rb)) {
                 btn.setChecked(false);
-            } else {
-                String item = btn.getText().toString();
-                setPayItem(item);
-                Log.d(TAG, "clicked " + item);
             }
         }
     }
 
     private void updateUI() {
         // update balance
+        NumberFormat formatter = new DecimalFormat("#0.00");
         balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
-                UserManager.getInstance().loadProfile().getBalance()));
+                formatter.format(getCurrentBalance())));
     }
 
     private void updateBalance() {
@@ -138,6 +141,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             @Override
             public void onSuccess(User user) {
                 UserManager.getInstance().setCurrentUser(user);
+                setCurrentBalance(user.getBalance());
                 updateUI();
             }
             @Override
@@ -152,7 +156,18 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     public void onPaymentSuccess(PaymentResponseWrapper result) {
         Log.i(TAG, "payment success");
         Toast.makeText(getActivity(), "payment succeed", Toast.LENGTH_SHORT).show();
-        updateBalance();
+        Log.i(TAG, "ucoin " + getUCoin(getPayItem()) + " payitem " + getPayItem());
+        setCurrentBalance(getCurrentBalance() + getUCoin(getPayItem()));
+        updateUI();
+    }
+
+    private Double getUCoin(String upayItem) {
+        for(UPayItem item: upayItems) {
+            if (item.getItemId().equals(upayItem)) {
+                return item.getUcoin();
+            }
+        }
+        return 0.00;
     }
 
     @Override
@@ -205,6 +220,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             }
         });
 
+        setCurrentBalance(UserManager.getInstance().getCurrentUser().getBalance());
         payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
     }
 
@@ -223,6 +239,14 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         return amount;
     }
 
+    public Double getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(Double currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
     private class UPayItemAdapter extends BaseAdapter {
 
         private Context context;
@@ -237,8 +261,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         }
 
         @Override
-        public Object getItem(int position) {
-            return upayItems.get(position);
+        public String getItem(int position) {
+            return upayItems.get(position).getItemId();
         }
 
         @Override
@@ -250,14 +274,14 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         public View getView(int position, View convertView, ViewGroup parent) {
             RadioButton v;
             if (convertView == null) {
-                Log.i(TAG, "inflate upay item view");
                 v = (RadioButton) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_item, parent, false);
-                String item = upayItems.get(position);
+                String item = getItem(position);
                 v.setText(item);
                 v.setOnClickListener((View.OnClickListener) UPayPaymentFragment.this);
-                if (position == 0) {
+                if (position == 0 && firstTime) {
                     v.setChecked(true);
                     setPayItem(item);
+                    firstTime = false;
                 }
                 upayItemViews.add(v);
             } else {
@@ -312,9 +336,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             @Override
             public void onSuccess(UPayItemCollection collection) {
                 for (UPayItem item : collection.getResults()) {
-                   upayItems.add(item.getItemId());
+                   upayItems.add(item);
                 }
-                Log.i(TAG, "Got upay items " + upayItems.toString());
                 upayItemAdapter.notifyDataSetChanged();
             }
 
@@ -335,11 +358,23 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     /*
      * 默认的 upay 计费代码
      */
-    private List<String> defaultUPayItems() {
-        List<String> items = new LinkedList<>();
-        items.add("2U");
-        items.add("5U");
-        items.add("13U");
+    private List<UPayItem> defaultUPayItems() {
+        List<UPayItem> items = new LinkedList<>();
+        List<Double> ucoins = new LinkedList<>();
+        ucoins.add(2.00);
+        ucoins.add(5.00);
+        ucoins.add(13.00);
+        ucoins.add(17.00);
+
+        NumberFormat formatter = new DecimalFormat("#0");
+        for (Double u: ucoins) {
+            UPayItem item = new UPayItem();
+            item.setDesc("");
+            item.setUcoin(u);
+            item.setItemId(formatter.format(u) + "U");
+            items.add(item);
+        }
         return items;
     }
+
 }
