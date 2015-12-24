@@ -230,11 +230,15 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // 让upay 实例在入口程序中重新初始化
+        IUTiaoSdk.setUpayInitialized(false);
+
         upayItemViews = new LinkedList<RadioButton>();
         initUPayItems(); // 初始化 upay 计费代码
         updateBalance();
         initUI(view);
         updateUI();
+
     }
 
     public String getAmount() {

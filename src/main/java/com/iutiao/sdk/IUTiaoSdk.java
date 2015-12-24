@@ -137,7 +137,6 @@ public final class IUTiaoSdk {
 
         if (!upayInitialized) {
             upayInitialize();
-            setUpayInitialized(true);
         }
 
         sdkInitialized = true;
@@ -150,6 +149,7 @@ public final class IUTiaoSdk {
             @Override
             public void onInitResult(int i, String s) {
                 if (i == 200) {
+                    setUpayInitialized(true);
                     Log.i(TAG, String.format("upay initialized successful. result code %d, response %s", i, s));
                 } else {
                     Log.e(TAG, String.format("upay initialize failed result code %d, response %s", i, s));
