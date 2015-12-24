@@ -13,15 +13,22 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
+import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
 
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.upay.billing.UpayConstant;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayInitCallback;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.Executor;
 
 /**
@@ -42,6 +49,7 @@ public final class IUTiaoSdk {
     private static volatile boolean upayInitialized = false;
     private static volatile boolean isDebugEnabled = BuildConfig.DEBUG;
     private static final int MAX_REQUEST_CODE_RANGE = 100;
+    private static volatile boolean sandbox = false;
 
     private static volatile String upayAppkey;
 
@@ -60,6 +68,10 @@ public final class IUTiaoSdk {
 
     public static void setUpayInitialized(boolean upayInitialized) {
         IUTiaoSdk.upayInitialized = upayInitialized;
+    }
+
+    public static boolean isSandbox() {
+        return sandbox;
     }
 
     public enum CURRENCIES {
@@ -162,7 +174,9 @@ public final class IUTiaoSdk {
     }
 
     public static void setSandBoxMode() {
+        sandbox = true;
         IUTiao.setSandBoxMode();
+        setTSPForUpay();
     }
 
     /**
@@ -282,6 +296,7 @@ public final class IUTiaoSdk {
 
     }
 
+
 //    public static void createFloatView() {
 //        ImageView img = new ImageView(getApplicationContext());
 //        img.setImageResource(R.drawable.ic_launcher);
@@ -296,4 +311,36 @@ public final class IUTiaoSdk {
 //        windowManager.addView(img, windownLayoutParams);
 //    }
 
+    private static File getUpayPropFile() {
+        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        String fileName = UpayConstant.PROPERTIES_FILE_NAME;
+        return new File(baseDir, fileName);
+    }
+
+    /*
+     * set different country telcom service provider for upay.
+     * NOTE: this only used for sandbox.
+     */
+    private static void setTSPForUpay() {
+        Validate.isSandbox();
+        File file = getUpayPropFile();
+        if (file.exists()) {
+            Log.i(TAG, "prop file existed");
+            return ;
+        }
+        Log.i(TAG, "upay prop file locate " + file);
+        Properties prop = new Properties();
+        prop.setProperty("mccmnc", "52001");
+        prop.setProperty("sandbox", "true");
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(file, false);
+            prop.store(fos, "simulate other country TSP.");
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "not found file " + file , e);
+        } catch (IOException e) {
+            Log.e(TAG, "write properites file failed", e);
+        }
+    }
 }

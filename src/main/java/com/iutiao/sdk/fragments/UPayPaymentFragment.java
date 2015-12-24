@@ -173,7 +173,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     @Override
     public void onPaymentError(PaymentResponseWrapper result) {
-        Toast.makeText(getActivity(), "payment failed due to " + result.error.toString(), Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "payment failed due to " + result.error.toString() + " data " + result.data.toString());
+        Toast.makeText(getActivity(), "payment failed due to " + result.error.toString() + " data " + result.data.toString(), Toast.LENGTH_SHORT).show();
         updateBalance();
     }
 

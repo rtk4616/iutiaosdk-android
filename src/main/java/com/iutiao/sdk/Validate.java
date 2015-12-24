@@ -130,4 +130,11 @@ public final class Validate {
         String exp = "(^\\+[\\d\\-]+)";
         return input.matches(exp);
     }
+
+    public static void isSandbox() {
+        if (!IUTiaoSdk.isSandbox()) {
+            throw new IUTiaoSdkNotInitializedException(
+                    "This api only for sandbox make sure you call IUTiaoSdk.setSandBoxMode() first.");
+        }
+    }
 }
