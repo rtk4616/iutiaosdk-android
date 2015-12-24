@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,6 +17,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.MenuItem;
 
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.fragments.IUTiaoDialogFragment;
@@ -55,6 +59,12 @@ public class IUTiaoActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 设置 ActionBar
+        ActionBar ab = getActionBar();
+        if (ab != null) {
+            ab.setHomeButtonEnabled(true);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
 
         setContentView(R.layout.com_iutiao_activity_layout);
 
@@ -111,5 +121,16 @@ public class IUTiaoActivity extends FragmentActivity {
         Intent intent = new Intent(ctx, IUTiaoActivity.class);
         intent.putExtra("fragment", fragment);
         return intent;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(TAG, "--- item selected" + item.toString());
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
