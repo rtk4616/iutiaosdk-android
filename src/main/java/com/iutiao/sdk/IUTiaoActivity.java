@@ -125,7 +125,6 @@ public class IUTiaoActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(TAG, "--- item selected" + item.toString());
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();

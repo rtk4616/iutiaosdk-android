@@ -15,6 +15,7 @@ import android.util.Log;
 
 import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
+import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayCallback;
@@ -159,6 +160,8 @@ public class UPayPayment implements IPayment {
             Log.d(TAG, "destroy upay instance.");
             upay.exit();
             upay = null;
+            // 让upay 实例在入口程序中重新初始化
+            IUTiaoSdk.setUpayInitialized(false);
         }
     }
 

@@ -14,10 +14,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
@@ -42,6 +39,7 @@ public final class IUTiaoSdk {
     private static volatile String appClientToken;
     private static Context applicationContext;
     private static volatile String currency;
+    private static volatile boolean upayInitialized = false;
     private static volatile boolean isDebugEnabled = BuildConfig.DEBUG;
     private static final int MAX_REQUEST_CODE_RANGE = 100;
 
@@ -55,6 +53,14 @@ public final class IUTiaoSdk {
     public static final String CURRENCY_PROPERTY = "com.iutiao.sdk.currency";
 
     public static final String UPAY_APPKEY_PROPERTY = "UPAY_APPKEY";
+
+    public static boolean isUpayInitialized() {
+        return upayInitialized;
+    }
+
+    public static void setUpayInitialized(boolean upayInitialized) {
+        IUTiaoSdk.upayInitialized = upayInitialized;
+    }
 
     public enum CURRENCIES {
         rub
@@ -117,8 +123,9 @@ public final class IUTiaoSdk {
         // 载入默认的设置
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
 
-        if (!isInitialized()) {
+        if (!upayInitialized) {
             upayInitialize();
+            setUpayInitialized(true);
         }
 
         sdkInitialized = true;
@@ -131,13 +138,12 @@ public final class IUTiaoSdk {
             @Override
             public void onInitResult(int i, String s) {
                 if (i == 200) {
-                    Log.i(TAG, "upay initialized successful, result " + i + " response " + s);
+                    Log.i(TAG, String.format("upay initialized successful. result code %d, response %s", i, s));
                 } else {
-                    throw new IUTiaoSdkException(String.format("upay initialized failed, status_code: %d reason: %s", i, s));
+                    Log.e(TAG, String.format("upay initialize failed result code %d, response %s", i, s));
                 }
             }
         });
-        Log.i(TAG, "upay initialized successful");
     }
 
     /*
