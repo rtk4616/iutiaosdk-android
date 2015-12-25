@@ -11,6 +11,8 @@ package com.iutiao.sdk.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import com.iutiao.sdk.tasks.ChargeTask;
 import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
 
+import java.lang.ref.WeakReference;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -54,6 +57,7 @@ import java.util.UUID;
 public class UPayPaymentFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
 
     private final static String TAG = UPayPayment.class.getSimpleName();
+    private final static int PROFILE_UPDATED = 201;
 
     // UI related
     private GridView upayItemsGV;
@@ -68,6 +72,29 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private List<RadioButton> upayItemViews;
     private Double currentBalance;
     private boolean firstTime = true;
+
+    private static class MyHandler extends Handler {
+        private WeakReference<UPayPaymentFragment> fragment;
+
+        public MyHandler(UPayPaymentFragment fragment) {
+            this.fragment = new WeakReference<UPayPaymentFragment>(fragment);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            UPayPaymentFragment fragment = this.fragment.get();
+            switch (msg.what) {
+                case PROFILE_UPDATED:
+                    User user = (User) msg.obj;
+                    Log.i(TAG, "profile updated " + user);
+                    UserManager.getInstance().setCurrentUser(user);
+                    fragment.setCurrentBalance(user.getBalance());
+                    fragment.updateUI();
+            }
+        }
+    }
+
+    private final MyHandler handler = new MyHandler(this);
 
     private IPayment payment;
 
@@ -128,11 +155,25 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         }
     }
 
-    private void updateUI() {
+    public void updateUI() {
         // update balance
         NumberFormat formatter = new DecimalFormat("#0.00");
         balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
                 formatter.format(getCurrentBalance())));
+    }
+
+    class UpdateUserProfileTask implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                User user = User.profile();
+                Message message = handler.obtainMessage(PROFILE_UPDATED, user);
+                message.sendToTarget();
+            } catch (Exception e) {
+                Log.e(TAG, "fetch user profile failed", e);
+            }
+        }
     }
 
     private void updateBalance() {
@@ -201,14 +242,6 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         balanceTextView = (TextView) view.findViewById(R.id.tv_balance);
         paymentDescTextView = (TextView) view.findViewById(R.id.tv_payment_desc);
 
-//        refreshBtn = (Button) view.findViewById(R.id.btn_refresh);
-//        refreshBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                updateBalance();
-//            }
-//        });
-
         upayItemsGV = (GridView) view.findViewById(R.id.gv_upay_items);
         upayItemAdapter = new UPayItemAdapter(getActivity());
         upayItemsGV.setAdapter(upayItemAdapter);
@@ -235,10 +268,10 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
         upayItemViews = new LinkedList<RadioButton>();
         initUPayItems(); // 初始化 upay 计费代码
-        updateBalance();
         initUI(view);
         updateUI();
 
+        new Thread(new UpdateUserProfileTask()).start();
     }
 
     public String getAmount() {
