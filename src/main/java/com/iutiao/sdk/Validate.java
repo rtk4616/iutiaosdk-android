@@ -14,9 +14,11 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.os.Looper;
 import android.util.Log;
 import android.util.Patterns;
 
+import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.exceptions.IUTiaoSdkNotInitializedException;
 
 import java.util.Collection;
@@ -135,6 +137,12 @@ public final class Validate {
         if (!IUTiaoSdk.isSandbox()) {
             throw new IUTiaoSdkNotInitializedException(
                     "This api only for sandbox make sure you call IUTiaoSdk.setSandBoxMode() first.");
+        }
+    }
+
+    public static void runningOnUiThread() {
+        if (!Looper.getMainLooper().equals(Looper.myLooper())) {
+            throw new IUTiaoSdkException("This method should be called from the UI thread");
         }
     }
 }
