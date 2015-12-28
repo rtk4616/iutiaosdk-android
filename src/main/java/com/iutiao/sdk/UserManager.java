@@ -24,6 +24,7 @@ import com.iutiao.sdk.util.CacheSharedPreference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Created by yxy on 15/11/4.
@@ -141,4 +142,37 @@ public final class UserManager extends CacheSharedPreference {
         params.put("is_guest", true);
         create(params, callback);
     }
+
+    public static class UserExecutor {
+        private static Executor executor = Executors.newFixedThreadPool(5);
+        public static void exec(Runnable runnable) {
+            executor.execute(runnable);
+        }
+    }
+
+    public static class ProfileTask implements Runnable {
+        private static volatile boolean running;
+
+        @Override
+        public void run() {
+            if (running) {
+                Log.d(TAG, "already have a thread execute update profile task.");
+                return;
+            }
+            running = true;
+            Log.d(TAG, "try to update profile");
+            try {
+                User user = User.profile();
+                UserManager.getInstance().setCurrentUser(user);
+            } catch (Exception e) {
+                Log.e(TAG, "fetch profile failed", e);
+            }
+            running = false;
+        }
+    }
+
+    public static void updateProfile() {
+        UserExecutor.exec(new ProfileTask());
+    }
+
 }

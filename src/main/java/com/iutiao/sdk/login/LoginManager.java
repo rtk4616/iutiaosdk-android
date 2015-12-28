@@ -158,6 +158,7 @@ public class LoginManager {
             user.setToken(AccessTokenManager.getInstance().getCurrentAccessToken());
             LoginManager.getInstance().onLogin(user);
             callback.onSuccess(user);
+            UserManager.updateProfile();
         } else {
             Log.i(TAG, "Create a guest");
             UserManager.createGuest(new UserManager.Callback() {
