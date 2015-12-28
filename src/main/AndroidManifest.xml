@@ -32,7 +32,7 @@
         android:supportsRtl="true" >
 
         <activity
-            android:name=".IUTiaoActivity"
+            android:name="com.iutiao.sdk.IUTiaoActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 
