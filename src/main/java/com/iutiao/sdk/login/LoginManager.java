@@ -141,7 +141,7 @@ public class LoginManager {
 
     public void onLogin(User user) {
 
-        Log.i(TAG, "onLogin user " + user);
+        Log.i(TAG, "onLogin user " + user.getUid());
         Validate.notNull(user.getToken(), "access token");
         // 缓存用户信息
         UserManager.getInstance().setCurrentUser(user);
