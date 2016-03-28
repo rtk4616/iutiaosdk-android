@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.OrientationEventListener;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -32,10 +31,15 @@ public class FloatView extends RelativeLayout {
     private ImageView ivMask;
     private ImageView ivBg;
 
+//    相对View的坐标，即以此View左上角为原点
     private float touchStartX;
     private float touchStartY;
+
+//    相对屏幕的坐标，即以屏幕左上角为原点
     private float x;
     private float y;
+
+//    屏幕宽高
     private int screenWidth;
     private int screenHeight;
     private boolean isTouching;
@@ -45,7 +49,6 @@ public class FloatView extends RelativeLayout {
 
     private WindowManager wm = (WindowManager) getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
     private WindowManager.LayoutParams wmParams ;
-    OrientationEventListener mScreenOrientationEventListener;
 
     private int state; //FloatState中的一种
 
@@ -356,10 +359,10 @@ public class FloatView extends RelativeLayout {
         private Context context;
         private final WindowManager.LayoutParams param;
 
-        public Builder(Context context) {
+        public Builder(Context applicationContext) {
             this.context = context;
             param = new WindowManager.LayoutParams();
-            param.type = WindowManager.LayoutParams.TYPE_TOAST;     // 系统提示类型,重要
+            param.type = WindowManager.LayoutParams.TYPE_TOAST;     // 该类型浮窗无须权限,重要
             param.format = 1;
             param.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE; // 不能抢占聚焦点
             param.flags = param.flags | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
