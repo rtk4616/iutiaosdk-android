@@ -12,7 +12,6 @@ package com.iutiao.sdk;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.PixelFormat;
 import android.os.Environment;
 import android.util.Log;
 import android.view.WindowManager;
@@ -20,6 +19,7 @@ import android.view.WindowManager;
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.iutiao.sdk.views.FloatView;
 import com.upay.billing.UpayConstant;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayInitCallback;
@@ -90,9 +90,11 @@ public final class IUTiaoSdk {
             "The callback request code offset can't be updated once the SDK is initialized";
     static final String CALLBACK_OFFSET_NEGATIVE =
             "The callback request code offset can't be negative.";
+
     /**
      * 初始化 sdk
-     * @param context The application context
+     *
+     * @param context                   The application context
      * @param callbackRequestCodeOffset the request code offset that iutiao activities will be called with.
      */
     public static synchronized void sdkInitialize(Context context, int callbackRequestCodeOffset) {
@@ -117,8 +119,9 @@ public final class IUTiaoSdk {
 
     /**
      * 初始化 sdk
+     *
      * @param applicationContext
-     * @param callback 初始化完成后执行的回调，即使 sdk 已经被初始化过了， 这个回调依然会被执行
+     * @param callback           初始化完成后执行的回调，即使 sdk 已经被初始化过了， 这个回调依然会被执行
      */
     public static synchronized void sdkInitialize(
             Context applicationContext, final InitializeCallback callback) {
@@ -138,7 +141,7 @@ public final class IUTiaoSdk {
         if (!upayInitialized) {
             upayInitialize();
         }
-
+        initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();
     }
@@ -181,6 +184,7 @@ public final class IUTiaoSdk {
 
     /**
      * Indicates whether the SDK has been initialized.
+     *
      * @return
      */
     public static synchronized boolean isInitialized() {
@@ -201,7 +205,9 @@ public final class IUTiaoSdk {
     }
 
     private static void loadDefaultsFromMetadata(Context context) {
-        if (context == null) { return; }
+        if (context == null) {
+            return;
+        }
         ApplicationInfo ai = null;
         try {
             ai = context.getPackageManager()
@@ -212,7 +218,9 @@ public final class IUTiaoSdk {
             return;
         }
 
-        if (ai == null || ai.metaData == null) { return; }
+        if (ai == null || ai.metaData == null) {
+            return;
+        }
 
         if (applicationId == null) {
             applicationId = ai.metaData.getString(APPLICATION_ID_PROPERTY);
@@ -280,19 +288,20 @@ public final class IUTiaoSdk {
     private static WindowManager.LayoutParams windownLayoutParams;
 
     public static void initFloatView() {
-        windowManager = (WindowManager) getApplicationContext().getSystemService("window");
-        // 设置 LayoutParams（全局变量）相关参数
-        windownLayoutParams = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.TYPE_PHONE
-        );
-        windownLayoutParams.format = PixelFormat.RGBA_8888;
-        windownLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-
-        windownLayoutParams.x = 400;
-        windownLayoutParams.y = 400;
-        windownLayoutParams.width = 80;
-        windownLayoutParams.height = 80;
+//        windowManager = (WindowManager) getApplicationContext().getSystemService("window");
+//        // 设置 LayoutParams（全局变量）相关参数
+//        windownLayoutParams = new WindowManager.LayoutParams(
+//                WindowManager.LayoutParams.TYPE_PHONE
+//        );
+//        windownLayoutParams.format = PixelFormat.RGBA_8888;
+//        windownLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+//
+//        windownLayoutParams.x = 400;
+//        windownLayoutParams.y = 400;
+//        windownLayoutParams.width = 80;
+//        windownLayoutParams.height = 80;
 //        createFloatView();
+        new FloatView.Builder(applicationContext).create();
 
     }
 
@@ -326,7 +335,7 @@ public final class IUTiaoSdk {
         File file = getUpayPropFile();
         if (file.exists()) {
             Log.i(TAG, "prop file existed");
-            return ;
+            return;
         }
         Log.i(TAG, "upay prop file locate " + file);
         Properties prop = new Properties();
@@ -338,7 +347,7 @@ public final class IUTiaoSdk {
             prop.store(fos, "simulate other country TSP.");
             fos.close();
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "not found file " + file , e);
+            Log.e(TAG, "not found file " + file, e);
         } catch (IOException e) {
             Log.e(TAG, "write properites file failed", e);
         }
