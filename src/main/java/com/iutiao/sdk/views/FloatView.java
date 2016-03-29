@@ -32,24 +32,27 @@ public class FloatView extends RelativeLayout {
     private ImageView ivMask;
     private ImageView ivBg;
 
-//    相对View的坐标，即以此View左上角为原点
+    private OnClickCallback onClickCallback = null;
+
+    //    相对View的坐标，即以此View左上角为原点
     private float touchStartX;
     private float touchStartY;
 
-//    相对屏幕的坐标，即以屏幕左上角为原点
+    //    相对屏幕的坐标，即以屏幕左上角为原点
     private float x;
     private float y;
 
-//    屏幕宽高
+    //    屏幕宽高
     private int screenWidth;
     private int screenHeight;
     private boolean isTouching;
     private boolean isLeft;
+    private boolean isShowing;
     private boolean mScreenProtrait = true;
     private static int count = 0;
 
     private WindowManager wm = (WindowManager) getContext().getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-    private WindowManager.LayoutParams wmParams ;
+    private WindowManager.LayoutParams wmParams;
 
     private int state; //FloatState中的一种
 
@@ -65,6 +68,10 @@ public class FloatView extends RelativeLayout {
         mContext = context;
         this.wmParams = param;
         init(mContext);
+    }
+
+    public void setOnClickCallback(OnClickCallback onClickCallback) {
+        this.onClickCallback = onClickCallback;
     }
 
     private void init(final Context mContext) {
@@ -107,7 +114,10 @@ public class FloatView extends RelativeLayout {
                 isTouching = false;
                 touchStartX = touchStartY = 0;
                 refreshRegion();
-                if(state == FloatState.HOVERING||state== FloatState.DOCKING){
+                if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
+                    if (onClickCallback != null) {
+                        onClickCallback.onClick();
+                    }
                     Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                 }
                 if (state == FloatState.MOVING || state == FloatState.HOVERING) {
@@ -223,29 +233,36 @@ public class FloatView extends RelativeLayout {
     }
 
     public void hide() {
-        wm.removeView(this);
-    }
-    public void show() {
-        // TODO: 16/3/28  优化：尝试监听屏幕切换来更新屏幕参数，持久化坐标
-        //更新屏幕参数
-        screenWidth = DisplayUtil.getDisplayWidthPixels(mContext);
-        screenHeight = DisplayUtil.getDisplayheightPixels(mContext);
-        if (!DisplayUtil.isScreenOriatationPortrait(mContext)) {
-            int temp = screenWidth;
-            screenWidth = screenHeight;
-            screenHeight = temp;
-            if(mScreenProtrait){
-                mScreenProtrait = false;
-                wmParams.x = wmParams.y = 0;
-            }
-        }else{
-            if(!mScreenProtrait){
-                mScreenProtrait = true;
-                wmParams.x = wmParams.y = 0;
-            }
+        if (isShowing) {
+            isShowing = false;
+            wm.removeView(this);
         }
-        //显示myFloatView图像
-        wm.addView(this, wmParams);
+    }
+
+    public void show() {
+        if (!isShowing) {
+            // TODO: 16/3/28  优化：尝试监听屏幕切换来更新屏幕参数，持久化坐标
+            //更新屏幕参数
+            screenWidth = DisplayUtil.getDisplayWidthPixels(mContext);
+            screenHeight = DisplayUtil.getDisplayheightPixels(mContext);
+            if (!DisplayUtil.isScreenOriatationPortrait(mContext)) {
+                int temp = screenWidth;
+                screenWidth = screenHeight;
+                screenHeight = temp;
+                if (mScreenProtrait) {
+                    mScreenProtrait = false;
+                    wmParams.x = wmParams.y = 0;
+                }
+            } else {
+                if (!mScreenProtrait) {
+                    mScreenProtrait = true;
+                    wmParams.x = wmParams.y = 0;
+                }
+            }
+            //显示myFloatView图像
+            wm.addView(this, wmParams);
+            isShowing = true;
+        }
     }
 
     private void logoAnimIn() {
@@ -269,7 +286,9 @@ public class FloatView extends RelativeLayout {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                getHandler().postDelayed(dimRunnable, 1000);
+                if (getHandler() != null) {
+                    getHandler().postDelayed(dimRunnable, 1000);
+                }
             }
 
             @Override
@@ -343,7 +362,7 @@ public class FloatView extends RelativeLayout {
     private Runnable dimRunnable = new Runnable() {
         @Override
         public void run() {
-            if (state == FloatState.DOCKING) {
+            if (state == FloatState.DOCKING && isShowing) {
                 smoothLightDown();
             }
         }
@@ -351,11 +370,16 @@ public class FloatView extends RelativeLayout {
     private Runnable dockRunnable = new Runnable() {
         @Override
         public void run() {
-            if (state == FloatState.HOVERING) {
+            if (state == FloatState.HOVERING && isShowing) {
                 dock();
             }
         }
     };
+
+    public interface OnClickCallback {
+        void onClick();
+    }
+
     public static class Builder {
         private Context context;
         private final WindowManager.LayoutParams param;
@@ -382,16 +406,16 @@ public class FloatView extends RelativeLayout {
         }
 
         public FloatView create() {
-            final FloatView floatView = new FloatView(context,param);
-            ((Application)context).registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            final FloatView floatView = new FloatView(context, param);
+            ((Application) context).registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
 
                 @Override
                 public void onActivityStopped(Activity activity) {
                     count--;
-                    if (count == 0 ) {
+                    if (count == 0) {
                         floatView.hide();
                     }
-                    if(activity instanceof IUTiaoActivity){// FIXME: 16/3/28  硬编码不显示浮窗的界面，考虑支持用xml或者其他配置 
+                    if (activity instanceof IUTiaoActivity) {// FIXME: 16/3/28  硬编码不显示浮窗的界面，考虑支持用xml或者其他配置
                         floatView.show();
                     }
                 }
@@ -402,7 +426,7 @@ public class FloatView extends RelativeLayout {
                         floatView.show();
 
                     }
-                    if(activity instanceof IUTiaoActivity){
+                    if (activity instanceof IUTiaoActivity) {
                         floatView.hide();
                     }
                     count++;
