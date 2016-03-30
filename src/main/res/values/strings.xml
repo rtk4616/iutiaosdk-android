@@ -5,7 +5,7 @@
     <string name="com_iutiao_login_username_hint">Email or Phone</string>
     <string name="com_iutiao_login_password_hint">Password</string>
     <string name="com_iutiao_quick_register">Quick register</string>
-    <string name="com_iutiao_register_password">Password</string>
+    <string name="com_iutiao_hint_register_password">Password</string>
     <string name="com_iutiao_register_password_confirm">Password confirm</string>
     <string name="com_iutiao_register_username">account@example.com</string>
     <string name="com_iutiao_register">Register</string>
@@ -18,7 +18,7 @@
     <string name="com_iutiao_verify_label">Please wait for the SMS and then enter the code here</string>
     <string name="com_iutiao_verify_title">Verification</string>
     <string name="com_iutiao_dialog_phone_title">Your phone</string>
-    <string name="com_iutiao_dialog_phone_message">Please confirm your country code and enter your phone number</string>
+    <string name="com_iutiao_register_phone_message">Please confirm your country code and enter your phone number</string>
     <string name="com_iutiao_dialog_login_title">SIGNIN</string>
     <string name="com_iutiao_dialog_login_message">Enter your credentials to continue</string>
     <string name="com_iutiao_error_invalid_email_or_phone">Invalid Email or Phone</string>
@@ -55,4 +55,7 @@
     <string name="com_iutiao_reload_your_balance">Reload Your Balance</string>
     <string name="com_iutiao_balance_prefix">$ %1s</string>
     <string name="com_iutiao_refresh">Refresh</string>
+    <string name="com_iutiao_already_register">Already have an account?</string>
+    <string name="com_iutiao_agreement">By continuing, you agree to our Terms and Privacy Policy</string>
+    <string name="com_iutiao_register_email_btn">sign up with email</string>
 </resources>

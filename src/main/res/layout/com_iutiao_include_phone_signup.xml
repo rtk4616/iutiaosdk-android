@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="@dimen/com_iutiao_activity_horizontal_margin">
+
+
+    <EditText
+        style="@style/IUTiaoEtCommon"
+        android:id="@+id/editText"
+        android:layout_weight="1"
+        android:hint="@string/com_iutiao_register_phone_message"
+        android:inputType="phone" />
+    <TextView
+        style="@style/IUTiaoTvErrorSmall"
+        android:text="@string/com_iutiao_error_invalid_email_or_phone"
+        android:id="@+id/textView4" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/com_iutiao_next" />
+    <TextView
+        style="@style/IUTiaoTvTipSmall"
+        android:text="@string/com_iutiao_agreement"
+        android:id="@+id/textView3"
+        android:layout_weight="1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/IUTiaoTextBtnSmall"
+            android:id="@+id/textView"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="@string/com_iutiao_already_register" />
+
+        <TextView
+            style="@style/IUTiaoTextBtnSmall"
+            android:id="@+id/textView2"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/com_iutiao_register_email_btn" />
+    </LinearLayout>
+
+</LinearLayout>

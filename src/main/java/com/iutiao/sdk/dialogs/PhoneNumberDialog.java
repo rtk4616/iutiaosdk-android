@@ -56,7 +56,7 @@ public class PhoneNumberDialog extends DialogFragment {
         Dialog d = builder
                 .setView(view)
                 .setTitle(getActivity().getString(R.string.com_iutiao_dialog_phone_title))
-                .setMessage(getActivity().getString(R.string.com_iutiao_dialog_phone_message))
+                .setMessage(getActivity().getString(R.string.com_iutiao_register_phone_message))
                 .create();
         onViewCreated(view, savedInstanceState);
         action = getArguments().getString("action");

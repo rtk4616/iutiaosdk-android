@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ben.floatwindowdemo.Main2Activity">
+
+    <LinearLayout
+        android:id="@+id/sign_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <!--<include layout="@layout/com_iutiao_include_email_signup" />-->
+        <include layout="@layout/com_iutiao_include_phone_signup"/>
+        <!--<include layout="@layout/com_iutiao_include_signin"/>-->
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/icon_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/sign_group"
+        android:layout_centerHorizontal="true"
+        android:background="@android:drawable/screen_background_dark" />
+</RelativeLayout>

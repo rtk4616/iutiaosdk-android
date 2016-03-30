@@ -27,5 +27,39 @@
         <item name="android:shadowRadius">2</item>
         <item name="android:background">@drawable/yellow_selector</item>
     </style>
-
+    <style name="Theme.IUTiao.Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:drawable/screen_background_dark_transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <style name="IUTiaoEtCommon">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:ems">10</item>
+    </style>
+    <style name="IUTiaoTvErrorSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+    <style name="IUTiaoTvTipSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:padding">@dimen/com_iutiao_activity_vertical_margin</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
+    <style name="IUTiaoTextBtnSmall">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+        <item name="android:padding">2dp</item>
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

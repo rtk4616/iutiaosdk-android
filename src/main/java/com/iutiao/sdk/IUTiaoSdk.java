@@ -10,6 +10,7 @@
 package com.iutiao.sdk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -288,37 +289,13 @@ public final class IUTiaoSdk {
     private static WindowManager.LayoutParams windownLayoutParams;
 
     public static void initFloatView() {
-//        windowManager = (WindowManager) getApplicationContext().getSystemService("window");
-//        // 设置 LayoutParams（全局变量）相关参数
-//        windownLayoutParams = new WindowManager.LayoutParams(
-//                WindowManager.LayoutParams.TYPE_PHONE
-//        );
-//        windownLayoutParams.format = PixelFormat.RGBA_8888;
-//        windownLayoutParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-//
-//        windownLayoutParams.x = 400;
-//        windownLayoutParams.y = 400;
-//        windownLayoutParams.width = 80;
-//        windownLayoutParams.height = 80;
-//        createFloatView();
-        new FloatView.Builder(applicationContext).create();
-
+        new FloatView.Builder(applicationContext).create().setOnClickCallback(new FloatView.OnClickCallback() {
+            @Override
+            public void onClick() {
+                applicationContext.startActivity(IUTiaoDevActivity.newIntent(applicationContext).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            }
+        });
     }
-
-
-//    public static void createFloatView() {
-//        ImageView img = new ImageView(getApplicationContext());
-//        img.setImageResource(R.drawable.ic_launcher);
-//        img.setAlpha(80);
-//        img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(TAG, "floatable clickable");
-//            }
-//        });
-//        windownLayoutParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-//        windowManager.addView(img, windownLayoutParams);
-//    }
 
     private static File getUpayPropFile() {
         String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
