@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.iutiao.sdk.IUTiaoActivity;
+import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.util.DisplayUtil;
 
@@ -412,11 +412,11 @@ public class FloatView extends RelativeLayout {
                 @Override
                 public void onActivityStopped(Activity activity) {
                     count--;
+                    if (activity instanceof IUTiaoDevActivity) {// FIXME: 16/3/28  硬编码不显示浮窗的界面，考虑支持用xml或者其他配置
+                        floatView.show();
+                    }
                     if (count == 0) {
                         floatView.hide();
-                    }
-                    if (activity instanceof IUTiaoActivity) {// FIXME: 16/3/28  硬编码不显示浮窗的界面，考虑支持用xml或者其他配置
-                        floatView.show();
                     }
                 }
 
@@ -426,7 +426,7 @@ public class FloatView extends RelativeLayout {
                         floatView.show();
 
                     }
-                    if (activity instanceof IUTiaoActivity) {
+                    if (activity instanceof IUTiaoDevActivity) {
                         floatView.hide();
                     }
                     count++;
