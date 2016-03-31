@@ -16,8 +16,10 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Looper;
 import android.util.Log;
-import android.util.Patterns;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.exceptions.IUTiaoSdkNotInitializedException;
 
@@ -129,8 +131,16 @@ public final class Validate {
     }
 
     public static boolean isPhoneValid(String input) {
-        String exp = "(^\\+[\\d\\-]+)";
-        return input.matches(exp);
+//        String exp = "(^\\+[\\d\\-]+)";
+//        return input.matches(exp);
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber swissNumberProto = null;
+        try {
+            swissNumberProto = phoneUtil.parse(input, "RU");// TODO: 16/3/31   自选国家码
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+        }
+        return phoneUtil.isValidNumber(swissNumberProto);
     }
 
     public static void isSandbox() {
