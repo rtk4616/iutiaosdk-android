@@ -11,20 +11,21 @@
         style="@style/IUTiaoEtCommon"
         android:inputType="textEmailAddress"
         android:hint="@string/com_iutiao_register_username"
-        android:id="@+id/editText3" />
+        android:id="@+id/et_email_signup_email" />
 
     <EditText
         style="@style/IUTiaoEtCommon"
         android:inputType="textPassword"
         android:hint="@string/com_iutiao_hint_register_password"
-        android:id="@+id/editText4" />
+        android:id="@+id/et_email_signup_password" />
 
     <TextView
         style="@style/IUTiaoTvErrorSmall"
         android:text="@string/com_iutiao_error_invalid_email_or_phone"
-        android:id="@+id/textView4" />
+        android:id="@+id/tv_email_signup_error" />
 
     <Button
+        android:id="@+id/btn_email_signup_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -32,7 +33,7 @@
     <TextView
         style="@style/IUTiaoTvTipSmall"
         android:text="@string/com_iutiao_agreement"
-        android:id="@+id/textView3"
+        android:id="@+id/tv_email_signup_tip"
         android:layout_weight="1" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,14 +42,14 @@
 
         <TextView
             style="@style/IUTiaoTextBtnSmall"
-            android:id="@+id/textView"
+            android:id="@+id/textBtn_email_signup_go_email_signin"
             android:layout_weight="1"
             android:gravity="left"
             android:text="@string/com_iutiao_already_register" />
 
         <TextView
             style="@style/IUTiaoTextBtnSmall"
-            android:id="@+id/textView2"
+            android:id="@+id/textBtn_email_signup_go_qick_register"
             android:layout_weight="1"
             android:gravity="right"
             android:text="@string/com_iutiao_quick_register"/>

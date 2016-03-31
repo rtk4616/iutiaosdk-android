@@ -7,32 +7,32 @@
     android:padding="@dimen/com_iutiao_activity_horizontal_margin">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/et_signin_username"
         style="@style/IUTiaoEtCommon"
         android:layout_weight="1"
-        android:hint="@string/com_iutiao_login_username_hint"
-        android:inputType="phone" />
+        android:hint="@string/com_iutiao_login_username_hint" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/et_signin_password"
         style="@style/IUTiaoEtCommon"
         android:layout_weight="1"
         android:hint="@string/com_iutiao_login_password_hint"
         android:inputType="textPassword" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_signin_error"
         style="@style/IUTiaoTvErrorSmall"
         android:text="@string/com_iutiao_error_invalid_email_or_phone" />
 
     <Button
+        android:id="@+id/btn_signin_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/com_iutiao_login_btn" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tv_signin_tip"
         style="@style/IUTiaoTvTipSmall"
         android:layout_weight="1"
         android:text="@string/com_iutiao_agreement" />
@@ -43,14 +43,14 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textBtn_signin_go_qick_register"
             style="@style/IUTiaoTextBtnSmall"
             android:layout_weight="1"
             android:gravity="left"
             android:text="@string/com_iutiao_quick_register" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textBtn_signin_go_forgot_pwd"
             style="@style/IUTiaoTextBtnSmall"
             android:layout_weight="1"
             android:gravity="right"

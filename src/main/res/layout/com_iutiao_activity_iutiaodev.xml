@@ -11,9 +11,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <!--<include layout="@layout/com_iutiao_include_email_signup" />-->
-        <include layout="@layout/com_iutiao_include_phone_signup"/>
-        <!--<include layout="@layout/com_iutiao_include_signin"/>-->
+        <include
+            android:id="@+id/ll_phone_signup"
+            layout="@layout/com_iutiao_include_phone_signup" />
+
+        <include
+            android:id="@+id/ll_email_signup"
+            layout="@layout/com_iutiao_include_email_signup"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/ll_signin"
+            layout="@layout/com_iutiao_include_signin"
+            android:visibility="gone" />
     </LinearLayout>
 
 
