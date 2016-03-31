@@ -134,7 +134,7 @@ public final class Validate {
     public static boolean isPhoneValid(String input) {
 //        String exp = "(^\\+[\\d\\-]+)";
 //        return input.matches(exp);
-        if(TextUtils.isEmpty(input)){
+        if(TextUtils.isEmpty(input)||!TextUtils.isDigitsOnly(input)){
             return false;
         }
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
