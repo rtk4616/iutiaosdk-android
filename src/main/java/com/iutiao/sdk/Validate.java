@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -122,7 +123,7 @@ public final class Validate {
         return id;
     }
 
-    private static final String EMAIL_PATTERN = "/^[a-zA-Z0-9#_~!$&'()*+,;=:.\"(),:;<>@\\[\\]\\\\]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*$/\n";
+    private static final String EMAIL_PATTERN = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
 
     public static boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -133,6 +134,9 @@ public final class Validate {
     public static boolean isPhoneValid(String input) {
 //        String exp = "(^\\+[\\d\\-]+)";
 //        return input.matches(exp);
+        if(TextUtils.isEmpty(input)){
+            return false;
+        }
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber swissNumberProto = null;
         try {
