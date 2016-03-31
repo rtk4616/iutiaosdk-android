@@ -49,6 +49,9 @@ public class IUTiaoDevActivity extends AppCompatActivity implements View.OnClick
         phoneSignUpHolder.goSigninTv.setOnClickListener(this);
         signInHolder.goQuickSigninTv.setOnClickListener(this);
         signInHolder.forgotPwd.setOnClickListener(this);
+        emailSignUpHolder.signupBtn.setOnClickListener(this);
+        phoneSignUpHolder.nextBtn.setOnClickListener(this);
+        signInHolder.signinBtn.setOnClickListener(this);
     }
 
     @Override
@@ -66,7 +69,47 @@ public class IUTiaoDevActivity extends AppCompatActivity implements View.OnClick
         if (i == R.id.textBtn_signin_go_forgot_pwd) {
             goForgetPwd();
         }
+        if (i == R.id.btn_signin_signin) {
+            // TODO: 16/3/31 signin();
+            String username = getSigninUsername();
+//            Toast.makeText(this, username, Toast.LENGTH_SHORT).show();
+            if (Validate.isEmailValid(username) || Validate.isPhoneValid(username)) {
+                Toast.makeText(this, "signin", Toast.LENGTH_SHORT).show();
+                hideUserNameError();
+            } else {
+                showUserNameError();
+            }
+        }
+        if (i == R.id.btn_phone_signup_next) {
+            // TODO: 16/3/31  signup();
+            String phone = getPhoneSignupPhone();
+            if (Validate.isPhoneValid(phone)) {
+                Toast.makeText(this, "signup", Toast.LENGTH_SHORT).show();
+                hidePhoneError();
+            } else {
+                showPhoneError();
+            }
+        }
+        if (i == R.id.btn_email_signup_signup) {
+            // TODO: 16/3/31 signup();
+            String email = getEmailSignupEmail();
+            if (Validate.isEmailValid(email)) {
+                Toast.makeText(this, "signup", Toast.LENGTH_SHORT).show();
+                hideEmailError();
+            } else {
+                Toast.makeText(this, Validate.isEmailValid(email)+""+email, Toast.LENGTH_SHORT).show();
+                showEmailError();
+            }
+        }
     }
+
+//    public void performSignin() {
+//        HashMap<String, Object> params = new HashMap<String, Object>();
+//        params.put("username", getInputUsername());
+//        params.put("password", getInputPassword());
+//        SigninTask task = new SigninTask(this, (IUTiaoCallback<User>) getTargetFragment());
+//        task.execute(params);
+//    }
 
     public void goQuickSignup() {
         emailSignUpHolder.root.setVisibility(View.GONE);
@@ -91,15 +134,51 @@ public class IUTiaoDevActivity extends AppCompatActivity implements View.OnClick
 
     }
 
-    public  void showEmailError(){
-
+    public void showEmailError() {
+        emailSignUpHolder.errorTv.setVisibility(View.VISIBLE);
     }
-    public  void showPhoneError(){
 
+    public void hideEmailError() {
+        emailSignUpHolder.errorTv.setVisibility(View.GONE);
     }
-    public  void showUserNameError(){
 
+    public void showPhoneError() {
+        phoneSignUpHolder.errorTv.setVisibility(View.VISIBLE);
     }
+
+    public void hidePhoneError() {
+        phoneSignUpHolder.errorTv.setVisibility(View.GONE);
+    }
+
+    public void showUserNameError() {
+        signInHolder.errorTv.setVisibility(View.VISIBLE);
+    }
+
+    public void hideUserNameError() {
+        signInHolder.errorTv.setVisibility(View.GONE);
+    }
+
+    public String getPhoneSignupPhone() {
+        return phoneSignUpHolder.phoneEt.getText().toString().trim();
+    }
+
+    public String getEmailSignupEmail() {
+        return emailSignUpHolder.emailEt.getText().toString().trim();
+    }
+
+    public String getEmailSignupPwd() {
+        return emailSignUpHolder.pwdEt.getText().toString().trim();
+    }
+
+    public String getSigninUsername() {
+        return signInHolder.userEt.getText().toString().trim();
+    }
+
+    public String getSigninPwd() {
+        return signInHolder.pwdEt.getText().toString().trim();
+    }
+
+
     class PhoneSignUpHolder {
         LinearLayout root;
         EditText phoneEt;
