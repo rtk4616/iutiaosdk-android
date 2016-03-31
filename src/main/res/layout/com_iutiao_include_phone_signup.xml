@@ -20,14 +20,10 @@
         android:text="@string/com_iutiao_error_invalid_email_or_phone"
         android:visibility="gone" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_phone_signup_next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/holo_blue_dark"
-        android:text="@string/com_iutiao_next"
-        android:textColor="@android:color/white" />
+        style="@style/IUTiaoTextBtnBlue"
+        android:text="@string/com_iutiao_next"/>
 
     <TextView
         android:id="@+id/tv_phone_signup_tip"

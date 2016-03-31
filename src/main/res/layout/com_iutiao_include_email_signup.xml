@@ -22,13 +22,12 @@
     <TextView
         style="@style/IUTiaoTvErrorSmall"
         android:text="@string/com_iutiao_error_invalid_email_or_phone"
-        android:id="@+id/tv_email_signup_error" />
+        android:id="@+id/tv_email_signup_error"
+        android:visibility="gone"/>
 
-    <Button
+    <TextView
         android:id="@+id/btn_email_signup_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        style="@style/IUTiaoTextBtnBlue"
         android:text="@string/com_iutiao_register" />
     <TextView
         style="@style/IUTiaoTvTipSmall"
