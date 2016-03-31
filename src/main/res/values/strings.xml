@@ -9,7 +9,7 @@
     <string name="com_iutiao_register_password_confirm">Password confirm</string>
     <string name="com_iutiao_register_username">account@example.com</string>
     <string name="com_iutiao_register">Register</string>
-    <string name="com_iutiao_next">next</string>
+    <string name="com_iutiao_next">Next</string>
     <string name="com_iutiao_signin">Signin</string>
     <string name="com_iutiao_forgot_password">Forgot your password?</string>
     <string name="com_iutiao_progress_loading">Please waiting ...</string>
