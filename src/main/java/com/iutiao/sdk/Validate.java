@@ -36,12 +36,12 @@ public final class Validate {
 
     private static final String NO_INTERNET_PERMISSION_REASON =
             "No internet permissions granted for the app, please add " +
-            "<uses-permission android:name=\"android.permission.INTERNET\" /> " +
-            "to your AndroidManifest.xml.";
+                    "<uses-permission android:name=\"android.permission.INTERNET\" /> " +
+                    "to your AndroidManifest.xml.";
 
     private static final String IUTIAO_ACTIVITY_NOT_FOUND_REASON =
             "IUTiaoActivity is not declared in the AndroidManifest.xml, please add " +
-            "com.iutiao.sdk.IUTiaoActivity to your AndroidManifest.xml file.";
+                    "com.iutiao.sdk.IUTiaoActivity to your AndroidManifest.xml file.";
 
     public static void notNull(Object arg, String name) {
         if (arg == null) {
@@ -98,8 +98,8 @@ public final class Validate {
         }
     }
 
-    public static  <E extends Enum<E>> void isInEnum(String value, Class<E> enumClass) {
-        for (E e: enumClass.getEnumConstants()) {
+    public static <E extends Enum<E>> void isInEnum(String value, Class<E> enumClass) {
+        for (E e : enumClass.getEnumConstants()) {
             if (e.name().equals(value)) {
                 return;
             }
@@ -111,7 +111,7 @@ public final class Validate {
         if (!IUTiaoSdk.isInitialized()) {
             throw new IUTiaoSdkNotInitializedException(
                     "The SDK has not been initialized, make sure to call " +
-                    " IUTiaoSdk.sdkInitialize() first.");
+                            " IUTiaoSdk.sdkInitialize() first.");
         }
     }
 
@@ -123,7 +123,9 @@ public final class Validate {
         return id;
     }
 
-    private static final String EMAIL_PATTERN = "^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
+    private static final String EMAIL_PATTERN = "^[A-Za-z0-9_~-]+(?:\\.{0,1}[A-Za-z0-9_~-]+)*" +
+            "@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*" +
+            "\\.[a-zA-Z]+$";
 
     public static boolean isEmailValid(String email) {
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);
@@ -134,7 +136,7 @@ public final class Validate {
     public static boolean isPhoneValid(String input) {
 //        String exp = "(^\\+[\\d\\-]+)";
 //        return input.matches(exp);
-        if(TextUtils.isEmpty(input)||!TextUtils.isDigitsOnly(input)){
+        if (TextUtils.isEmpty(input) || !TextUtils.isDigitsOnly(input)) {
             return false;
         }
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
