@@ -136,13 +136,13 @@ public final class Validate {
     public static boolean isPhoneValid(String input) {
 //        String exp = "(^\\+[\\d\\-]+)";
 //        return input.matches(exp);
-        if (TextUtils.isEmpty(input) || !TextUtils.isDigitsOnly(input)) {
+        if (TextUtils.isEmpty(input) || input.length() < 2 || !TextUtils.isDigitsOnly(input)) {
             return false;
         }
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber swissNumberProto = null;
         try {
-            swissNumberProto = phoneUtil.parse(input, "RU");// TODO: 16/3/31   自选国家码
+            swissNumberProto = phoneUtil.parse(input, "CN");// TODO: 16/3/31   自选国家码
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
