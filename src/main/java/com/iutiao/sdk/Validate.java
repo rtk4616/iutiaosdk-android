@@ -133,20 +133,23 @@ public final class Validate {
         return matcher.matches();
     }
 
-    public static boolean isPhoneValid(String input) {
-//        String exp = "(^\\+[\\d\\-]+)";
-//        return input.matches(exp);
-        if (TextUtils.isEmpty(input) || input.length() < 2 || !TextUtils.isDigitsOnly(input)) {
+    public static boolean isPhoneValid(String input,String region) {
+        String exp = "(^\\+[\\d\\-]+)";
+        if (TextUtils.isEmpty(input) || input.length() < 5 || !input.matches(exp)) {
             return false;
         }
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber swissNumberProto = null;
         try {
-            swissNumberProto = phoneUtil.parse(input, "CN");// TODO: 16/3/31   自选国家码
+            swissNumberProto = phoneUtil.parse(input, region);
         } catch (NumberParseException e) {
             e.printStackTrace();
         }
         return phoneUtil.isValidNumber(swissNumberProto);
+    }
+
+    public static boolean isPwdValid(String password) {
+        return password.length()>=6;
     }
 
     public static void isSandbox() {
