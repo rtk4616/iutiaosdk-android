@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.FloatMath;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -55,6 +56,7 @@ public class FloatView extends RelativeLayout {
     private WindowManager.LayoutParams wmParams;
 
     private int state; //FloatState中的一种
+    private float oldDist;
 
     public static final class FloatState {
         public static final int FOLDED = 0;// 折叠
@@ -105,15 +107,26 @@ public class FloatView extends RelativeLayout {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
-                    state = FloatState.MOVING;
+//                float newDist = spacing(event);
+//                if (newDist > oldDist) {
+//                    if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
+//                        state = FloatState.MOVING;// TODO: 16/4/6 move太灵敏问题
+//                    }
+//                    updateViewPosition();
+//                    oldDist = newDist;
+//                }
+                if(isMoving(event)){
+                    if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
+                        state = FloatState.MOVING;// TODO: 16/4/6 move太灵敏问题
+                    }
+                    updateViewPosition();
                 }
-                updateViewPosition();
                 break;
             case MotionEvent.ACTION_UP:
                 isTouching = false;
                 touchStartX = touchStartY = 0;
                 refreshRegion();
+                Log.i("state", state + "");
                 if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
                     if (onClickCallback != null) {
                         onClickCallback.onClick();
@@ -130,6 +143,17 @@ public class FloatView extends RelativeLayout {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private boolean isMoving(MotionEvent event) {
+        float x = event.getX() - touchStartX;
+        float y = event.getY() - touchStartY;
+        if(FloatMath.sqrt(x * x + y * y)>20){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void refreshRegion() {
