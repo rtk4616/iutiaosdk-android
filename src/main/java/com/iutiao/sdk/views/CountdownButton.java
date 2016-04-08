@@ -1,6 +1,7 @@
 package com.iutiao.sdk.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -12,14 +13,19 @@ import com.iutiao.sdk.R;
 public class CountdownButton extends TextView {
     private Context mContext;
     private CountDownTask countDownTask;
+    private String resendText = "resend";
+    private int countTime = 60;
     public CountdownButton(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        mContext = context;
-        init(mContext);
+        this(context, attrs, 0);
     }
 
     public CountdownButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        mContext = context;
+        TypedArray a = context.obtainStyledAttributes(attrs,R.styleable.IUTCountdownButton);
+        resendText = a.getString(R.styleable.IUTCountdownButton_resend_text);
+        countTime = a.getInt(R.styleable.IUTCountdownButton_count_time,60);
+        init(mContext);
     }
 
     public CountdownButton(Context context) {
@@ -45,7 +51,7 @@ public class CountdownButton extends TextView {
     }
 
     private class CountDownTask extends AsyncTask<Void, Integer, Void> {
-        private int i = 60;
+        private int i = countTime;
         private TextView countTv;
 
         public CountDownTask(TextView btn) {
@@ -60,7 +66,7 @@ public class CountdownButton extends TextView {
         @Override
         protected void onPostExecute(Void aVoid) {
             this.countTv.setEnabled(true);
-            this.countTv.setText(mContext.getString(R.string.com_iutiao_verify_resend));// TODO: 16/4/5  spannable
+            this.countTv.setText(resendText);// TODO: 16/4/5  spannable
             this.countTv.setEnabled(true);
         }
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="IUTCountdownButton">
+        <attr name="resend_text" format="string"/>
+        <attr name="count_time" format="integer"/>
+    </declare-styleable>
+</resources>
