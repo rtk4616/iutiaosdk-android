@@ -14,6 +14,7 @@ import com.iutiao.model.OKEntity;
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
+import com.iutiao.sdk.R;
 import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.holders.PhoneVerifyHolder;
 import com.iutiao.sdk.login.LoginManager;
@@ -69,7 +70,7 @@ public class PhoneVerfyFragment extends Fragment {
             phoneVerfyHolder.goSigninTv.setVisibility(View.GONE);
             phoneVerfyHolder.goEmailSignupTv.setVisibility(View.GONE);
         } else {
-            phoneVerfyHolder.nextBtn.setText("一键注册");
+            phoneVerfyHolder.nextBtn.setText(getString(R.string.com_iutiao_next));
             phoneVerfyHolder.verifyTipTv.setVisibility(View.VISIBLE);
             phoneVerfyHolder.goSigninTv.setVisibility(View.VISIBLE);
             phoneVerfyHolder.goEmailSignupTv.setVisibility(View.VISIBLE);
@@ -90,7 +91,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!Validate.isPhoneValid(phoneVerfyHolder.getNationPhone(), phoneVerfyHolder.getNationName())) {
-                    phoneVerfyHolder.showError("手机号格式不正确，请重新输入");
+                    phoneVerfyHolder.showError(getString(R.string.error_phone));
                 } else if (action.equals(ACTIONS.register.name())) {
                     quickRegister();
                 } else {
@@ -113,9 +114,9 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(phoneVerfyHolder.getCode())) {
-                    phoneVerfyHolder.showError("请输入验证码");
+                    phoneVerfyHolder.showError(getString(R.string.error_empty_verify_code));
                 } else if (action.equals(ACTIONS.reset_password.name()) && TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
-                    phoneVerfyHolder.showError("请输入密码");
+                    phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 } else if (action.equals(ACTIONS.reset_password.name()) && !TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
                     resetPassword();
                 } else {
@@ -132,7 +133,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onSuccess(User t) {
                 LoginManager.getInstance().onLogin(t);
-                Toast.makeText(getActivity(), "welcome，" + t.getNickname(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.com_iutiao_tips_welcome) + t.getNickname(), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
 
@@ -170,13 +171,12 @@ public class PhoneVerfyFragment extends Fragment {
         });
         HashMap<String, Object> p = new HashMap<String, Object>() {{
             put("receiver", phoneVerfyHolder.getNationPhone());
-            put("action", action);//Fixme
+            put("action", action);
         }};
         task.execute(p);
     }
 
     private void resetPassword() {
-        Toast.makeText(context, "修改成功，欢迎回来～", Toast.LENGTH_SHORT).show();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("password", phoneVerfyHolder.getPwd());
         params.put("phone_number", phoneVerfyHolder.getNationPhone());
@@ -184,7 +184,7 @@ public class PhoneVerfyFragment extends Fragment {
         ResetPasswordTask task = new ResetPasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
-                Toast.makeText(getActivity(), "password reset succeed! use your new password to login", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.tips_success_reset_pwd, Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
 

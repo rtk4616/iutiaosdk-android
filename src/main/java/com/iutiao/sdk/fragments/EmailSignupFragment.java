@@ -58,13 +58,13 @@ public class EmailSignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!Validate.isEmailValid(emailSignUpHolder.getInputEmail())){
-                    emailSignUpHolder.showError("email格式不正确，请重新填写");
+                    emailSignUpHolder.showError(getString(R.string.com_iutiao_error_email_not_valid));
                 }
                 else if(TextUtils.isEmpty(emailSignUpHolder.getInputPwd())){
-                    emailSignUpHolder.showError("请输入密码");
+                    emailSignUpHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 }
                 else if(!Validate.isPwdValid(emailSignUpHolder.getInputPwd())){
-                    emailSignUpHolder.showError("密码长度至少6位");
+                    emailSignUpHolder.showError(getString(R.string.com_iutiao_error_pwd_length));
                 }
                 else {
                     emailSignUpHolder.hideError();
@@ -84,7 +84,7 @@ public class EmailSignupFragment extends Fragment {
             public void onSuccess(User t) {
                 LoginManager.getInstance().onLogin(t);
                 // display welcome message
-                Toast.makeText(getActivity(), "welcome，"+t.getNickname(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getResources().getString(R.string.com_iutiao_tips_welcome)+t.getNickname(), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
 

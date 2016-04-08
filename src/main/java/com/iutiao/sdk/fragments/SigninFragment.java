@@ -69,10 +69,10 @@ public class SigninFragment extends Fragment {
                 if (!Validate.isEmailValid(username) && !Validate.isPhoneValid(username,signInHolder.countrySelector.getSelectedCountryName())) {
                     signInHolder.showError(getResources().getString(R.string.com_iutiao_error_invalid_email_or_phone));
                 } else if (TextUtils.isEmpty(pwd)) {
-                    signInHolder.showError("请输入密码");// TODO: 16/4/6 字符资源
+                    signInHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 }
                 else if(pwd.length()<6){
-                    signInHolder.showError("密码长度至少6位");
+                    signInHolder.showError(getString(R.string.com_iutiao_error_pwd_length));
                 }else {
                     performSignin();
                     signInHolder.hideError();
@@ -103,7 +103,7 @@ public class SigninFragment extends Fragment {
             public void onSuccess(User user) {
                 LoginManager.getInstance().onLogin(user);
                 // display welcome message
-                Toast.makeText(getActivity(), "欢迎回来，" + user.getNickname(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.com_iutiao_tips_welcome) + user.getNickname(), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
             }
 

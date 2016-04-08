@@ -58,4 +58,11 @@
     <string name="com_iutiao_already_register">Already have an account?</string>
     <string name="com_iutiao_agreement">By continuing, you agree to our Terms and Privacy Policy</string>
     <string name="com_iutiao_register_email_btn">sign up with email</string>
+    <string name="com_iutiao_error_email_not_valid">Invalid Email</string>
+    <string name="com_iutiao_error_empty_pwd">Please enter your password</string>
+    <string name="com_iutiao_error_pwd_length">Password lengh must be over 6 letters</string>
+    <string name="com_iutiao_tips_welcome">welcome </string>
+    <string name="error_phone">Invalid Phone</string>
+    <string name="error_empty_verify_code">请输入验证码</string>
+    <string name="tips_success_reset_pwd">修改成功，欢迎回来～</string>
 </resources>
