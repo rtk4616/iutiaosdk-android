@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:padding="@dimen/com_iutiao_activity_horizontal_margin">
+
+    <LinearLayout
+        android:id="@+id/ll_group_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.iutiao.sdk.views.spinner.IUTCountrySelector
+                android:id="@+id/countrySelector"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:background="@null"
+                android:prompt="@string/country_selection_prompt" />
+
+            <EditText
+                android:id="@+id/et_verfy_phone"
+                style="@style/IUTiaoEtCommon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:hint="输入注册手机号"
+                android:textSize="16sp"
+                android:inputType="phone" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/btn_verfy_next"
+            style="@style/IUTiaoTextBtnBlue"
+            android:text="下一步" />
+
+        <TextView
+            android:id="@+id/tv_verfy_tip"
+            style="@style/IUTiaoTvTipSmall"
+            android:layout_weight="1"
+            android:text="@string/com_iutiao_agreement"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textBtn_phone_signup_go_email_signin"
+                style="@style/IUTiaoTextBtnSmall"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:text="@string/com_iutiao_already_register" />
+
+            <TextView
+                android:id="@+id/textBtn_phone_signup_go_email_signup"
+                style="@style/IUTiaoTextBtnSmall"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/com_iutiao_register_email_btn" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_group_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="1569xxxxxxxx" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_verfy_code"
+                style="@style/IUTiaoEtCommon"
+                android:layout_weight="1"
+                android:hint="输入手机收到的验证码"
+                android:inputType="number" />
+
+            <com.iutiao.sdk.views.CountdownButton
+                android:id="@+id/countBtn_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/et_verfy_code"
+                android:layout_alignParentRight="true"
+                android:text="重发" />
+
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/et_pwd"
+            style="@style/IUTiaoEtCommon"
+            android:layout_weight="1"
+            android:hint="输入新密码"
+            android:inputType="textPassword"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btn_verfy_confirm"
+            style="@style/IUTiaoTextBtnBlue"
+            android:text="完成" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_verfy_error"
+        style="@style/IUTiaoTvErrorSmall"
+        android:text="@string/com_iutiao_error_invalid_email_or_phone"
+        android:visibility="gone" />
+
+</LinearLayout>
