@@ -18,12 +18,14 @@ import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.holders.SignInHolder;
 import com.iutiao.sdk.login.LoginManager;
 import com.iutiao.sdk.tasks.SigninTask;
+import com.iutiao.sdk.util.IUTPreferencesUtils;
 
 import java.util.HashMap;
 
 public class SigninFragment extends Fragment {
     private SignInHolder signInHolder;
     private Context context;
+    private static final String KEY_CACHE_EMAIL = "key_cached_email";
 
     public static SigninFragment newInstance() {
         SigninFragment fragment = new SigninFragment();
@@ -53,27 +55,27 @@ public class SigninFragment extends Fragment {
                 ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.reset_password));
             }
         });
-        signInHolder.userEt.setText(getActivity().getSharedPreferences("CachedEmail",Context.MODE_PRIVATE).getString("email",null));// TODO: 16/4/7 CacheUtil or SPUtil
+        String cacheLogEmail = IUTPreferencesUtils.getString(getActivity(),KEY_CACHE_EMAIL);
+        signInHolder.userEt.setText(cacheLogEmail);
         signInHolder.signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInHolder.pwdEt.requestFocus();
                 String username = signInHolder.getSigninUsername();
                 String pwd = signInHolder.getSigninPwd();
-                if(Validate.isEmailValid(username)){
-                    getActivity().getSharedPreferences("CachedEmail",Context.MODE_PRIVATE).edit().putString("email",username).commit();
+                if (Validate.isEmailValid(username)) {
+                    IUTPreferencesUtils.putString(getActivity(),KEY_CACHE_EMAIL,username);
                 }
-                if(TextUtils.isDigitsOnly(username)){
-                    username = "+"+signInHolder.countrySelector.getSelectedCountryCode()+username;
+                if (TextUtils.isDigitsOnly(username)) {
+                    username = "+" + signInHolder.countrySelector.getSelectedCountryCode() + username;
                 }
-                if (!Validate.isEmailValid(username) && !Validate.isPhoneValid(username,signInHolder.countrySelector.getSelectedCountryName())) {
+                if (!Validate.isEmailValid(username) && !Validate.isPhoneValid(username, signInHolder.countrySelector.getSelectedCountryName())) {
                     signInHolder.showError(getResources().getString(R.string.com_iutiao_error_invalid_email_or_phone));
                 } else if (TextUtils.isEmpty(pwd)) {
                     signInHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
-                }
-                else if(pwd.length()<6){
+                } else if (pwd.length() < 6) {
                     signInHolder.showError(getString(R.string.com_iutiao_error_pwd_length));
-                }else {
+                } else {
                     performSignin();
                     signInHolder.hideError();
                 }
