@@ -6,11 +6,28 @@
     android:orientation="vertical"
     android:padding="@dimen/com_iutiao_activity_horizontal_margin">
 
-    <EditText
-        android:id="@+id/et_signin_username"
-        style="@style/IUTiaoEtCommon"
-        android:layout_weight="1"
-        android:hint="@string/com_iutiao_login_username_hint" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.iutiao.sdk.views.spinner.IUTCountrySelector
+            android:id="@+id/countrySelector"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:background="@null"
+            android:prompt="@string/country_selection_prompt"
+            android:visibility="gone"/>
+        <EditText
+            android:id="@+id/et_signin_username"
+            style="@style/IUTiaoEtCommon"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:hint="@string/com_iutiao_login_username_hint"
+            android:focusableInTouchMode="true"/>
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/et_signin_password"
