@@ -15,7 +15,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.util.Log;
-import android.view.WindowManager;
 
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
@@ -284,9 +283,6 @@ public final class IUTiaoSdk {
         // sdk 初始化完成后调用
         void onInitialized();
     }
-
-    private static WindowManager windowManager;
-    private static WindowManager.LayoutParams windownLayoutParams;
 
     public static void initFloatView() {
         new FloatView.Builder(applicationContext).create().setOnClickCallback(new FloatView.OnClickCallback() {

@@ -9,8 +9,7 @@
 
 package com.iutiao.sdk.model;
 
-import com.iutiao.sdk.Validate;
-import com.iutiao.sdk.util.TextUtils;
+import com.iutiao.sdk.util.IUTTextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,11 +34,11 @@ public class OrderInfo {
     }
 
     private OrderInfo(Builder builder) {
-        this.sku = TextUtils.nullIfBlank(builder.sku);
+        this.sku = IUTTextUtils.nullIfBlank(builder.sku);
         this.quanilty = builder.quanilty;
-        this.appOrderId = TextUtils.nullIfBlank(builder.appOrderId);
-        this.extra = TextUtils.nullIfBlank(builder.extra);
-        this.postback = TextUtils.nullIfBlank(builder.postback);
+        this.appOrderId = IUTTextUtils.nullIfBlank(builder.appOrderId);
+        this.extra = IUTTextUtils.nullIfBlank(builder.extra);
+        this.postback = IUTTextUtils.nullIfBlank(builder.postback);
     }
 
     public String getSku() {
@@ -122,11 +121,11 @@ public class OrderInfo {
 
     public Map<String, Object> toHashMap() {
         Map<String, Object> params = new HashMap<>();
-        params.put("sku", TextUtils.nullIfBlank(this.getSku()));
+        params.put("sku", IUTTextUtils.nullIfBlank(this.getSku()));
         params.put("quanilty", this.getQuanilty());
-        params.put("app_orderid", TextUtils.nullIfBlank(this.getAppOrderId()));
-        params.put("extra", TextUtils.nullIfBlank(this.getExtra()));
-        params.put("postback", TextUtils.nullIfBlank(this.getPostback()));
+        params.put("app_orderid", IUTTextUtils.nullIfBlank(this.getAppOrderId()));
+        params.put("extra", IUTTextUtils.nullIfBlank(this.getExtra()));
+        params.put("postback", IUTTextUtils.nullIfBlank(this.getPostback()));
 
         // remove null value
         for (String key : new HashSet<>(params.keySet())) {
