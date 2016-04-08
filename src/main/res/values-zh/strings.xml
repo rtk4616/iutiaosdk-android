@@ -77,7 +77,10 @@
   <string name="com_iutiao_error_empty_pwd">请输入密码</string>
   <string name="com_iutiao_error_pwd_length">密码长度至少6位</string>
   <string name="com_iutiao_tips_welcome">欢迎回来，</string>
-  <string name="error_phone">手机号格式不正确，请重新输入</string>
-  <string name="error_empty_verify_code">请输入验证码</string>
-  <string name="tips_success_reset_pwd">修改成功，欢迎回来～</string>
+  <string name="com_iutiao_error_phone">手机号格式不正确，请重新输入</string>
+  <string name="com_iutiao_error_empty_verify_code">请输入验证码</string>
+  <string name="com_iutiao_tips_success_reset_pwd">修改成功，欢迎回来～</string>
+  <string name="com_iutiao_hint_phone">输入注册手机号</string>
+  <string name="com_iutiao_next_step">下一步</string>
+  <string name="com_iutiao_hint_verify_code">输入手机收到的验证码</string>
 </resources>

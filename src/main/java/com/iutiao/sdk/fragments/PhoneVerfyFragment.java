@@ -91,7 +91,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!Validate.isPhoneValid(phoneVerfyHolder.getNationPhone(), phoneVerfyHolder.getNationName())) {
-                    phoneVerfyHolder.showError(getString(R.string.error_phone));
+                    phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_phone));
                 } else if (action.equals(ACTIONS.register.name())) {
                     quickRegister();
                 } else {
@@ -114,7 +114,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(phoneVerfyHolder.getCode())) {
-                    phoneVerfyHolder.showError(getString(R.string.error_empty_verify_code));
+                    phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_verify_code));
                 } else if (action.equals(ACTIONS.reset_password.name()) && TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
                     phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 } else if (action.equals(ACTIONS.reset_password.name()) && !TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
@@ -184,7 +184,7 @@ public class PhoneVerfyFragment extends Fragment {
         ResetPasswordTask task = new ResetPasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
-                Toast.makeText(getActivity(), R.string.tips_success_reset_pwd, Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.com_iutiao_tips_success_reset_pwd, Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
 

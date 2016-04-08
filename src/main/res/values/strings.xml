@@ -62,7 +62,10 @@
     <string name="com_iutiao_error_empty_pwd">Please enter your password</string>
     <string name="com_iutiao_error_pwd_length">Password lengh must be over 6 letters</string>
     <string name="com_iutiao_tips_welcome">welcome </string>
-    <string name="error_phone">Invalid Phone</string>
-    <string name="error_empty_verify_code">请输入验证码</string>
-    <string name="tips_success_reset_pwd">修改成功，欢迎回来～</string>
+    <string name="com_iutiao_error_phone">Invalid Phone</string>
+    <string name="com_iutiao_error_empty_verify_code">Please enter verify code</string>
+    <string name="com_iutiao_tips_success_reset_pwd">Password change successful，welcome back～</string>
+    <string name="com_iutiao_hint_phone">registered phone</string>
+    <string name="com_iutiao_next_step">Next</string>
+    <string name="com_iutiao_hint_verify_code">verify code</string>
 </resources>

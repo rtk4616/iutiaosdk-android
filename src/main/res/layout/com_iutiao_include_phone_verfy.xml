@@ -31,7 +31,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
-                android:hint="输入注册手机号"
+                android:hint="@string/com_iutiao_hint_phone"
                 android:textSize="16sp"
                 android:inputType="phone" />
         </LinearLayout>
@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/btn_verfy_next"
             style="@style/IUTiaoTextBtnBlue"
-            android:text="下一步" />
+            android:text="@string/com_iutiao_next_step" />
 
         <TextView
             android:id="@+id/tv_verfy_tip"
@@ -92,7 +92,7 @@
                 android:id="@+id/et_verfy_code"
                 style="@style/IUTiaoEtCommon"
                 android:layout_weight="1"
-                android:hint="输入手机收到的验证码"
+                android:hint="@string/com_iutiao_hint_verify_code"
                 android:inputType="number" />
 
             <com.iutiao.sdk.views.CountdownButton
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/et_verfy_code"
                 android:layout_alignParentRight="true"
-                android:text="重发" />
+                android:text="@string/com_iutiao_verify_resend" />
 
         </RelativeLayout>
 
@@ -109,14 +109,14 @@
             android:id="@+id/et_pwd"
             style="@style/IUTiaoEtCommon"
             android:layout_weight="1"
-            android:hint="输入新密码"
+            android:hint="@string/com_iutiao_reset_password_password_hint"
             android:inputType="textPassword"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/btn_verfy_confirm"
             style="@style/IUTiaoTextBtnBlue"
-            android:text="完成" />
+            android:text="@string/com_iutiao_verify" />
     </LinearLayout>
 
     <TextView
