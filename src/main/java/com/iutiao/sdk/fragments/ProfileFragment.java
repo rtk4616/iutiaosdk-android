@@ -9,25 +9,19 @@
 
 package com.iutiao.sdk.fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
-import com.iutiao.model.User;
-import com.iutiao.sdk.IUTiaoCallback;
+import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
-import com.iutiao.sdk.dialogs.ProfileDialog;
-import com.iutiao.sdk.login.LoginManager;
-import com.iutiao.sdk.tasks.UserProfileTask;
 
 /**
  * Created by yxy on 15/11/7.
@@ -35,16 +29,34 @@ import com.iutiao.sdk.tasks.UserProfileTask;
 
 public class ProfileFragment extends BaseFragment {
 
-    private Button signOutBtn;
-    private Button profileBtn;
-    private Button loginBtn;
+    private TextView settings;
+    private TextView chargeBtn;
+//    private Button loginBtn;
 
-    public static final UserManager userManager = UserManager.getInstance();private static final String TAG = ProfileFragment.class.getSimpleName();
+    public static final UserManager userManager = UserManager.getInstance();
+    private static final String TAG = ProfileFragment.class.getSimpleName();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.com_iutiao_fragment_profile, container, false);
+        settings = (TextView) v.findViewById(R.id.settings);
+        chargeBtn = (TextView) v.findViewById(R.id.chargeBtn);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getActivity(), settings);
+                MenuInflater menuInflater = popupMenu.getMenuInflater();
+                menuInflater.inflate(R.menu.settings, popupMenu.getMenu());
+                popupMenu.show();
+            }
+        });
+        chargeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((IUTiaoDevActivity) getActivity()).switchTo(UPayPaymentFragment.newInstance());
+            }
+        });
         return v;
     }
 
@@ -56,55 +68,55 @@ public class ProfileFragment extends BaseFragment {
             Log.w(TAG, "user profile missing, may be a bug when cache user profile?");
         }
 
-        profileBtn = (Button) view.findViewById(R.id.btn_profile);
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserProfileTask task = new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
-                    @Override
-                    public void onSuccess(User user) {
-                        UserManager.getInstance().setCurrentUser(user);
-                        Log.i(TAG, user.toString());
-                        showDialog(ProfileDialog.newInstance());
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Log.e(TAG, "fetch user profile", e);
-                        Toast.makeText(getActivity(), "error " + e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onCancel() {
-
-                    }
-                });
-                task.execute();
-            }
-        });
-
-        loginBtn = (Button) view.findViewById(R.id.btn_login);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent();
-                User user = userManager.getCurrentUser();
-                i.putExtra("user", user.GSON.toJson(user));
-                // display welcome message
-                Toast.makeText(getActivity(), "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
-                getActivity().setResult(Activity.RESULT_OK, i);
-                getActivity().finish();
-            }
-        });
-
-        signOutBtn = (Button) view.findViewById(R.id.btn_signout);
-        signOutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logOut();
-                getActivity().finish();
-            }
-        });
+//        profileBtn = (Button) view.findViewById(R.id.btn_profile);
+//        profileBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                UserProfileTask task = new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
+//                    @Override
+//                    public void onSuccess(User user) {
+//                        UserManager.getInstance().setCurrentUser(user);
+//                        Log.i(TAG, user.toString());
+//                        showDialog(ProfileDialog.newInstance());
+//                    }
+//
+//                    @Override
+//                    public void onError(Exception e) {
+//                        Log.e(TAG, "fetch user profile", e);
+//                        Toast.makeText(getActivity(), "error " + e.toString(), Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//
+//                    }
+//                });
+//                task.execute();
+//            }
+//        });
+//
+//        loginBtn = (Button) view.findViewById(R.id.btn_login);
+//        loginBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent();
+//                User user = userManager.getCurrentUser();
+//                i.putExtra("user", user.GSON.toJson(user));
+//                // display welcome message
+//                Toast.makeText(getActivity(), "welcome " + user.getNickname(), Toast.LENGTH_SHORT).show();
+//                getActivity().setResult(Activity.RESULT_OK, i);
+//                getActivity().finish();
+//            }
+//        });
+//
+//        signOutBtn = (Button) view.findViewById(R.id.btn_signout);
+//        signOutBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LoginManager.getInstance().logOut();
+//                getActivity().finish();
+//            }
+//        });
     }
 
     public static ProfileFragment newInstance() {
