@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
-import com.iutiao.sdk.fragments.EmailSignupFragment;
+import com.iutiao.net.RequestOptions;
+import com.iutiao.sdk.fragments.ProfileFragment;
+import com.iutiao.sdk.fragments.SigninFragment;
 
 
 public class IUTiaoDevActivity extends AppCompatActivity {
@@ -34,7 +36,13 @@ public class IUTiaoDevActivity extends AppCompatActivity {
     }
 
     private void init() {
-        switchTo(EmailSignupFragment.newInstance());
+        String token = RequestOptions.getInstance().getToken();
+        if (token != null) {
+            switchTo(ProfileFragment.newInstance());
+        }
+        else {
+            switchTo(SigninFragment.newInstance());
+        }
 //        load app icon
 //        imageView = (ImageView) findViewById(R.id.icon_app);
 //        Info info = new Info(this);
