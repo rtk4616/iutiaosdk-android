@@ -10,12 +10,16 @@
 package com.iutiao.sdk.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -41,6 +45,7 @@ import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
+import com.iutiao.sdk.views.BadgeView;
 
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
@@ -73,6 +78,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private EditText upayItemEt;
     private Double currentBalance;
     private boolean firstTime = true;
+    private BadgeView wetchatBadge;
+    private BadgeView aliBadge;
+    private BadgeView unionBadge;
 
     private static class MyHandler extends Handler {
         private WeakReference<UPayPaymentFragment> fragment;
@@ -101,6 +109,11 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
     private String orderid;
     private String payItem;
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
+
     private String amount = "0"; // upay 只有计费代码
 
     public String getOrderid() {
@@ -149,7 +162,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Override
     public void onClick(View v) {
         RadioButton rb = (RadioButton) v;
-        if(upayItemEt!=null){
+        if (upayItemEt != null) {
             upayItemEt.clearFocus();
         }
         setPayItem(rb.getText().toString());
@@ -264,9 +277,53 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 createChargeOrder();
             }
         });
-
+        final TextView wechatPayTv = (TextView) view.findViewById(R.id.wechatpay);
+        final TextView alipayTv = (TextView) view.findViewById(R.id.tv_alipay);
+        TextView unionPayTv = (TextView) view.findViewById(R.id.tv_unionpay);
+        wetchatBadge= badge(wechatPayTv);
+        aliBadge= badge(alipayTv);
+        unionBadge= badge(unionPayTv);
+        aliBadge.show();
+//        badgeView.hide();
+        wechatPayTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBadges();
+                wetchatBadge.toggle();
+            }
+        });
+        alipayTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBadges();
+                aliBadge.toggle();
+            }
+        });
+        unionPayTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideBadges();
+                unionBadge.toggle();
+            }
+        });
         setCurrentBalance(UserManager.getInstance().getCurrentUser().getBalance());
         payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
+    }
+
+    private void hideBadges() {
+        wetchatBadge.hide();
+        aliBadge.hide();
+        unionBadge.hide();
+    }
+
+    private BadgeView badge(View view) {
+        BadgeView badgeView = new BadgeView(getActivity(), view);
+        badgeView.setTextColor(Color.WHITE);
+        badgeView.setBackgroundResource(R.drawable.pay_sel);
+        badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
+        badgeView.setAlpha(1f);
+        badgeView.setBadgeMargin(0, 0);
+        return badgeView;
     }
 
     @Override
@@ -325,12 +382,30 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             if (position == upayItems.size()) {
                 EditText view;
                 view = (EditText) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_input_item, parent, false);
-                view.setOnClickListener(new View.OnClickListener() {
+                view.setOnTouchListener(new View.OnTouchListener() {
                     @Override
-                    public void onClick(View v) {
+                    public boolean onTouch(View v, MotionEvent event) {
                         for (RadioButton btn : upayItemViews) {
-                                btn.setChecked(false);
+                            btn.setChecked(false);
                         }
+                        return false;
+                    }
+                });
+                view.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        setAmount(String.valueOf(s));
+                        setPayItem(null);
                     }
                 });
                 upayItemEt = view;
