@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -42,7 +43,6 @@ import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
 
 import java.lang.ref.WeakReference;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -70,6 +70,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     final private String payMethod = "upay";
     private UPayItemAdapter upayItemAdapter;
     private List<RadioButton> upayItemViews;
+    private EditText upayItemEt;
     private Double currentBalance;
     private boolean firstTime = true;
 
@@ -119,6 +120,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     }
 
     private Map<String, Object> paymentArguments = new HashMap<>();
+
     public Map<String, Object> getPaymentArguments() {
         return paymentArguments;
     }
@@ -147,8 +149,11 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Override
     public void onClick(View v) {
         RadioButton rb = (RadioButton) v;
+        if(upayItemEt!=null){
+            upayItemEt.clearFocus();
+        }
         setPayItem(rb.getText().toString());
-        for (RadioButton btn: upayItemViews) {
+        for (RadioButton btn : upayItemViews) {
             if (!btn.equals(rb)) {
                 btn.setChecked(false);
             }
@@ -185,10 +190,14 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 setCurrentBalance(user.getBalance());
                 updateUI();
             }
+
             @Override
-            public void onError(Exception e) {}
+            public void onError(Exception e) {
+            }
+
             @Override
-            public void onCancel() {}
+            public void onCancel() {
+            }
         });
         task.execute();
     }
@@ -201,10 +210,11 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 getPayItem(), ucoin, balance));
         setCurrentBalance(balance);
         updateUI();
+//        new Thread(new UpdateUserProfileTask()).start();
     }
 
     private Double getUCoin(String upayItem) {
-        for(UPayItem item: upayItems) {
+        for (UPayItem item : upayItems) {
             if (item.getItemId().equals(upayItem)) {
                 return item.getUcoin();
             }
@@ -296,7 +306,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
         @Override
         public int getCount() {
-            return upayItems.size();
+            return upayItems.size() + 1;
         }
 
         @Override
@@ -311,8 +321,22 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            RadioButton v;
-            if (convertView == null) {
+
+            if (position == upayItems.size()) {
+                EditText view;
+                view = (EditText) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_input_item, parent, false);
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for (RadioButton btn : upayItemViews) {
+                                btn.setChecked(false);
+                        }
+                    }
+                });
+                upayItemEt = view;
+                return view;
+            } else {
+                RadioButton v;
                 v = (RadioButton) LayoutInflater.from(this.context).inflate(R.layout.com_iutiao_upay_item, parent, false);
                 String item = getItem(position);
                 v.setText(item);
@@ -323,10 +347,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                     firstTime = false;
                 }
                 upayItemViews.add(v);
-            } else {
-                v = (RadioButton) convertView;
+                return v;
             }
-            return v;
+
         }
     }
 
@@ -375,7 +398,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             @Override
             public void onSuccess(UPayItemCollection collection) {
                 for (UPayItem item : collection.getResults()) {
-                   upayItems.add(item);
+                    upayItems.add(item);
                 }
                 upayItemAdapter.notifyDataSetChanged();
             }
@@ -406,7 +429,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         ucoins.add(17.00);
 
         NumberFormat formatter = new DecimalFormat("#0");
-        for (Double u: ucoins) {
+        for (Double u : ucoins) {
             UPayItem item = new UPayItem();
             item.setDesc("");
             item.setUcoin(u);
