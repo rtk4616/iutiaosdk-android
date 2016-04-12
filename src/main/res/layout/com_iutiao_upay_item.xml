@@ -13,6 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rbtn_selector"
+    android:textColor="@drawable/rbtn_textcolor_selector"
     android:button="@null"
     android:gravity="center"
     android:padding="10dp"
