@@ -70,6 +70,7 @@ public class ProfileFragment extends BaseFragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         int i = item.getItemId();
                         if (i == R.id.account_settings) {
+                            ((IUTiaoDevActivity)getActivity()).switchTo(AccountSettingsFragment.newInstance());
                         } else if (i == R.id.logout) {
                             LoginManager.getInstance().logOut();
                             getActivity().finish();
