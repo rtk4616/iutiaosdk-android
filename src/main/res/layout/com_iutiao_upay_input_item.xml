@@ -17,6 +17,7 @@
     android:button="@null"
     android:gravity="center"
     android:padding="10dp"
+    android:inputType="number"
     android:hint="其他金额">
 
 </EditText>
