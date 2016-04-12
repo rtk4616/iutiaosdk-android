@@ -43,7 +43,7 @@
         <activity
             android:name=".IUTiaoDevActivity"
             android:theme="@style/Theme.IUTiao.Transparent"
-            android:windowSoftInputMode="adjustResize|stateVisible"></activity>
+            android:windowSoftInputMode="adjustResize|stateUnspecified"></activity>
         <!--upay begin -->
         <meta-data android:name="UPAY_APPKEY" android:value="10000038"/>
         <meta-data android:name="UPAY_APPSECRET" android:value="616669C4C8B420311B313991A868ACC8"/>
