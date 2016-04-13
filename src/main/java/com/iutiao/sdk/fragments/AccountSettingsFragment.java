@@ -14,10 +14,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 
 public class AccountSettingsFragment extends Fragment {
+
+    private LinearLayout resetPwdLL;
+    private LinearLayout bindPhoneLL;
 
     public AccountSettingsFragment() {
         // Required empty public constructor
@@ -37,7 +42,22 @@ public class AccountSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_settings, container, false);
+        View v = inflater.inflate(R.layout.fragment_account_settings, container, false);
+        resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
+        resetPwdLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((IUTiaoDevActivity)getActivity()).switchTo(ResetPasswordFragment.newInstance());
+            }
+        });
+        bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
+        bindPhoneLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {// TODO: 16/4/13 newInstance
+                ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.bind_phone));
+            }
+        });
+        return v;
     }
 
 

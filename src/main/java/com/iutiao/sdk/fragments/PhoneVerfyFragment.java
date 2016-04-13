@@ -69,6 +69,11 @@ public class PhoneVerfyFragment extends Fragment {
             phoneVerfyHolder.verifyTipTv.setVisibility(View.GONE);
             phoneVerfyHolder.goSigninTv.setVisibility(View.GONE);
             phoneVerfyHolder.goEmailSignupTv.setVisibility(View.GONE);
+        } else if (action.equals(ACTIONS.bind_phone.name())) {
+            phoneVerfyHolder.nextBtn.setText("绑定");
+            phoneVerfyHolder.verifyTipTv.setVisibility(View.GONE);
+            phoneVerfyHolder.goSigninTv.setVisibility(View.GONE);
+            phoneVerfyHolder.goEmailSignupTv.setVisibility(View.GONE);
         } else {
             phoneVerfyHolder.nextBtn.setText(getString(R.string.com_iutiao_next));
             phoneVerfyHolder.verifyTipTv.setVisibility(View.VISIBLE);
@@ -94,13 +99,21 @@ public class PhoneVerfyFragment extends Fragment {
                     phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_phone));
                 } else if (action.equals(ACTIONS.register.name())) {
                     quickRegister();
-                } else {
+                } else if (action.equals(ACTIONS.bind_phone.name())) {
                     receiver = phoneVerfyHolder.getNationPhone();
+                    resendCode();
                     phoneVerfyHolder.phoneTv.setText(receiver);
-                    phoneVerfyHolder.next();
                     phoneVerfyHolder.countdownTv.startCountDown();
                     phoneVerfyHolder.hideError();
+                    phoneVerfyHolder.next();//// TODO: 16/4/13 界面转换
+                } else {
+                    receiver = phoneVerfyHolder.getNationPhone();
                     resendCode();
+                    phoneVerfyHolder.phoneTv.setText(receiver);
+                    phoneVerfyHolder.countdownTv.startCountDown();
+                    phoneVerfyHolder.hideError();
+                    phoneVerfyHolder.next();
+
                 }
             }
         });
