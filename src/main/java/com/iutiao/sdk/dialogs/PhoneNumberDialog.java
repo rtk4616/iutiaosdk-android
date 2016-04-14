@@ -105,6 +105,16 @@ public class PhoneNumberDialog extends DialogFragment {
                     public void onCancel() {
 
                     }
+
+                    @Override
+                    public void onPreExecute() {
+
+                    }
+
+                    @Override
+                    public void onExecuted() {
+
+                    }
                 });
                 HashMap<String, Object> params = new HashMap<String, Object>();
                 params.put("receiver", getPhoneNumber());

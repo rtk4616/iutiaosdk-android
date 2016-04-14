@@ -60,7 +60,7 @@ import java.util.UUID;
  * Created by yxy on 15/12/21.
  */
 public class UPayPaymentFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
-
+    // TODO: 16/4/14 progress,holder
     private final static String TAG = UPayPayment.class.getSimpleName();
     private final static int PROFILE_UPDATED = 201;
 
@@ -176,8 +176,10 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     public void updateUI() {
         // update balance
         NumberFormat formatter = new DecimalFormat("#0.00");
-        balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
-                formatter.format(getCurrentBalance())));
+        if(isAdded()){
+            balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
+                    formatter.format(getCurrentBalance())));
+        }
     }
 
     class UpdateUserProfileTask implements Runnable {
@@ -210,6 +212,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
             @Override
             public void onCancel() {
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
             }
         });
         task.execute();
@@ -449,6 +461,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             public void onCancel() {
 
             }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
+            }
         });
 
         task.execute(paymentArguments);
@@ -487,6 +509,16 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
             @Override
             public void onCancel() {
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
             }
         });
         task.execute();

@@ -15,7 +15,6 @@ import android.util.Log;
 
 import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
-import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayCallback;
@@ -180,6 +179,16 @@ public class UPayPayment implements IPayment {
 
             @Override
             public void onCancel() {}
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
+            }
         });
         task.setAction(task.ACTION_UPDATE);
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, upayResponseData);

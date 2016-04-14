@@ -117,7 +117,7 @@ public class PhoneVerfyFragment extends Fragment {
                     phoneVerfyHolder.phoneTv.setText(receiver);
                     phoneVerfyHolder.countdownTv.startCountDown();
                     phoneVerfyHolder.hideError();
-                    phoneVerfyHolder.next();//// TODO: 16/4/13 界面转换
+                    phoneVerfyHolder.next();//TODO: 16/4/13 界面转换
                 } else {
                     receiver = phoneVerfyHolder.getNationPhone();
                     resendCode();
@@ -171,6 +171,16 @@ public class PhoneVerfyFragment extends Fragment {
             public void onCancel() {
 
             }
+
+            @Override
+            public void onPreExecute() {
+                phoneVerfyHolder.showProgress();
+            }
+
+            @Override
+            public void onExecuted() {
+                phoneVerfyHolder.dismissProgress();
+            }
         });
         task.execute(p);
     }
@@ -192,6 +202,16 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onCancel() {
 
+            }
+
+            @Override
+            public void onPreExecute() {
+                phoneVerfyHolder.showProgress();
+            }
+
+            @Override
+            public void onExecuted() {
+                phoneVerfyHolder.dismissProgress();
             }
         });
         HashMap<String, Object> p = new HashMap<String, Object>() {{
@@ -221,6 +241,16 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onCancel() {
 
+            }
+
+            @Override
+            public void onPreExecute() {
+                phoneVerfyHolder.showProgress();
+            }
+
+            @Override
+            public void onExecuted() {
+                phoneVerfyHolder.dismissProgress();
             }
         });
         task.execute(params);

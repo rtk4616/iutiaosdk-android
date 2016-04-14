@@ -34,7 +34,7 @@ import com.iutiao.sdk.views.IUTTitleBar;
  */
 
 public class ProfileFragment extends BaseFragment {
-
+    // TODO: 16/4/14 progress,holder
     private IUTTitleBar titleBar;
     private TextView chargeBtn;
     private TextView balanceTv;
@@ -105,6 +105,16 @@ public class ProfileFragment extends BaseFragment {
 
             @Override
             public void onCancel() {
+
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
 
             }
         }).execute();

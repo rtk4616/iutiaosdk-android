@@ -97,6 +97,16 @@ public class EmailSignupFragment extends Fragment {
             public void onCancel() {
 
             }
+
+            @Override
+            public void onPreExecute() {
+emailSignUpHolder.showProgress();
+            }
+
+            @Override
+            public void onExecuted() {
+emailSignUpHolder.dismissProgress();
+            }
         });
         registerUserTask.execute(params);
     }

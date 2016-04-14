@@ -34,7 +34,6 @@ import com.iutiao.sdk.tasks.ChargeTask;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.zip.Inflater;
 
 /**
  * 充值U币
@@ -186,6 +185,16 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
 
             @Override
             public void onCancel() {
+
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
 
             }
         });

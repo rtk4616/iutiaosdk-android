@@ -143,4 +143,14 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         getActivity().setResult(Activity.RESULT_CANCELED, null);
         getActivity().finish();
     }
+
+    @Override
+    public void onPreExecute() {
+
+    }
+
+    @Override
+    public void onExecuted() {
+
+    }
 }

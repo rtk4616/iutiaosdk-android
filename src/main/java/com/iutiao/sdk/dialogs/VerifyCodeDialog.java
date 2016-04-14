@@ -194,6 +194,16 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
             public void onCancel() {
 
             }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
+            }
         });
         Map<String, Object> p = getParams();
         p.put("id", UserManager.getInstance().getCurrentUser().getUid());
@@ -227,6 +237,16 @@ public class VerifyCodeDialog extends DialogFragment implements View.OnClickList
 
             @Override
             public void onCancel() {
+
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
 
             }
         });
