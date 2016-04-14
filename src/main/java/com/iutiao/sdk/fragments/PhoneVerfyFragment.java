@@ -181,7 +181,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onSuccess(Object t) {
                 Toast.makeText(getActivity(), "request has been sent, please wait for the SMS", Toast.LENGTH_SHORT).show();
-// TODO: 16/4/6 跳转在此
+// TODO: 16/4/6 go verify page here (should go to verify page after sending code)
             }
 
             @Override

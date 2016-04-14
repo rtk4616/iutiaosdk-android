@@ -68,4 +68,11 @@
     <string name="com_iutiao_hint_phone">registered phone</string>
     <string name="com_iutiao_next_step">Next</string>
     <string name="com_iutiao_hint_verify_code">verify code</string>
+    <string name="com_iutiao_new_pwd">New Password</string>
+    <string name="com_iutiao_old_pwd">Current Password</string>
+    <string name="com_iutiao_reset_pwd">Reset Password</string>
+    <string name="com_iutiao_account_settings">Account Settings</string>
+    <string name="com_iutiao_settings_phone">Phone</string>
+    <string name="coom_iutiao_settings_unbind">Unbound</string>
+    <string name="com_iutiao_charge_other_amount">Other Amount</string>
 </resources>

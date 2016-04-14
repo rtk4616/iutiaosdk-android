@@ -42,7 +42,7 @@ public class AccountSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_account_settings, container, false);
+        View v = inflater.inflate(R.layout.com_iutiao_fragment_account_settings, container, false);
         resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
         resetPwdLL.setOnClickListener(new View.OnClickListener() {
             @Override

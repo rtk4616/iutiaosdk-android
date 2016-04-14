@@ -18,20 +18,18 @@
         android:id="@+id/tv_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:background="@android:drawable/ic_delete" />
 
     <TextView
+        style="@style/IUTiaoTvCommonMedium"
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:padding="0dp"
         android:layout_weight="3"
         android:gravity="center"
-        android:text="15692008232"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="@string/com_iutiao_profile_nickname" />
 
     <TextView
         android:id="@+id/tv_right"

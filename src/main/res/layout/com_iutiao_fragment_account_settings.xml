@@ -22,37 +22,17 @@
        />
 
     <TextView
+        style="@style/IUTiaoTvCommonMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:text="账号设置"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:text="@string/com_iutiao_account_settings"
+         />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:padding="12dp">-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@android:color/black"-->
-            <!--android:text="邮箱" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="right"-->
-            <!--android:text="未绑定" />-->
-    <!--</LinearLayout>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -68,13 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:text="手机" />
+            android:text="@string/com_iutiao_settings_phone" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
-            android:text="未绑定" />
+            android:text="@string/coom_iutiao_settings_unbind" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -91,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:text="修改密码" />
+            android:text="@string/com_iutiao_reset_pwd" />
 
         <TextView
             android:layout_width="match_parent"

@@ -83,4 +83,11 @@
   <string name="com_iutiao_hint_phone">输入注册手机号</string>
   <string name="com_iutiao_next_step">下一步</string>
   <string name="com_iutiao_hint_verify_code">输入手机收到的验证码</string>
+  <string name="com_iutiao_new_pwd">新密码</string>
+  <string name="com_iutiao_old_pwd">当前密码</string>
+  <string name="com_iutiao_reset_pwd">修改密码</string>
+  <string name="com_iutiao_account_settings">账号设置</string>
+  <string name="com_iutiao_settings_phone">手机</string>
+  <string name="coom_iutiao_settings_unbind">未绑定</string>
+  <string name="com_iutiao_charge_other_amount">其他金额</string>
 </resources>
