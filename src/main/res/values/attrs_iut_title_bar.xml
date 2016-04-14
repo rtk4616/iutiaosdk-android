@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016, prchance, Inc. All rights reserved.
+  ~
+  ~ You are hreby granted a non-exclusive, worldwide, royalty-free license to use,
+  ~ copy, modify, and distribute this software in source code or binary form for use
+  ~ in connection with the web services and APIs provided by PRCHANCE.
+  ~
+  -->
+
+<resources>
+    <declare-styleable name="IUTTitleBar">
+        <attr name="iut_title" format="string"/>
+        <attr name="hide_left" format="boolean"/>
+        <attr name="hide_right" format="boolean"/>
+        <attr name="left_drawable" format="reference"/>
+        <attr name="right_drawable" format="reference"/>
+    </declare-styleable>
+</resources>

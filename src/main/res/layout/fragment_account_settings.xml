@@ -8,38 +8,18 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:IUT="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="vertical"
     android:padding="@dimen/com_iutiao_activity_horizontal_margin">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <!--todo 抽取为bar-->
-        <ImageView
-            android:id="@+id/iv_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:background="@android:drawable/ic_delete"
-            android:text="@string/com_iutiao_profile_login" />
-
-        <TextView
-            android:id="@+id/tv_profile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_weight="3"
-            android:gravity="center"
-            android:text="15692008232"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
+   <com.iutiao.sdk.views.IUTTitleBar
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       IUT:hide_right="true"
+       />
 
     <TextView
         android:layout_width="match_parent"
