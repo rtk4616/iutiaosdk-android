@@ -9,23 +9,17 @@
 
 package com.iutiao.sdk.tasks;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
-import com.iutiao.sdk.R;
-
-import java.util.HashMap;
 
 /**
  * Created by yxy on 15/11/5.
  */
 
 public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params, Void, Result> {
-    private ProgressDialog progressBar;
     private IUTiaoCallback listener;
     private Exception e;
     private Context context;
@@ -40,7 +34,6 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
     public IUTiaoRequestTask(Context context, IUTiaoCallback listener) {
         this.listener = listener;
         this.context = context;
-        this.progressBar = new ProgressDialog(context);
     }
 
     public void setListener(IUTiaoCallback listener) {
@@ -50,21 +43,7 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        showProgress();
-    }
-
-    private void showProgress() {
-        this.progressBar.setCancelable(false);
-        this.progressBar.setMessage(this.context.getString(getProgressMessage()));
-        this.progressBar.show();
-    }
-
-    protected int getProgressMessage() {
-        return R.string.com_iutiao_progress_loading;
-    }
-
-    private void dismissProgress() {
-        this.progressBar.dismiss();
+        this.listener.onPreExecute();
     }
 
     @Override
@@ -84,7 +63,7 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
 
     @Override
     protected void onPostExecute(Result result) {
-        dismissProgress();
+        this.listener.onExecuted();
         if (e != null) {
             Log.e(TAG, "Request failed", e);
             this.listener.onError(e);
@@ -96,6 +75,7 @@ public abstract class IUTiaoRequestTask<Params, Result> extends AsyncTask<Params
 
     @Override
     protected void onCancelled() {
+        this.listener.onExecuted();
         this.listener.onCancel();
     }
 

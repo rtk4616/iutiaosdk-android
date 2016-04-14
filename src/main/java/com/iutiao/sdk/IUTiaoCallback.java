@@ -14,6 +14,16 @@ package com.iutiao.sdk;
  */
 public interface IUTiaoCallback<Result> {
     void onSuccess(Result t);
+
     void onError(Exception e);
+
     void onCancel();
+
+    void onPreExecute();
+
+    /*
+    Will be called when task completed, no matter what the result.
+    onSuccess/Error/Cancel can still be called after onExcuted
+     */
+    void onExecuted();
 }

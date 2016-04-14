@@ -12,7 +12,6 @@ package com.iutiao.sdk.tasks;
 import android.content.Context;
 
 import com.iutiao.sdk.IUTiaoCallback;
-import com.iutiao.sdk.R;
 
 import java.util.Map;
 
@@ -30,16 +29,6 @@ public class AppOrderTask extends IUTiaoRequestTask<Map<String, Object>, com.iut
     public AppOrderTask(Context context, IUTiaoCallback listener, String action) {
         super(context, listener);
         this.action = action;
-    }
-
-    @Override
-    protected int getProgressMessage() {
-        if (action == "create") {
-            return R.string.com_iutiao_progress_loading_create_app_order;
-        } else if (action == "retrieve") {
-            return R.string.com_iutiao_progress_loading_retrieve_app_order;
-        }
-        return super.getProgressMessage();
     }
 
     @Override
