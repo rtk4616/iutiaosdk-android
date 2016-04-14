@@ -53,8 +53,8 @@ public class AccountSettingsFragment extends Fragment {
         bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
         bindPhoneLL.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {// TODO: 16/4/13 newInstance
-                ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.bind_phone));
+            public void onClick(View v) {
+                ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newBindPhone());
             }
         });
         return v;

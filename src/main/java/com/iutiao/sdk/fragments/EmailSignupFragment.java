@@ -45,7 +45,7 @@ public class EmailSignupFragment extends Fragment {
         emailSignUpHolder.goQuickSignupTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.register));
+                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newRegister());
             }
         });
         emailSignUpHolder.goSigninTv.setOnClickListener(new View.OnClickListener() {

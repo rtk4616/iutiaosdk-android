@@ -50,6 +50,18 @@ public class PhoneVerfyFragment extends Fragment {
         return fragment;
     }
 
+    public static PhoneVerfyFragment newRegister() {
+        return PhoneVerfyFragment.newInstance(ACTIONS.register);
+    }
+
+    public static PhoneVerfyFragment newBindPhone() {
+        return PhoneVerfyFragment.newInstance(ACTIONS.bind_phone);
+    }
+
+    public static PhoneVerfyFragment newResetPwd() {
+        return PhoneVerfyFragment.newInstance(ACTIONS.reset_password);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -46,13 +46,13 @@ public class SigninFragment extends Fragment {
         signInHolder.goQuickSignupTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.register));
+                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newRegister());
             }
         });
         signInHolder.forgotPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newInstance(PhoneVerfyFragment.ACTIONS.reset_password));
+                ((IUTiaoDevActivity) getActivity()).switchTo(PhoneVerfyFragment.newResetPwd());
             }
         });
         String cacheLogEmail = IUTPreferencesUtils.getString(getActivity(),KEY_CACHE_EMAIL);
