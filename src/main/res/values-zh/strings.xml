@@ -31,7 +31,7 @@
   <string name="com_iutiao_phone_bound">手机已经被关联</string>
   <string name="com_iutiao_phone_to_bind">关联手机</string>
   <string name="com_iutiao_profile">个人信息</string>
-  <string name="com_iutiao_profile_balance">余额</string>
+  <string name="com_iutiao_profile_balance">余额:</string>
   <string name="com_iutiao_profile_bind_phone">绑定手机</string>
   <string name="com_iutiao_profile_login">登录</string>
   <string name="com_iutiao_profile_nickname">昵称</string>
@@ -90,4 +90,9 @@
   <string name="com_iutiao_settings_phone">手机</string>
   <string name="coom_iutiao_settings_unbind">未绑定</string>
   <string name="com_iutiao_charge_other_amount">其他金额</string>
+  <string name="com_iutiao_charge">充值</string>
+  <string name="com_iutiao_verify_bind_phone">绑定</string>
+  <string name="com_iiutiao_pay_alipay">支付宝</string>
+  <string name="com_iutiao_unionpay">银联卡</string>
+  <string name="com_iutiao_wechatpay">微信钱包</string>
 </resources>

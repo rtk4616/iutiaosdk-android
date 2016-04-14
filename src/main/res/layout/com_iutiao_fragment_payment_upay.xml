@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/alipay"
                 android:padding="8dp"
-                android:text="支付宝" />
+                android:text="@string/com_iiutiao_pay_alipay" />
 
             <TextView
                 android:id="@+id/tv_unionpay"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/unionpay"
                 android:padding="8dp"
-                android:text="银联卡" />
+                android:text="@string/com_iutiao_unionpay" />
 
             <TextView
                 android:id="@+id/wechatpay"
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/wechat"
                 android:padding="8dp"
-                android:text="微信钱包" />
+                android:text="@string/com_iutiao_wechatpay" />
 
         </LinearLayout>
 

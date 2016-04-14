@@ -41,13 +41,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="余额：" />
+            android:text="@string/com_iutiao_profile_balance" />
 
         <TextView
             android:id="@+id/tv_balance"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="没有U币" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="充值" />
+                android:text="@string/com_iutiao_charge" />
         </LinearLayout>
 
     </LinearLayout>

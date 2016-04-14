@@ -30,7 +30,7 @@
     <string name="com_iutiao_profile_login">Login</string>
     <string name="com_iutiao_profile_nickname">Nickname</string>
     <string name="com_iutiao_profile_uid">uid</string>
-    <string name="com_iutiao_profile_balance">Balance</string>
+    <string name="com_iutiao_profile_balance">Balance:</string>
     <string name="com_iutiao_profile_bind_phone">Bind phone</string>
     <string name="com_iutiao_phone_bound">Phone Associated</string>
     <string name="com_iutiao_phone_to_bind">Associate Phone</string>
@@ -75,4 +75,9 @@
     <string name="com_iutiao_settings_phone">Phone</string>
     <string name="coom_iutiao_settings_unbind">Unbound</string>
     <string name="com_iutiao_charge_other_amount">Other Amount</string>
+    <string name="com_iutiao_charge">Reload</string>
+    <string name="com_iutiao_verify_bind_phone">Bind</string>
+    <string name="com_iiutiao_pay_alipay">Alipay</string>
+    <string name="com_iutiao_unionpay">Unionpay</string>
+    <string name="com_iutiao_wechatpay">Wechat</string>
 </resources>

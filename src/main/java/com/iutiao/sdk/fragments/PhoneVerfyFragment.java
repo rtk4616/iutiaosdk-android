@@ -82,7 +82,7 @@ public class PhoneVerfyFragment extends Fragment {
             phoneVerfyHolder.goSigninTv.setVisibility(View.GONE);
             phoneVerfyHolder.goEmailSignupTv.setVisibility(View.GONE);
         } else if (action.equals(ACTIONS.bind_phone.name())) {
-            phoneVerfyHolder.nextBtn.setText("绑定");
+            phoneVerfyHolder.nextBtn.setText(R.string.com_iutiao_verify_bind_phone);
             phoneVerfyHolder.verifyTipTv.setVisibility(View.GONE);
             phoneVerfyHolder.goSigninTv.setVisibility(View.GONE);
             phoneVerfyHolder.goEmailSignupTv.setVisibility(View.GONE);
