@@ -80,4 +80,7 @@
     <string name="com_iiutiao_pay_alipay">Alipay</string>
     <string name="com_iutiao_unionpay">Unionpay</string>
     <string name="com_iutiao_wechatpay">Wechat</string>
+    <string name="com_iutiao_balance_suffixes">" U币"</string>
+    <string name="com_iutiao_menu_account_settings">Account Settings</string>
+    <string name="com_iutiao_menu_logout">Logout</string>
 </resources>

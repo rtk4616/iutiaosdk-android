@@ -89,7 +89,7 @@ public class ProfileFragment extends BaseFragment {
         } else {
             User user = userManager.getCurrentUser();
             titleBar.setTitle(user.getNickname());
-            balanceTv.setText(user.getBalance() + " U币");
+            balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
         }
         new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
             @Override

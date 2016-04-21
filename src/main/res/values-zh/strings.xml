@@ -95,4 +95,7 @@
   <string name="com_iiutiao_pay_alipay">支付宝</string>
   <string name="com_iutiao_unionpay">银联卡</string>
   <string name="com_iutiao_wechatpay">微信钱包</string>
+  <string name="com_iutiao_balance_suffixes">" U"</string>
+  <string name="com_iutiao_menu_account_settings">账号设置</string>
+  <string name="com_iutiao_menu_logout">退出登录</string>
 </resources>

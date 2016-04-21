@@ -20,22 +20,31 @@
         android:layout_height="wrap_content"
         />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@drawable/iutiao_yellow_selector"
-        android:clickable="true"
-        android:drawableLeft="@drawable/vip"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="冲返高达40%优惠"
-        android:textColor="#ffffff" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:background="@drawable/iutiao_yellow_selector"-->
+        <!--android:clickable="true"-->
+        <!--android:drawableLeft="@drawable/vip"-->
+        <!--android:gravity="center"-->
+        <!--android:padding="8dp"-->
+        <!--android:text="冲返高达40%优惠"-->
+        <!--android:textColor="#ffffff" />-->
+
+
+        <TextView
+            style="@style/IUTiaoTextBtnBlue"
+            android:id="@+id/chargeBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_gravity="center"
+            android:text="@string/com_iutiao_charge" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:padding="4dp">
 
         <TextView
@@ -48,19 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
 
-            <TextView
-                style="@style/IUTiaoTextBtnBlue"
-                android:id="@+id/chargeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="@string/com_iutiao_charge" />
-        </LinearLayout>
 
     </LinearLayout>
 
