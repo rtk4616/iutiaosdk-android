@@ -10,7 +10,6 @@
 package com.iutiao.sdk.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -23,11 +22,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iutiao.model.Charge;
@@ -38,6 +34,7 @@ import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
+import com.iutiao.sdk.holders.PaymentHolder;
 import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
@@ -45,7 +42,6 @@ import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
-import com.iutiao.sdk.views.BadgeView;
 
 import java.lang.ref.WeakReference;
 import java.text.DecimalFormat;
@@ -60,17 +56,10 @@ import java.util.UUID;
  * Created by yxy on 15/12/21.
  */
 public class UPayPaymentFragment extends BaseFragment implements PaymentCallback, View.OnClickListener {
-    // TODO: 16/4/14 progress,holder
     private final static String TAG = UPayPayment.class.getSimpleName();
     private final static int PROFILE_UPDATED = 201;
 
-    // UI related
-    private GridView upayItemsGV;
-    private Button paymentBtn;
-    private TextView balanceTextView;
-    private TextView paymentDescTextView;
-//    private Button refreshBtn;
-
+    private PaymentHolder paymentHolder;
     private List<UPayItem> upayItems;
     final private String payMethod = "upay";
     private UPayItemAdapter upayItemAdapter;
@@ -78,9 +67,6 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private EditText upayItemEt;
     private Double currentBalance;
     private boolean firstTime = true;
-    private BadgeView wetchatBadge;
-    private BadgeView aliBadge;
-    private BadgeView unionBadge;
 
     private static class MyHandler extends Handler {
         private WeakReference<UPayPaymentFragment> fragment;
@@ -177,7 +163,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         // update balance
         NumberFormat formatter = new DecimalFormat("#0.00");
         if(isAdded()){
-            balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
+            paymentHolder.balanceTextView.setText(getString(R.string.com_iutiao_balance_prefix,
                     formatter.format(getCurrentBalance())));
         }
     }
@@ -266,77 +252,64 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.com_iutiao_fragment_payment_upay, container, false);
+        paymentHolder = PaymentHolder.Create(getActivity());
+        return paymentHolder.root;
     }
 
     /*
      * 初始化 UI 相关的代码
      */
-    private void initUI(View view) {
+    private void initUI() {
 
-        balanceTextView = (TextView) view.findViewById(R.id.tv_balance);
-        paymentDescTextView = (TextView) view.findViewById(R.id.tv_payment_desc);
 
-        upayItemsGV = (GridView) view.findViewById(R.id.gv_upay_items);
         upayItemAdapter = new UPayItemAdapter(getActivity());
-        upayItemsGV.setAdapter(upayItemAdapter);
+        paymentHolder.upayItemsGV.setAdapter(upayItemAdapter);
 
-        paymentBtn = (Button) view.findViewById(R.id.btn_payment);
-        paymentBtn.setOnClickListener(new View.OnClickListener() {
+
+        paymentHolder.paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initPaymentArguments();
                 createChargeOrder();
             }
         });
-        final TextView wechatPayTv = (TextView) view.findViewById(R.id.wechatpay);
-        final TextView alipayTv = (TextView) view.findViewById(R.id.tv_alipay);
-        TextView unionPayTv = (TextView) view.findViewById(R.id.tv_unionpay);
-        wetchatBadge= badge(wechatPayTv);
-        aliBadge= badge(alipayTv);
-        unionBadge= badge(unionPayTv);
-        aliBadge.show();
+
+
+        paymentHolder.aliBadge.show();
 //        badgeView.hide();
-        wechatPayTv.setOnClickListener(new View.OnClickListener() {
+        paymentHolder.wechatPayTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideBadges();
-                wetchatBadge.toggle();
+                paymentHolder.hideBadges();
+                paymentHolder.wetchatBadge.toggle();
             }
         });
-        alipayTv.setOnClickListener(new View.OnClickListener() {
+        paymentHolder.alipayTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideBadges();
-                aliBadge.toggle();
+                paymentHolder.hideBadges();
+                paymentHolder.aliBadge.toggle();
             }
         });
-        unionPayTv.setOnClickListener(new View.OnClickListener() {
+        paymentHolder.unionPayTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideBadges();
-                unionBadge.toggle();
+                paymentHolder.hideBadges();
+                paymentHolder.unionBadge.toggle();
+            }
+        });
+        paymentHolder.upayTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paymentHolder.hideBadges();
+                paymentHolder.upayBadge.toggle();
             }
         });
         setCurrentBalance(UserManager.getInstance().getCurrentUser().getBalance());
         payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
     }
 
-    private void hideBadges() {
-        wetchatBadge.hide();
-        aliBadge.hide();
-        unionBadge.hide();
-    }
 
-    private BadgeView badge(View view) {
-        BadgeView badgeView = new BadgeView(getActivity(), view);
-        badgeView.setTextColor(Color.WHITE);
-        badgeView.setBackgroundResource(R.drawable.pay_sel);
-        badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        badgeView.setAlpha(1f);
-        badgeView.setBadgeMargin(0, 0);
-        return badgeView;
-    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -347,7 +320,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
         upayItemViews = new LinkedList<RadioButton>();
         initUPayItems(); // 初始化 upay 计费代码
-        initUI(view);
+        initUI();
         updateUI();
 
         new Thread(new UpdateUserProfileTask()).start();

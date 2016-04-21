@@ -83,6 +83,14 @@
                 android:drawableTop="@drawable/alipay"
                 android:padding="8dp"
                 android:text="@string/com_iiutiao_pay_alipay" />
+            <TextView
+                android:id="@+id/tv_upay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/upay_logo_bottom"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/upay" />
 
             <TextView
                 android:id="@+id/tv_unionpay"
