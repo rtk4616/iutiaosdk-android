@@ -16,6 +16,7 @@ import com.iutiao.sdk.fragments.SigninFragment;
 
 public class IUTiaoDevActivity extends AppCompatActivity {
     ImageView imageView;
+    CallbackManager callbackManager = CallbackManager.Factory.create();
 
     public static Intent newIntent(Context ctx) {
         return new Intent(ctx, IUTiaoDevActivity.class);
@@ -47,5 +48,10 @@ public class IUTiaoDevActivity extends AppCompatActivity {
 //        imageView = (ImageView) findViewById(R.id.icon_app);
 //        Info info = new Info(this);
 //        imageView.setImageDrawable(info.getAppIcon(getPackageName()));
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode,resultCode,data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

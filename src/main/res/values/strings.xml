@@ -83,4 +83,6 @@
     <string name="com_iutiao_balance_suffixes">" U币"</string>
     <string name="com_iutiao_menu_account_settings">Account Settings</string>
     <string name="com_iutiao_menu_logout">Logout</string>
+    <string name="com_iutiao_payment_qiwi">qiwi</string>
+    <string name="com_iutiao_payment_yamoney">yamoney</string>
 </resources>

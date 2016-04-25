@@ -73,40 +73,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/tv_alipay"
+            <!--<TextView-->
+                <!--android:id="@+id/tv_alipay"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableTop="@drawable/alipay"-->
+                <!--android:padding="8dp"-->
+                <!--android:text="@string/com_iiutiao_pay_alipay" />-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_unionpay"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableTop="@drawable/unionpay"-->
+                <!--android:padding="8dp"-->
+                <!--android:text="@string/com_iutiao_unionpay" />-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/wechatpay"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:drawableTop="@drawable/wechat"-->
+                <!--android:padding="8dp"-->
+                <!--android:text="@string/com_iutiao_wechatpay" />-->
+
+            <ImageView
+                android:id="@+id/tv_qiwi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/alipay"
                 android:padding="8dp"
-                android:text="@string/com_iiutiao_pay_alipay" />
-            <TextView
+                android:src="@drawable/qiwi" />
+
+            <ImageView
+                android:id="@+id/tv_yamoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:src="@drawable/yandex" />
+            <ImageView
                 android:id="@+id/tv_upay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/upay_logo_bottom"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="@string/upay" />
-
-            <TextView
-                android:id="@+id/tv_unionpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/unionpay"
-                android:padding="8dp"
-                android:text="@string/com_iutiao_unionpay" />
-
-            <TextView
-                android:id="@+id/wechatpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/wechat"
-                android:padding="8dp"
-                android:text="@string/com_iutiao_wechatpay" />
+                android:src="@drawable/upay_logo_bottom" />
 
         </LinearLayout>
 

@@ -40,6 +40,8 @@
             android:name="com.upay.billing.UpayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent" />
+        <activity android:name="com.payssion.android.sdk.PayssionActivity"
+            android:theme="@style/Theme.IUTiao.Transparent"/>
         <activity
             android:name=".IUTiaoDevActivity"
             android:theme="@style/Theme.IUTiao.Transparent"

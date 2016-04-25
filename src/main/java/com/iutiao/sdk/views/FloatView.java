@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.util.DisplayUtil;
+import com.payssion.android.sdk.PayssionActivity;
 
 public class FloatView extends RelativeLayout {
     // TODO: 16/3/28 onTouchEvent交给GestureDetector处理，更简洁灵敏
@@ -107,17 +108,9 @@ public class FloatView extends RelativeLayout {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-//                float newDist = spacing(event);
-//                if (newDist > oldDist) {
-//                    if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
-//                        state = FloatState.MOVING;// TODO: 16/4/6 move太灵敏问题
-//                    }
-//                    updateViewPosition();
-//                    oldDist = newDist;
-//                }
                 if(isMoving(event)){
                     if (state == FloatState.HOVERING || state == FloatState.DOCKING) {
-                        state = FloatState.MOVING;// TODO: 16/4/6 move太灵敏问题
+                        state = FloatState.MOVING;
                     }
                     updateViewPosition();
                 }
@@ -450,7 +443,7 @@ public class FloatView extends RelativeLayout {
                         floatView.show();
 
                     }
-                    if (activity instanceof IUTiaoDevActivity) {
+                    if (activity instanceof IUTiaoDevActivity||activity instanceof PayssionActivity) {
                         floatView.hide();
                     }
                     count++;

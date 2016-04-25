@@ -15,26 +15,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.views.BadgeView;
 
 public class PaymentHolder extends IUTViewHolder {
-    // UI related
     public GridView upayItemsGV;
     public Button paymentBtn;
     public TextView balanceTextView;
     public TextView paymentDescTextView;
     //    private Button refreshBtn;
-    public BadgeView wetchatBadge;
-    public BadgeView aliBadge;
-    public BadgeView unionBadge;
+
+//    different payment UI
+//    public TextView wechatPayTv;
+//    public BadgeView wetchatBadge;
+//    public TextView alipayTv;
+//    public BadgeView aliBadge;
+//    public TextView unionPayTv;
+//    public BadgeView unionBadge;
+    public ImageView upayTv;
     public BadgeView upayBadge;
-    public TextView wechatPayTv;
-    public TextView alipayTv;
-    public TextView unionPayTv;
-    public TextView upayTv;
+    public ImageView qiwiTv;
+    public BadgeView qiwiBadge;
+    public ImageView yamoneyTv;
+    public BadgeView yamoneyBadge;
+
+
+
+
 
     private PaymentHolder(Context context, View view) {
         super(context, view);
@@ -51,20 +62,17 @@ public class PaymentHolder extends IUTViewHolder {
         paymentDescTextView = (TextView) root.findViewById(R.id.tv_payment_desc);
         upayItemsGV = (GridView) root.findViewById(R.id.gv_upay_items);
         paymentBtn = (Button) root.findViewById(R.id.btn_payment);
-        wechatPayTv = (TextView) root.findViewById(R.id.wechatpay);
-        alipayTv = (TextView) root.findViewById(R.id.tv_alipay);
-        upayTv = (TextView) root.findViewById(R.id.tv_upay);
-        unionPayTv = (TextView) root.findViewById(R.id.tv_unionpay);
-        wetchatBadge = badge(wechatPayTv);
-        aliBadge = badge(alipayTv);
-        unionBadge = badge(unionPayTv);
+        qiwiTv = (ImageView) root.findViewById(R.id.tv_qiwi);
+        yamoneyTv = (ImageView) root.findViewById(R.id.tv_yamoney);
+        upayTv = (ImageView) root.findViewById(R.id.tv_upay);
+        qiwiBadge = badge(qiwiTv);
+        yamoneyBadge = badge(yamoneyTv);
         upayBadge = badge(upayTv);
     }
 
     public void hideBadges() {
-        wetchatBadge.hide();
-        aliBadge.hide();
-        unionBadge.hide();
+        qiwiBadge.hide();
+        yamoneyBadge.hide();
         upayBadge.hide();
     }
 
@@ -85,7 +93,7 @@ public class PaymentHolder extends IUTViewHolder {
 
     @Override
     public void showError(String errMsg) {
-        // TODO: 16/4/21  error的呈现方式
+        Toast.makeText(context, "error " + errMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
