@@ -116,7 +116,7 @@
                 android:id="@+id/tv_upay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/upay_logo_bottom" />
+                android:src="@drawable/upay" />
 
         </LinearLayout>
 
