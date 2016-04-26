@@ -4,19 +4,20 @@
     android:id="@+id/float_view"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/ivBg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:src="@drawable/bg"/>
+
     <ImageView
         android:id="@+id/ivMask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:visibility="gone"
-        android:src="@drawable/alien"/>
+        android:src="@drawable/mask"/>
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:src="@drawable/bg"/>
     <ImageView
         android:id="@+id/ivArrowInRight"
         android:layout_width="wrap_content"

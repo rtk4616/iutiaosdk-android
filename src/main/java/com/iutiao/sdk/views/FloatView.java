@@ -219,14 +219,15 @@ public class FloatView extends RelativeLayout {
             wmParams.x = (int) (x - touchStartX);
             wmParams.y = (int) (y - touchStartY);
             // 坐标约束
-            if (wmParams.x > screenWidth - wmParams.width) {
-                wmParams.x = screenWidth - wmParams.width;
+            if (wmParams.x > screenWidth - this.getMeasuredWidth()) {
+                wmParams.x = screenWidth - this.getMeasuredWidth();
             }
             if (wmParams.x < 0) {
                 wmParams.x = 0;
             }
-            if (wmParams.y > screenHeight - wmParams.height) {
-                wmParams.y = screenHeight - wmParams.height;
+            // TODO: 16/4/26 wrap_content或match_parent时wmParams.height为负
+            if (wmParams.y > screenHeight - this.getMeasuredHeight()*1.5) {
+                wmParams.y = (int) (screenHeight - this.getMeasuredHeight()*1.5);
             }
             if (wmParams.y < 0) {
                 wmParams.y = 0;
