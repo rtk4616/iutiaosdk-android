@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2016, prchance, Inc. All rights reserved.
+  ~
+  ~ You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
+  ~ copy, modify, and distribute this software in source code or binary form for use
+  ~ in connection with the web services and APIs provided by PRCHANCE.
+  ~
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:IUT="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/com_iutiao_activity_horizontal_margin">
+
+    <EditText
+        android:id="@+id/et_email_bind_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Email" />
+
+    <TextView
+        style="@style/IUTiaoTvErrorSmall"
+        android:text="@string/com_iutiao_error_invalid_email_or_phone"
+        android:id="@+id/tv_email_bind_error"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/btn_email_bind_confirm"
+        style="@style/IUTiaoTextBtnBlue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bind" />
+</LinearLayout>
+

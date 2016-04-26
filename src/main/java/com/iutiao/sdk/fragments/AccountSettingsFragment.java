@@ -31,6 +31,7 @@ public class AccountSettingsFragment extends Fragment {
     private TextView phoneBindStateTv;
     private TextView emailBindStateTv;
     private IUTTitleBar title;
+    private LinearLayout bindEmailLL;
 
     public AccountSettingsFragment() {
         // Required empty public constructor
@@ -55,6 +56,7 @@ public class AccountSettingsFragment extends Fragment {
         emailBindStateTv = (TextView) v.findViewById(R.id.tv_email_bind_state);
         resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
         bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
+        bindEmailLL = (LinearLayout) v.findViewById(R.id.ll_bind_email);
         title = (IUTTitleBar) v.findViewById(R.id.iuttb_title);
         User user = UserManager.getInstance().getCurrentUser();
         title.setTitle(user.getNickname());
@@ -71,7 +73,12 @@ public class AccountSettingsFragment extends Fragment {
         if(user.isEmail_verified()){
             emailBindStateTv.setText("已关联");
         }else{
-            // TODO: 16/4/25 绑定登陆邮箱
+            bindEmailLL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((IUTiaoDevActivity) getActivity()).switchTo(BindEmailFragment.newInstance());
+                }
+            });
         }
         resetPwdLL.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -14,23 +14,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.iutiao.model.User;
+import com.iutiao.model.OKEntity;
+import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
-import com.iutiao.sdk.views.IUTTitleBar;
+import com.iutiao.sdk.Validate;
+import com.iutiao.sdk.holders.BindEmailHolder;
+import com.iutiao.sdk.tasks.BindEmailTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BindEmailFragment extends Fragment {
 
-    private LinearLayout resetPwdLL;
-    private LinearLayout bindPhoneLL;
-    private TextView phoneBindStateTv;
-    private TextView emailBindStateTv;
-    private IUTTitleBar title;
+    private BindEmailHolder bindEmailHolder;
 
     public BindEmailFragment() {
         // Required empty public constructor
@@ -50,40 +50,53 @@ public class BindEmailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.com_iutiao_fragment_account_settings, container, false);
-        phoneBindStateTv = (TextView) v.findViewById(R.id.tv_phone_bind_state);
-        emailBindStateTv = (TextView) v.findViewById(R.id.tv_email_bind_state);
-        resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
-        bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
-        title = (IUTTitleBar) v.findViewById(R.id.iuttb_title);
-        User user = UserManager.getInstance().getCurrentUser();
-        title.setTitle(user.getNickname());
-        if(user.isPhone_verified()){
-            phoneBindStateTv.setText("已关联");
-        }else{
-            bindPhoneLL.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newBindPhone());
-                }
-            });
-        }
-        if(user.isEmail_verified()){
-            emailBindStateTv.setText("已关联");
-        }else{
-            // TODO: 16/4/25 绑定登陆邮箱
-        }
-        resetPwdLL.setOnClickListener(new View.OnClickListener() {
+        bindEmailHolder = new BindEmailHolder(getActivity(), inflater.inflate(R.layout.com_iutiao_fragment_bind_email, container, false));
+        bindEmailHolder.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!UserManager.getInstance().getCurrentUser().isEmail_verified()||!UserManager.getInstance().getCurrentUser().isPhone_verified()){
-                    Toast.makeText(getActivity(), "请先绑定手机或邮箱", Toast.LENGTH_SHORT).show();
-                }else{
-                    ((IUTiaoDevActivity)getActivity()).switchTo(ChangePasswordFragment.newInstance());
+                if (!Validate.isEmailValid(bindEmailHolder.getInputEmail())) {
+                    bindEmailHolder.showError(getString(R.string.com_iutiao_error_email_not_valid));
+                    return;
                 }
+                bindEmail();
             }
         });
-        return v;
+        return bindEmailHolder.root;
+    }
+
+    private void bindEmail() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", UserManager.getInstance().getCurrentUser().getUid());
+        params.put("email", bindEmailHolder.getInputEmail());
+        BindEmailTask task = new BindEmailTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+            @Override
+            public void onSuccess(OKEntity t) {
+                Toast.makeText(getActivity(), "绑定链接已通过邮件发送，请前往邮箱进行绑定操作～", Toast.LENGTH_LONG).show();
+//                LoginManager.getInstance().logOut();
+                ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
+            }
+
+            @Override
+            public void onError(Exception e) {
+                bindEmailHolder.showError(e.getMessage());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPreExecute() {
+                bindEmailHolder.showProgress();
+            }
+
+            @Override
+            public void onExecuted() {
+                bindEmailHolder.dismissProgress();
+            }
+        });
+        task.execute(params);
     }
 
 
@@ -91,4 +104,5 @@ public class BindEmailFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
+
 }

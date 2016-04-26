@@ -15,14 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.iutiao.sdk.R;
-import com.iutiao.sdk.views.IUTTitleBar;
 
 public class BindEmailHolder extends IUTViewHolder {
-    public EditText pwd1Et;
-    public EditText pwd2Et;
+    public EditText emailEt;
     public TextView confirmBtn;
     public TextView errorTv;
-    public IUTTitleBar title;
 
     public BindEmailHolder(Context context, View root) {
         super(context, root);
@@ -44,19 +41,13 @@ public class BindEmailHolder extends IUTViewHolder {
         errorTv.setVisibility(View.GONE);
     }
 
-    public String getInputPwd1() {
-        return pwd1Et.getText().toString().trim();
-    }
-
-    public String getInputPwd2() {
-        return pwd2Et.getText().toString().trim();
+    public String getInputEmail() {
+        return emailEt.getText().toString().trim();
     }
 
     private void findView(View root) {
-        pwd1Et = (EditText) root.findViewById(R.id.et_pwd1);
-        pwd2Et = (EditText) root.findViewById(R.id.et_pwd2);
-        confirmBtn = (TextView) root.findViewById(R.id.btn_confirm);
-        errorTv = (TextView) root.findViewById(R.id.tv_reset_pwd_error);
-        title = (IUTTitleBar) root.findViewById(R.id.iuttb_title);
+        emailEt = (EditText) root.findViewById(R.id.et_email_bind_email);
+        confirmBtn = (TextView) root.findViewById(R.id.btn_email_bind_confirm);
+        errorTv = (TextView) root.findViewById(R.id.tv_email_bind_error);
     }
 }
