@@ -13,7 +13,7 @@
         android:hint="@string/com_iutiao_register_username"
         android:id="@+id/et_email_signup_email" />
 
-    <EditText
+    <com.iutiao.sdk.views.PasswordEditText
         style="@style/IUTiaoEtCommon"
         android:inputType="textPassword"
         android:hint="@string/com_iutiao_hint_register_password"

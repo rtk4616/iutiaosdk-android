@@ -28,13 +28,14 @@
             android:focusableInTouchMode="true"/>
     </LinearLayout>
 
-
-    <EditText
+    <com.iutiao.sdk.views.PasswordEditText
         android:id="@+id/et_signin_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         style="@style/IUTiaoEtCommon"
         android:layout_weight="1"
         android:hint="@string/com_iutiao_login_password_hint"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"/>
 
     <TextView
         android:id="@+id/tv_signin_error"
