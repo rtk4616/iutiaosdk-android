@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Email" />
+        android:hint="@string/com_iutiao_bind_emial_hint" />
 
     <TextView
         style="@style/IUTiaoTvErrorSmall"

@@ -61,7 +61,7 @@ public class AccountSettingsFragment extends Fragment {
         User user = UserManager.getInstance().getCurrentUser();
         title.setTitle(user.getNickname());
         if(user.isPhone_verified()){
-            phoneBindStateTv.setText("已关联");
+            phoneBindStateTv.setText(R.string.com_iutiao_tips_bound);
         }else{
             bindPhoneLL.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +71,7 @@ public class AccountSettingsFragment extends Fragment {
             });
         }
         if(user.isEmail_verified()){
-            emailBindStateTv.setText("已关联");
+            emailBindStateTv.setText(R.string.com_iutiao_tips_bound);
         }else{
             bindEmailLL.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,7 +84,7 @@ public class AccountSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!UserManager.getInstance().getCurrentUser().isEmail_verified()||!UserManager.getInstance().getCurrentUser().isPhone_verified()){
-                    Toast.makeText(getActivity(), "请先绑定手机或邮箱", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.com_iutiao_tips_ask_bind, Toast.LENGTH_SHORT).show();
                 }else{
                     ((IUTiaoDevActivity)getActivity()).switchTo(ChangePasswordFragment.newInstance());
                 }

@@ -85,4 +85,10 @@
     <string name="com_iutiao_menu_logout">Logout</string>
     <string name="com_iutiao_payment_qiwi">qiwi</string>
     <string name="com_iutiao_payment_yamoney">yamoney</string>
+    <string name="com_iutiao_popup_tips">Tips</string>
+    <string name="com_iutiao_popup_logout_ask">Logout?</string>
+    <string name="com_iutiao_cancel">Cancel</string>
+    <string name="com_iutiao_tips_bound">Bound</string>
+    <string name="com_iutiao_tips_ask_bind">Please bind your phone or email first.</string>
+    <string name="com_iutiao_bind_emial_hint">Email</string>
 </resources>

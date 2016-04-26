@@ -65,9 +65,9 @@ public class ProfileFragment extends BaseFragment {
                             ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
                         } else if (i == R.id.logout) {
                             AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-                            builder.setTitle("提示"); //设置标题
-                            builder.setMessage("退出登录?"); //设置内容
-                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+                            builder.setTitle(R.string.com_iutiao_popup_tips); //设置标题
+                            builder.setMessage(R.string.com_iutiao_popup_logout_ask); //设置内容
+                            builder.setPositiveButton(R.string.com_iutiao_confirm, new DialogInterface.OnClickListener() { //设置确定按钮
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss(); //关闭dialog
@@ -75,7 +75,7 @@ public class ProfileFragment extends BaseFragment {
                                     getActivity().finish();
                                 }
                             });
-                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+                            builder.setNegativeButton(R.string.com_iutiao_cancel, new DialogInterface.OnClickListener() { //设置取消按钮
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
