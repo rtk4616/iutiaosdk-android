@@ -15,9 +15,11 @@ import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
+import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.holders.PhoneVerifyHolder;
 import com.iutiao.sdk.login.LoginManager;
+import com.iutiao.sdk.tasks.BindPhoneTask;
 import com.iutiao.sdk.tasks.RegisterPhoneTask;
 import com.iutiao.sdk.tasks.ResetPasswordTask;
 import com.iutiao.sdk.tasks.SMSTask;
@@ -143,11 +145,50 @@ public class PhoneVerfyFragment extends Fragment {
                     phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 } else if (action.equals(ACTIONS.reset_password.name()) && !TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
                     resetPassword();
+                    phoneVerfyHolder.hideError();
                 } else {
+                    // TODO: 16/4/26 code length
+                    bindPhone();
+                    phoneVerfyHolder.hideError();
                 }
             }
         });
         return phoneVerfyHolder.root;
+    }
+
+    private void bindPhone() {
+        BindPhoneTask task = new BindPhoneTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+            @Override
+            public void onSuccess(OKEntity t) {
+                Toast.makeText(getActivity(), "Profile updated", Toast.LENGTH_SHORT).show();
+                ((IUTiaoDevActivity)getActivity()).switchTo(AccountSettingsFragment.newInstance());
+            }
+
+            @Override
+            public void onError(Exception e) {
+                phoneVerfyHolder.showError(e.getMessage());
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onPreExecute() {
+
+            }
+
+            @Override
+            public void onExecuted() {
+
+            }
+        });
+        HashMap<String, Object> p = new HashMap<>();
+        p.put("phone_number", receiver);
+        p.put("code", phoneVerfyHolder.getCode());
+        p.put("id", UserManager.getInstance().getCurrentUser().getUid());
+        task.execute(p);
     }
 
     private void quickRegister() {
