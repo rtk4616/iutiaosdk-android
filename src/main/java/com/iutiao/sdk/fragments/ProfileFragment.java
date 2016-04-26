@@ -9,6 +9,8 @@
 
 package com.iutiao.sdk.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,8 +64,25 @@ public class ProfileFragment extends BaseFragment {
                         if (i == R.id.account_settings) {
                             ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
                         } else if (i == R.id.logout) {
-                            LoginManager.getInstance().logOut();
-                            getActivity().finish();
+                            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                            builder.setTitle("提示"); //设置标题
+                            builder.setMessage("退出登录?"); //设置内容
+                            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() { //设置确定按钮
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss(); //关闭dialog
+                                    LoginManager.getInstance().logOut();
+                                    getActivity().finish();
+                                }
+                            });
+                            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() { //设置取消按钮
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.create().show();
+
                         }
                         return false;
                     }

@@ -16,6 +16,7 @@
     android:padding="@dimen/com_iutiao_activity_horizontal_margin">
 
    <com.iutiao.sdk.views.IUTTitleBar
+       android:id="@+id/iuttb_title"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        IUT:hide_right="true"
@@ -51,6 +52,27 @@
             android:text="@string/com_iutiao_settings_phone" />
 
         <TextView
+            android:id="@+id/tv_phone_bind_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/coom_iutiao_settings_unbind" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_bind_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="@string/com_iutiao_settings_phone" />
+
+        <TextView
+            android:id="@+id/tv_email_bind_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"

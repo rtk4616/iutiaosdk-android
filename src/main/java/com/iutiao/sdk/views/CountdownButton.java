@@ -66,7 +66,7 @@ public class CountdownButton extends TextView {
         @Override
         protected void onPostExecute(Void aVoid) {
             this.countTv.setEnabled(true);
-            this.countTv.setText(resendText);// TODO: 16/4/5  spannable
+            this.countTv.setText(resendText);
             this.countTv.setEnabled(true);
         }
 

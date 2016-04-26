@@ -74,7 +74,6 @@ public class PhoneVerfyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // TODO: 16/4/6 捋一捋,封装界面
         phoneVerfyHolder = PhoneVerifyHolder.Create(context);
         if (action.equals(ACTIONS.reset_password.name())) {
             phoneVerfyHolder.pwdEt.setVisibility(View.VISIBLE);
@@ -117,7 +116,7 @@ public class PhoneVerfyFragment extends Fragment {
                     phoneVerfyHolder.phoneTv.setText(receiver);
                     phoneVerfyHolder.countdownTv.startCountDown();
                     phoneVerfyHolder.hideError();
-                    phoneVerfyHolder.next();//TODO: 16/4/13 界面转换
+                    phoneVerfyHolder.next();
                 } else {
                     receiver = phoneVerfyHolder.getNationPhone();
                     resendCode();
@@ -230,7 +229,7 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), R.string.com_iutiao_tips_success_reset_pwd, Toast.LENGTH_LONG).show();
-                getActivity().finish();
+                ((IUTiaoDevActivity)getActivity()).switchTo(SigninFragment.newInstance());
             }
 
             @Override

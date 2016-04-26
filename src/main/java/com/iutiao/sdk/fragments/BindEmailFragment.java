@@ -24,7 +24,7 @@ import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.views.IUTTitleBar;
 
-public class AccountSettingsFragment extends Fragment {
+public class BindEmailFragment extends Fragment {
 
     private LinearLayout resetPwdLL;
     private LinearLayout bindPhoneLL;
@@ -32,12 +32,12 @@ public class AccountSettingsFragment extends Fragment {
     private TextView emailBindStateTv;
     private IUTTitleBar title;
 
-    public AccountSettingsFragment() {
+    public BindEmailFragment() {
         // Required empty public constructor
     }
 
-    public static AccountSettingsFragment newInstance() {
-        AccountSettingsFragment fragment = new AccountSettingsFragment();
+    public static BindEmailFragment newInstance() {
+        BindEmailFragment fragment = new BindEmailFragment();
         return fragment;
     }
 

@@ -9,15 +9,8 @@
 
 package com.iutiao.sdk;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-
-import com.iutiao.model.User;
-import com.iutiao.sdk.login.LoginManager;
 
 import java.util.HashMap;
 import java.util.Map;
