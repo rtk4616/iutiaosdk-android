@@ -113,20 +113,9 @@ public class PhoneVerfyFragment extends Fragment {
                 } else if (action.equals(ACTIONS.register.name())) {
                     quickRegister();
                 } else if (action.equals(ACTIONS.bind_phone.name())) {
-                    receiver = phoneVerfyHolder.getNationPhone();
                     resendCode();
-                    phoneVerfyHolder.phoneTv.setText(receiver);
-                    phoneVerfyHolder.countdownTv.startCountDown();
-                    phoneVerfyHolder.hideError();
-                    phoneVerfyHolder.next();
                 } else {
-                    receiver = phoneVerfyHolder.getNationPhone();
                     resendCode();
-                    phoneVerfyHolder.phoneTv.setText(receiver);
-                    phoneVerfyHolder.countdownTv.startCountDown();
-                    phoneVerfyHolder.hideError();
-                    phoneVerfyHolder.next();
-
                 }
             }
         });
@@ -141,7 +130,10 @@ public class PhoneVerfyFragment extends Fragment {
             public void onClick(View v) {
                 if (TextUtils.isEmpty(phoneVerfyHolder.getCode())) {
                     phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_verify_code));
-                } else if (action.equals(ACTIONS.reset_password.name()) && TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
+                }else if(phoneVerfyHolder.getCode().length()<6){
+                    phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_code_length));
+                }
+                else if (action.equals(ACTIONS.reset_password.name()) && TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
                     phoneVerfyHolder.showError(getString(R.string.com_iutiao_error_empty_pwd));
                 } else if (action.equals(ACTIONS.reset_password.name()) && !TextUtils.isEmpty(phoneVerfyHolder.getPwd())) {
                     resetPassword();
@@ -231,7 +223,11 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onSuccess(Object t) {
                 Toast.makeText(getActivity(), "request has been sent, please wait for the SMS", Toast.LENGTH_SHORT).show();
-// TODO: 16/4/6 go verify page here (should go to verify page after sending code)
+                receiver = phoneVerfyHolder.getNationPhone();
+                phoneVerfyHolder.phoneTv.setText(receiver);
+                phoneVerfyHolder.countdownTv.startCountDown();
+                phoneVerfyHolder.hideError();
+                phoneVerfyHolder.next();
             }
 
             @Override
