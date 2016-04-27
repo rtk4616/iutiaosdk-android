@@ -60,6 +60,27 @@
             android:gravity="right" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="@string/com_iutiao_profile_nickname" />
+
+        <TextView
+            android:id="@+id/tv_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|center_vertical"
+            android:drawablePadding="12dp"
+            android:drawableRight="@drawable/go" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_bind_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

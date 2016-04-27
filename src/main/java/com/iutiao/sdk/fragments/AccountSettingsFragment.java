@@ -14,8 +14,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iutiao.model.User;
@@ -23,19 +21,12 @@ import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
+import com.iutiao.sdk.holders.AccountSettingsHolder;
 import com.iutiao.sdk.tasks.UserProfileTask;
-import com.iutiao.sdk.views.IUTTitleBar;
 
 public class AccountSettingsFragment extends Fragment {
 
-    private LinearLayout resetPwdLL;
-    private LinearLayout bindPhoneLL;
-    private TextView phoneBindStateTv;
-    private TextView emailBindStateTv;
-    private TextView uidTv;
-    private TextView balanceTv;
-    private IUTTitleBar title;
-    private LinearLayout bindEmailLL;
+private AccountSettingsHolder accountSettingsHolder;
 
     public AccountSettingsFragment() {
         // Required empty public constructor
@@ -55,26 +46,53 @@ public class AccountSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.com_iutiao_fragment_account_settings, container, false);
-        phoneBindStateTv = (TextView) v.findViewById(R.id.tv_phone_bind_state);
-        emailBindStateTv = (TextView) v.findViewById(R.id.tv_email_bind_state);
-        uidTv= (TextView) v.findViewById(R.id.tv_uid);
-        balanceTv = (TextView) v.findViewById(R.id.tv_balance);
-        resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
-        bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
-        bindEmailLL = (LinearLayout) v.findViewById(R.id.ll_bind_email);
-        title = (IUTTitleBar) v.findViewById(R.id.iuttb_title);
+        accountSettingsHolder = AccountSettingsHolder.Create(getActivity());
+        updateProfile();
+        return accountSettingsHolder.root;
+    }
+
+    private void updateProfile() {
         User currentUser = UserManager.getInstance().getCurrentUser();
-        title.setTitle(currentUser.getNickname());
-        uidTv.setText(currentUser.getUid());
+        accountSettingsHolder.title.setTitle(currentUser.getNickname());
+        accountSettingsHolder.uidTv.setText(currentUser.getUid());
         if(currentUser.isPhone_verified()){
-            phoneBindStateTv.setText(R.string.com_iutiao_tips_bound);
+            accountSettingsHolder.phoneBindStateTv.setText(R.string.com_iutiao_tips_bound);
+            accountSettingsHolder.phoneBindStateTv.setOnClickListener(null);
+            accountSettingsHolder.phoneBindStateTv.setCompoundDrawables(null, null, null, null);
+            accountSettingsHolder.phoneBindStateTv.setCompoundDrawables(null, null, null, null);
+        }else{
+            accountSettingsHolder.bindPhoneLL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newBindPhone());
+                }
+            });
         }
         if(currentUser.isEmail_verified()){
-            emailBindStateTv.setText(R.string.com_iutiao_tips_bound);
+            accountSettingsHolder.emailBindStateTv.setText(R.string.com_iutiao_tips_bound);
+            accountSettingsHolder.emailBindStateTv.setOnClickListener(null);
+            accountSettingsHolder.emailBindStateTv.setCompoundDrawables(null, null, null, null);
+        }else{
+            accountSettingsHolder.bindEmailLL.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((IUTiaoDevActivity) getActivity()).switchTo(BindEmailFragment.newInstance());
+                }
+            });
         }
-        balanceTv.setText(currentUser.getBalance()+getString(R.string.com_iutiao_balance_suffixes));
-        return v;
+        accountSettingsHolder.resetPwdLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserManager.getInstance().getCurrentUser().isEmail_verified() || UserManager.getInstance().getCurrentUser().isPhone_verified()) {
+                    ((IUTiaoDevActivity) getActivity()).switchTo(ChangePasswordFragment.newInstance());
+                } else {
+                    Toast.makeText(getActivity(), R.string.com_iutiao_tips_ask_bind, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        accountSettingsHolder.balanceTv.setText(currentUser.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
+        accountSettingsHolder.nicknameTv.setText(currentUser.getNickname());
+//        accountSettingsHolder.nicknameTv.setCompoundDrawables(null, null, null, null);
     }
 
     @Override
@@ -83,38 +101,7 @@ public class AccountSettingsFragment extends Fragment {
         new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User user) {
-                title.setTitle(user.getNickname());
-                balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
-                if(user.isPhone_verified()){
-                    phoneBindStateTv.setText(R.string.com_iutiao_tips_bound);
-                }else{
-                    bindPhoneLL.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((IUTiaoDevActivity)getActivity()).switchTo(PhoneVerfyFragment.newBindPhone());
-                        }
-                    });
-                }
-                if(user.isEmail_verified()){
-                    emailBindStateTv.setText(R.string.com_iutiao_tips_bound);
-                }else{
-                    bindEmailLL.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            ((IUTiaoDevActivity) getActivity()).switchTo(BindEmailFragment.newInstance());
-                        }
-                    });
-                }
-                resetPwdLL.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (UserManager.getInstance().getCurrentUser().isEmail_verified() || UserManager.getInstance().getCurrentUser().isPhone_verified()) {
-                            ((IUTiaoDevActivity) getActivity()).switchTo(ChangePasswordFragment.newInstance());
-                        } else {
-                            Toast.makeText(getActivity(), R.string.com_iutiao_tips_ask_bind, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                updateProfile();
             }
 
             @Override
