@@ -16,12 +16,12 @@ import android.widget.TextView;
 
 import com.iutiao.sdk.R;
 
-public class BindEmailHolder extends IUTViewHolder {
+public class SimpleInputHolder extends IUTViewHolder {
     public EditText emailEt;
     public TextView confirmBtn;
     public TextView errorTv;
 
-    public BindEmailHolder(Context context, View root) {
+    public SimpleInputHolder(Context context, View root) {
         super(context, root);
     }
 
@@ -41,7 +41,7 @@ public class BindEmailHolder extends IUTViewHolder {
         errorTv.setVisibility(View.GONE);
     }
 
-    public String getInputEmail() {
+    public String getInput() {
         return emailEt.getText().toString().trim();
     }
 

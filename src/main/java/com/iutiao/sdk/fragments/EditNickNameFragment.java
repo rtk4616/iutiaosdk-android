@@ -16,28 +16,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.iutiao.model.OKEntity;
+import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
-import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.holders.SimpleInputHolder;
-import com.iutiao.sdk.tasks.BindEmailTask;
+import com.iutiao.sdk.tasks.UpdateUserTask;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class BindEmailFragment extends Fragment {
+public class EditNickNameFragment extends Fragment {
 
     private SimpleInputHolder simpleInputHolder;
 
-    public BindEmailFragment() {
+    public EditNickNameFragment() {
         // Required empty public constructor
     }
 
-    public static BindEmailFragment newInstance() {
-        BindEmailFragment fragment = new BindEmailFragment();
+    public static EditNickNameFragment newInstance() {
+        EditNickNameFragment fragment = new EditNickNameFragment();
         return fragment;
     }
 
@@ -54,26 +53,30 @@ public class BindEmailFragment extends Fragment {
         simpleInputHolder.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Validate.isEmailValid(simpleInputHolder.getInput())) {
-                    simpleInputHolder.showError(getString(R.string.com_iutiao_error_email_not_valid));
+                if (simpleInputHolder.getInput().length()<6) {
+                    simpleInputHolder.showError("用户名过短");
+                    return;
+                }else if(simpleInputHolder.getInput().length()>50){
+                    simpleInputHolder.showError("用户名过长");
                     return;
                 }
-                bindEmail();
+                updateUser();
             }
         });
         return simpleInputHolder.root;
     }
 
-    private void bindEmail() {
+    private void updateUser() {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", UserManager.getInstance().getCurrentUser().getUid());
-        params.put("email", simpleInputHolder.getInput());
-        BindEmailTask task = new BindEmailTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+        params.put("nickname", simpleInputHolder.getInput());
+        UpdateUserTask task = new UpdateUserTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
-            public void onSuccess(OKEntity t) {
-                Toast.makeText(getActivity(), "绑定链接已通过邮件发送，请前往邮箱进行绑定操作～", Toast.LENGTH_LONG).show();
-//                LoginManager.getInstance().logOut();
+            public void onSuccess(User user) {
+                Toast.makeText(getActivity(), "昵称已修改", Toast.LENGTH_LONG).show();
+                UserManager.getInstance().setCurrentUser(user);
                 ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
+
             }
 
             @Override
