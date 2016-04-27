@@ -34,18 +34,20 @@
 
 
         <TextView
+
             style="@style/IUTiaoTextBtnBlue"
             android:id="@+id/chargeBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:layout_gravity="center"
             android:text="@string/com_iutiao_reload_your_balance" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp">
+        android:layout_marginBottom="4dp">
 
         <TextView
             android:layout_width="wrap_content"

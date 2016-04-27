@@ -32,11 +32,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+
         android:background="@android:drawable/divider_horizontal_bright"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:padding="12dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
     <LinearLayout
         android:id="@+id/ll_uid"
@@ -74,8 +76,8 @@
             android:id="@+id/tv_phone_bind_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="@string/coom_iutiao_settings_unbind" />
+            android:gravity="right|center_vertical"
+            android:drawableRight="@drawable/go" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_bind_email"
@@ -94,8 +96,27 @@
             android:id="@+id/tv_email_bind_state"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text="@string/coom_iutiao_settings_unbind" />
+            android:gravity="right|center_vertical"
+            android:drawableRight="@drawable/go" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/com_iutiao_profile_balance" />
+
+        <TextView
+            android:id="@+id/tv_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4U"/>
+
+
+
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -117,8 +138,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:text=">" />
+            android:gravity="right|center_vertical"
+            android:drawableRight="@drawable/go" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
