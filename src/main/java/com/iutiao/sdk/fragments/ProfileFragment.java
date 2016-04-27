@@ -116,7 +116,7 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void onSuccess(User user) {
                 profileHolder.titleBar.setTitle(user.getNickname());
-                profileHolder.balanceTv.setText(user.getBalance() + " U币");
+                profileHolder.balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
             }
 
             @Override

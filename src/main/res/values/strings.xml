@@ -73,14 +73,14 @@
     <string name="com_iutiao_reset_pwd">Reset Password</string>
     <string name="com_iutiao_account_settings">Account Settings</string>
     <string name="com_iutiao_settings_phone">Phone</string>
-    <string name="coom_iutiao_settings_unbind">Unbound</string>
+    <string name="coom_iutiao_settings_unbind">Unverified</string>
     <string name="com_iutiao_charge_other_amount">Other Amount</string>
     <string name="com_iutiao_charge">Reload</string>
     <string name="com_iutiao_verify_bind_phone">Bind</string>
     <string name="com_iiutiao_pay_alipay">Alipay</string>
     <string name="com_iutiao_unionpay">Unionpay</string>
     <string name="com_iutiao_wechatpay">Wechat</string>
-    <string name="com_iutiao_balance_suffixes">" U币"</string>
+    <string name="com_iutiao_balance_suffixes">" U"</string>
     <string name="com_iutiao_menu_account_settings">Account Settings</string>
     <string name="com_iutiao_menu_logout">Logout</string>
     <string name="com_iutiao_payment_qiwi">qiwi</string>
@@ -88,7 +88,9 @@
     <string name="com_iutiao_popup_tips">Tips</string>
     <string name="com_iutiao_popup_logout_ask">Logout?</string>
     <string name="com_iutiao_cancel">Cancel</string>
-    <string name="com_iutiao_tips_bound">Bound</string>
+    <string name="com_iutiao_tips_bound">Verified</string>
     <string name="com_iutiao_tips_ask_bind">Please bind your phone or email first.</string>
     <string name="com_iutiao_bind_emial_hint">Email</string>
+    <string name="com_iutiao_error_code_length">Code lengh must be over 6 letters</string>
+    <string name="com_iutiao_account_uid">UID</string>
 </resources>

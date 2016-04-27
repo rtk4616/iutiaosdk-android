@@ -103,7 +103,9 @@
   <string name="com_iutiao_popup_tips">提示</string>
   <string name="com_iutiao_popup_logout_ask">退出登录?</string>
   <string name="com_iutiao_cancel">取消</string>
-  <string name="com_iutiao_tips_bound">已关联</string>
+  <string name="com_iutiao_tips_bound">已绑定</string>
   <string name="com_iutiao_tips_ask_bind">请先绑定手机或邮箱</string>
   <string name="com_iutiao_bind_emial_hint">Email</string>
+  <string name="com_iutiao_error_code_length">验证码长度至少6位</string>
+  <string name="com_iutiao_account_uid">UID</string>
 </resources>

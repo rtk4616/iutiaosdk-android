@@ -39,6 +39,25 @@
         android:layout_height="1dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
     <LinearLayout
+        android:id="@+id/ll_uid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:text="@string/com_iutiao_account_uid" />
+
+        <TextView
+            android:id="@+id/tv_uid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right" />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_bind_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
