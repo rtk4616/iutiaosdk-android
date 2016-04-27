@@ -33,6 +33,7 @@ public class AccountSettingsFragment extends Fragment {
     private TextView phoneBindStateTv;
     private TextView emailBindStateTv;
     private TextView uidTv;
+    private TextView balanceTv;
     private IUTTitleBar title;
     private LinearLayout bindEmailLL;
 
@@ -58,6 +59,7 @@ public class AccountSettingsFragment extends Fragment {
         phoneBindStateTv = (TextView) v.findViewById(R.id.tv_phone_bind_state);
         emailBindStateTv = (TextView) v.findViewById(R.id.tv_email_bind_state);
         uidTv= (TextView) v.findViewById(R.id.tv_uid);
+        balanceTv = (TextView) v.findViewById(R.id.tv_balance);
         resetPwdLL = (LinearLayout) v.findViewById(R.id.ll_reset_pwd);
         bindPhoneLL = (LinearLayout) v.findViewById(R.id.ll_bind_phone);
         bindEmailLL = (LinearLayout) v.findViewById(R.id.ll_bind_email);
@@ -71,6 +73,7 @@ public class AccountSettingsFragment extends Fragment {
         if(currentUser.isEmail_verified()){
             emailBindStateTv.setText(R.string.com_iutiao_tips_bound);
         }
+        balanceTv.setText(currentUser.getBalance()+getString(R.string.com_iutiao_balance_suffixes));
         return v;
     }
 
@@ -81,6 +84,7 @@ public class AccountSettingsFragment extends Fragment {
             @Override
             public void onSuccess(User user) {
                 title.setTitle(user.getNickname());
+                balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
                 if(user.isPhone_verified()){
                     phoneBindStateTv.setText(R.string.com_iutiao_tips_bound);
                 }else{
