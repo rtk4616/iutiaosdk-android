@@ -94,6 +94,12 @@ private AccountSettingsHolder accountSettingsHolder;
                 ((IUTiaoDevActivity) getActivity()).switchTo(EditNickNameFragment.newInstance());
             }
         });
+        accountSettingsHolder.balanceLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((IUTiaoDevActivity) getActivity()).switchTo(UPayPaymentFragment.newInstance());
+            }
+        });
         accountSettingsHolder.balanceTv.setText(currentUser.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
         accountSettingsHolder.nicknameTv.setText(currentUser.getNickname());
 //        accountSettingsHolder.nicknameTv.setCompoundDrawables(null, null, null, null);
