@@ -96,6 +96,6 @@
     <string name="com_iutiao_account_uid">UID</string>
     <string name="com_iutiao_tips_verify_email">Please open the link in the email to verify~</string>
     <string name="com_iutiao_tips_nickname_modified">Nickname has been modified</string>
-    <string name="com_iutiao_username_error_tooshort">Nickname lengh must be over 6 letters</string>
+    <string name="com_iutiao_username_error_tooshort">Nickname lengh must be over 3 letters</string>
     <string name="com_iutiao_error_username_toolong">Nickname lengh can not be over 50 letters</string>
 </resources>
