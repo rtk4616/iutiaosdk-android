@@ -123,6 +123,7 @@
             android:drawableRight="@drawable/go" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ll_balance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp">

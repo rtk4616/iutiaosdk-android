@@ -55,11 +55,12 @@ public class EditNickNameFragment extends Fragment {
 
     private void initUIAndListener() {
         simpleInputHolder.inputEt.setHint("Nickname");
+        simpleInputHolder.inputEt.setText(UserManager.getInstance().getCurrentUser().getNickname());
         simpleInputHolder.confirmBtn.setText("Confirm");
         simpleInputHolder.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (simpleInputHolder.getInput().length()<6) {
+                if (simpleInputHolder.getInput().length()<3) {
                     simpleInputHolder.showError(getString(R.string.com_iutiao_username_error_tooshort));
                     return;
                 }else if(simpleInputHolder.getInput().length()>50){

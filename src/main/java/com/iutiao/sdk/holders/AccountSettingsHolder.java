@@ -30,6 +30,7 @@ public class AccountSettingsHolder extends IUTViewHolder {
     public IUTTitleBar title;
     public LinearLayout bindEmailLL;
     public LinearLayout nicknameLL;
+    public LinearLayout balanceLL;
 
     private AccountSettingsHolder(Context context, View view) {
         super(context, view);
@@ -51,6 +52,7 @@ public class AccountSettingsHolder extends IUTViewHolder {
         bindPhoneLL = (LinearLayout) root.findViewById(R.id.ll_bind_phone);
         bindEmailLL = (LinearLayout) root.findViewById(R.id.ll_bind_email);
         nicknameLL = (LinearLayout) root.findViewById(R.id.ll_nickname);
+        balanceLL = (LinearLayout) root.findViewById(R.id.ll_balance);
         title = (IUTTitleBar) root.findViewById(R.id.iuttb_title);
     }
 
