@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
@@ -124,7 +123,6 @@ public class FloatView extends RelativeLayout {
                     if (onClickCallback != null) {
                         onClickCallback.onClick();
                     }
-                    Toast.makeText(mContext, "click", Toast.LENGTH_SHORT).show();
                 }
                 if (state == FloatState.MOVING || state == FloatState.HOVERING) {
                     state = FloatState.HOVERING;
