@@ -108,7 +108,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         this.amount = amount;
     }
 
-    private String amount = "0"; // upay 只有计费代码
+    private String amount = "10.0"; // upay 只有计费代码
 
     public String getOrderid() {
         return orderid;
@@ -299,6 +299,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 paymentHolder.hideBadges();
                 paymentHolder.upayBadge.toggle();
                 payMethod = "upay";
+                setAmount("0");
                 payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
