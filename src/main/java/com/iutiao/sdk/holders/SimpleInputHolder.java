@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.iutiao.sdk.R;
 
 public class SimpleInputHolder extends IUTViewHolder {
-    public EditText emailEt;
+    public EditText inputEt;
     public TextView confirmBtn;
     public TextView errorTv;
 
@@ -42,11 +42,11 @@ public class SimpleInputHolder extends IUTViewHolder {
     }
 
     public String getInput() {
-        return emailEt.getText().toString().trim();
+        return inputEt.getText().toString().trim();
     }
 
     private void findView(View root) {
-        emailEt = (EditText) root.findViewById(R.id.et_email_bind_email);
+        inputEt = (EditText) root.findViewById(R.id.et_email_bind_email);
         confirmBtn = (TextView) root.findViewById(R.id.btn_email_bind_confirm);
         errorTv = (TextView) root.findViewById(R.id.tv_email_bind_error);
     }

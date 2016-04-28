@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
@@ -50,20 +49,26 @@ public class EditNickNameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         simpleInputHolder = new SimpleInputHolder(getActivity(), inflater.inflate(R.layout.com_iutiao_fragment_bind_email, container, false));
+        initUIAndListener();
+        return simpleInputHolder.root;
+    }
+
+    private void initUIAndListener() {
+        simpleInputHolder.inputEt.setHint("Nickname");
+        simpleInputHolder.confirmBtn.setText("Confirm");
         simpleInputHolder.confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (simpleInputHolder.getInput().length()<6) {
-                    simpleInputHolder.showError("用户名过短");
+                    simpleInputHolder.showError(getString(R.string.com_iutiao_username_error_tooshort));
                     return;
                 }else if(simpleInputHolder.getInput().length()>50){
-                    simpleInputHolder.showError("用户名过长");
+                    simpleInputHolder.showError(getString(R.string.com_iutiao_error_username_toolong));
                     return;
                 }
                 updateUser();
             }
         });
-        return simpleInputHolder.root;
     }
 
     private void updateUser() {
@@ -73,10 +78,8 @@ public class EditNickNameFragment extends Fragment {
         UpdateUserTask task = new UpdateUserTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User user) {
-                Toast.makeText(getActivity(), R.string.com_iutiao_tips_nickname_modified, Toast.LENGTH_LONG).show();
                 UserManager.getInstance().setCurrentUser(user);
                 ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
-
             }
 
             @Override

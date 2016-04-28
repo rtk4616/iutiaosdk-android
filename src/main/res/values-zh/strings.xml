@@ -32,6 +32,8 @@
   <string name="com_iutiao_phone_to_bind">关联手机</string>
   <string name="com_iutiao_profile">个人信息</string>
   <string name="com_iutiao_profile_balance">余额:</string>
+  <string name="com_iutiao_your_balance">您的当前余额: </string>
+  <string name="com_iutiao_settings_item_balance">余额</string>
   <string name="com_iutiao_profile_bind_phone">绑定手机</string>
   <string name="com_iutiao_profile_login">登录</string>
   <string name="com_iutiao_profile_nickname">昵称</string>
@@ -67,7 +69,6 @@
   <string name="com_iutiao_buy_consumable_product_gold_5">一堆金币5 (5U)</string>
   <string name="com_iutiao_reset_password_btn_verify">验证</string>
   <string name="com_iutiao_charge_pay_method">请选择支付方式</string>
-  <string name="com_iutiao_your_balance">您的当前余额: </string>
   <string name="com_iutiao_reload_your_balance">为您的账户充值</string>
   <string name="com_iutiao_payment_description">When you reload your balance, you are purchasing U Coin in the selected amount that will be automatically added to your Balance. View <a href="http://www.iutiao.com/ucoin/terms/">Terms and Conditions.</a></string>
   <string name="com_iutiao_refresh">刷新</string>
@@ -110,4 +111,6 @@
   <string name="com_iutiao_account_uid">UID</string>
   <string name="com_iutiao_tips_verify_email">绑定链接已通过邮件发送，请前往邮箱进行绑定操作～</string>
   <string name="com_iutiao_tips_nickname_modified">昵称已修改</string>
+  <string name="com_iutiao_username_error_tooshort">昵称长度至少6位</string>
+  <string name="com_iutiao_error_username_toolong">昵称长度不能超过50位</string>
 </resources>

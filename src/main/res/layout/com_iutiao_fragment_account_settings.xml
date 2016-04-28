@@ -33,12 +33,14 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
     <LinearLayout
         android:id="@+id/ll_uid"
@@ -128,13 +130,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/com_iutiao_profile_balance" />
+            android:textColor="@android:color/black"
+            android:text="@string/com_iutiao_settings_item_balance" />
 
         <TextView
             android:id="@+id/tv_balance"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4U"/>
+            android:gravity="right|center_vertical"/>
 
 
 
@@ -143,6 +146,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
     <LinearLayout
         android:id="@+id/ll_reset_pwd"
@@ -167,6 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@android:drawable/divider_horizontal_bright"/>
 
 </LinearLayout>

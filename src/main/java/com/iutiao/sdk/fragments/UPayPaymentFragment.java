@@ -56,6 +56,7 @@ import java.util.UUID;
 /**
  * Created by yxy on 15/12/21.
  */
+// TODO: 16/4/28 Code cleanup and refactoring
 public class UPayPaymentFragment extends BaseFragment implements PaymentCallback {
     private final static String TAG = UPayPayment.class.getSimpleName();
     private final static int PROFILE_UPDATED = 201;
@@ -276,6 +277,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 payment = new PassionPayment((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
+                setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
             }
         });
         paymentHolder.yamoneyTv.setOnClickListener(new View.OnClickListener() {
@@ -288,6 +290,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 payment = new PassionPayment((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
+                setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
             }
         });
         paymentHolder.upayTv.setOnClickListener(new View.OnClickListener() {
@@ -421,13 +424,10 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                         }
                     }
                 });
-                if (position == 0&&isFirstTime) {
+                if (position == 0) {
                     v.setChecked(true);
-                    isFirstTime = false;
                     if(payMethod.equals("upay")){
                         setPayItem(item);
-                    }else{
-                        setAmount(String.valueOf(upayItems.get(position).getUcoin() * 10));
                     }
                 }
                 upayItemViews.add(v);
