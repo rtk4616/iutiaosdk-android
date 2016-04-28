@@ -73,7 +73,7 @@ public class EditNickNameFragment extends Fragment {
         UpdateUserTask task = new UpdateUserTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User user) {
-                Toast.makeText(getActivity(), "昵称已修改", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.com_iutiao_tips_nickname_modified, Toast.LENGTH_LONG).show();
                 UserManager.getInstance().setCurrentUser(user);
                 ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
 

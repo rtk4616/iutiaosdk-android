@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.iutiao.model.OKEntity;
+import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
@@ -71,8 +72,11 @@ public class BindEmailFragment extends Fragment {
         BindEmailTask task = new BindEmailTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
-                Toast.makeText(getActivity(), "绑定链接已通过邮件发送，请前往邮箱进行绑定操作～", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), R.string.com_iutiao_tips_verify_email, Toast.LENGTH_LONG).show();
 //                LoginManager.getInstance().logOut();
+                User user = UserManager.getInstance().getCurrentUser();
+                user.setEmail_verified(true);
+                UserManager.getInstance().setCurrentUser(user);
                 ((IUTiaoDevActivity) getActivity()).switchTo(AccountSettingsFragment.newInstance());
             }
 

@@ -17,12 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.iutiao.model.User;
-import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.holders.AccountSettingsHolder;
-import com.iutiao.sdk.tasks.UserProfileTask;
 
 public class AccountSettingsFragment extends Fragment {
 
@@ -104,32 +102,6 @@ private AccountSettingsHolder accountSettingsHolder;
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
-            @Override
-            public void onSuccess(User user) {
-                updateProfile();
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-
-            @Override
-            public void onCancel() {
-
-            }
-
-            @Override
-            public void onPreExecute() {
-
-            }
-
-            @Override
-            public void onExecuted() {
-
-            }
-        }).execute();
     }
 
     @Override

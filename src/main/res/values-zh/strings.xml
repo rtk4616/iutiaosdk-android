@@ -108,4 +108,6 @@
   <string name="com_iutiao_bind_emial_hint">Email</string>
   <string name="com_iutiao_error_code_length">验证码长度至少6位</string>
   <string name="com_iutiao_account_uid">UID</string>
+  <string name="com_iutiao_tips_verify_email">绑定链接已通过邮件发送，请前往邮箱进行绑定操作～</string>
+  <string name="com_iutiao_tips_nickname_modified">昵称已修改</string>
 </resources>

@@ -153,6 +153,9 @@ public class PhoneVerfyFragment extends Fragment {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), "Profile updated", Toast.LENGTH_SHORT).show();
+                User user = UserManager.getInstance().getCurrentUser();
+                user.setPhone_verified(true);
+                UserManager.getInstance().setCurrentUser(user);
                 ((IUTiaoDevActivity)getActivity()).switchTo(AccountSettingsFragment.newInstance());
             }
 

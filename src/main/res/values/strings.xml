@@ -93,4 +93,6 @@
     <string name="com_iutiao_bind_emial_hint">Email</string>
     <string name="com_iutiao_error_code_length">Code lengh must be over 6 letters</string>
     <string name="com_iutiao_account_uid">UID</string>
+    <string name="com_iutiao_tips_verify_email">Please open the link in the email to verify~</string>
+    <string name="com_iutiao_tips_nickname_modified">Nickname has been modified</string>
 </resources>
