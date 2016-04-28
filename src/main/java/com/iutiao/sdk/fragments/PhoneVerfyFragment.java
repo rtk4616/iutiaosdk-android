@@ -32,6 +32,10 @@ public class PhoneVerfyFragment extends Fragment {
     private Context context;
     private String action;
     private String receiver;
+    private ResetPasswordTask resetPasswordTask;
+    private BindPhoneTask bindPhoneTask;
+    private RegisterPhoneTask registerPhoneTask;
+    private SMSTask smsTask;
 
     public enum ACTIONS {
         register,
@@ -149,7 +153,7 @@ public class PhoneVerfyFragment extends Fragment {
     }
 
     private void bindPhone() {
-        BindPhoneTask task = new BindPhoneTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+        bindPhoneTask = new BindPhoneTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), "Profile updated", Toast.LENGTH_SHORT).show();
@@ -183,13 +187,13 @@ public class PhoneVerfyFragment extends Fragment {
         p.put("phone_number", receiver);
         p.put("code", phoneVerfyHolder.getCode());
         p.put("id", UserManager.getInstance().getCurrentUser().getUid());
-        task.execute(p);
+        bindPhoneTask.execute(p);
     }
 
     private void quickRegister() {
         HashMap<String, Object> p = new HashMap<>();
         p.put("phone_number", phoneVerfyHolder.getNationPhone());
-        RegisterPhoneTask task = new RegisterPhoneTask(getActivity(), new IUTiaoCallback<User>() {
+        registerPhoneTask = new RegisterPhoneTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User t) {
                 LoginManager.getInstance().onLogin(t);
@@ -217,12 +221,12 @@ public class PhoneVerfyFragment extends Fragment {
                 phoneVerfyHolder.dismissProgress();
             }
         });
-        task.execute(p);
+        registerPhoneTask.execute(p);
     }
 
     public void resendCode() {
 
-        SMSTask task = new SMSTask(getActivity(), new IUTiaoCallback() {
+        smsTask = new SMSTask(getActivity(), new IUTiaoCallback() {
             @Override
             public void onSuccess(Object t) {
                 Toast.makeText(getActivity(), "request has been sent, please wait for the SMS", Toast.LENGTH_SHORT).show();
@@ -257,7 +261,7 @@ public class PhoneVerfyFragment extends Fragment {
             put("receiver", phoneVerfyHolder.getNationPhone());
             put("action", action);
         }};
-        task.execute(p);
+        smsTask.execute(p);
     }
 
     private void resetPassword() {
@@ -265,7 +269,7 @@ public class PhoneVerfyFragment extends Fragment {
         params.put("password", phoneVerfyHolder.getPwd());
         params.put("phone_number", phoneVerfyHolder.getNationPhone());
         params.put("code", phoneVerfyHolder.getCode());
-        ResetPasswordTask task = new ResetPasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+        resetPasswordTask = new ResetPasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), R.string.com_iutiao_tips_success_reset_pwd, Toast.LENGTH_LONG).show();
@@ -292,7 +296,7 @@ public class PhoneVerfyFragment extends Fragment {
                 phoneVerfyHolder.dismissProgress();
             }
         });
-        task.execute(params);
+        resetPasswordTask.execute(params);
 
     }
 
@@ -304,5 +308,21 @@ public class PhoneVerfyFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        if (resetPasswordTask != null) {
+            resetPasswordTask.cancel(true);
+            resetPasswordTask = null;
+        }
+        if (bindPhoneTask != null) {
+            bindPhoneTask.cancel(true);
+            bindPhoneTask = null;
+        }
+        if (registerPhoneTask != null) {
+            registerPhoneTask.cancel(true);
+            registerPhoneTask = null;
+        }
+        if (smsTask != null) {
+            smsTask.cancel(true);
+            smsTask = null;
+        }
     }
 }

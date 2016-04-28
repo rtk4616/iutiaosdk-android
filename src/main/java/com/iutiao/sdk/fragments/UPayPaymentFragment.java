@@ -71,6 +71,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     private EditText upayItemEt;
     private Double currentBalance;
     private boolean isFirstTime = true;
+    private UPayItemCollectionTask uPayItemCollectionTask;
+    private UserProfileTask userProfileTask;
+    private ChargeTask chargeTask;
 
     public String getPmId() {
         return pmId;
@@ -178,7 +181,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     }
 
     private void updateBalance() {
-        UserProfileTask task = new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
+         userProfileTask = new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
 
             @Override
             public void onSuccess(User user) {
@@ -205,7 +208,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
             }
         });
-        task.execute();
+        userProfileTask.execute();
     }
 
     @Override
@@ -442,7 +445,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
      * 创建充值订单
      */
     public void createChargeOrder() {
-        ChargeTask task = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
+        chargeTask = new ChargeTask(getActivity(), new IUTiaoCallback<Charge>() {
             @Override
             public void onSuccess(Charge t) {
                 payment.setPaymentArguments(getPaymentArguments());
@@ -471,7 +474,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             }
         });
 
-        task.execute(paymentArguments);
+        chargeTask.execute(paymentArguments);
     }
 
     @Override
@@ -491,7 +494,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         final List payItems = new LinkedList<>();
         upayItems = new LinkedList<>();
         if (payMethod.equals("upay")) {
-            UPayItemCollectionTask task = new UPayItemCollectionTask(getActivity(), new IUTiaoCallback<UPayItemCollection>() {
+            uPayItemCollectionTask  = new UPayItemCollectionTask(getActivity(), new IUTiaoCallback<UPayItemCollection>() {
                 @Override
                 public void onSuccess(UPayItemCollection collection) {
                     for (UPayItem item : collection.getResults()) {
@@ -524,7 +527,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
 
                 }
             });
-            task.execute();
+            uPayItemCollectionTask.execute();
         } else {
             upayItems = defaultPayItems();
             if (upayItemAdapter != null) {
@@ -573,6 +576,26 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             items.add(item);
         }
         return items;
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cancelTasks();
+    }
+
+    private void cancelTasks() {
+        if(uPayItemCollectionTask!=null){
+            uPayItemCollectionTask.cancel(true);
+            uPayItemCollectionTask = null ;
+        }
+        if(userProfileTask!=null){
+            userProfileTask.cancel(true);
+            userProfileTask = null;
+        }
+        if(chargeTask!=null){
+            chargeTask.cancel(true);
+            chargeTask = null;
+        }
     }
 
 }

@@ -32,6 +32,7 @@ import java.util.Map;
 public class BindEmailFragment extends Fragment {
 
     private SimpleInputHolder simpleInputHolder;
+    private BindEmailTask task;
 
     public BindEmailFragment() {
         // Required empty public constructor
@@ -69,7 +70,7 @@ public class BindEmailFragment extends Fragment {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", UserManager.getInstance().getCurrentUser().getUid());
         params.put("email", simpleInputHolder.getInput());
-        BindEmailTask task = new BindEmailTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+        task = new BindEmailTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), R.string.com_iutiao_tips_verify_email, Toast.LENGTH_LONG).show();
@@ -107,6 +108,10 @@ public class BindEmailFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        if (task != null) {
+            task.cancel(true);
+            task= null;
+        }
     }
 
 }

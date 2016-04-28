@@ -29,6 +29,7 @@ import java.util.Map;
 public class EditNickNameFragment extends Fragment {
 
     private SimpleInputHolder simpleInputHolder;
+    private UpdateUserTask task;
 
     public EditNickNameFragment() {
         // Required empty public constructor
@@ -76,7 +77,7 @@ public class EditNickNameFragment extends Fragment {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id", UserManager.getInstance().getCurrentUser().getUid());
         params.put("nickname", simpleInputHolder.getInput());
-        UpdateUserTask task = new UpdateUserTask(getActivity(), new IUTiaoCallback<User>() {
+        task = new UpdateUserTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User user) {
                 UserManager.getInstance().setCurrentUser(user);
@@ -110,6 +111,10 @@ public class EditNickNameFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        if (task != null) {
+            task.cancel(true);
+            task= null;
+        }
     }
 
 }

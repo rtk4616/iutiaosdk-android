@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 public class EmailSignupFragment extends Fragment {
     EmailSignUpHolder emailSignUpHolder;
+    private RegisterUserTask registerUserTask;
 
     public EmailSignupFragment() {
         // Required empty public constructor
@@ -79,7 +80,7 @@ public class EmailSignupFragment extends Fragment {
         HashMap<String, Object> params = new HashMap<String, Object>();
         params.put("username", emailSignUpHolder.getInputEmail());
         params.put("password", emailSignUpHolder.getInputPwd());
-        RegisterUserTask registerUserTask = new RegisterUserTask(getActivity(), new IUTiaoCallback<User>() {
+        registerUserTask = new RegisterUserTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User t) {
                 LoginManager.getInstance().onLogin(t);
@@ -119,6 +120,10 @@ emailSignUpHolder.dismissProgress();
     @Override
     public void onDetach() {
         super.onDetach();
+        if (registerUserTask != null) {
+            registerUserTask.cancel(true);
+            registerUserTask= null;
+        }
     }
 
 }

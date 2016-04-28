@@ -32,6 +32,7 @@ import java.util.Map;
 public class ChangePasswordFragment extends Fragment {
 
     private ChangePwdHolder changePwdHolder;
+    private ChangePasswordTask task;
 
     public ChangePasswordFragment() {
         // Required empty public constructor
@@ -74,7 +75,7 @@ public class ChangePasswordFragment extends Fragment {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("password1", changePwdHolder.getInputPwd1());
         params.put("password2", changePwdHolder.getInputPwd2());
-        ChangePasswordTask task = new ChangePasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
+        task = new ChangePasswordTask(getActivity(), new IUTiaoCallback<OKEntity>() {
             @Override
             public void onSuccess(OKEntity t) {
                 Toast.makeText(getActivity(), R.string.com_iutiao_tips_success_reset_pwd, Toast.LENGTH_LONG).show();
@@ -109,6 +110,10 @@ public class ChangePasswordFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        if (task != null) {
+            task.cancel(true);
+            task= null;
+        }
     }
 
 }

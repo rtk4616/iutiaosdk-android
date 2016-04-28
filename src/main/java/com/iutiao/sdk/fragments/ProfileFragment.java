@@ -12,6 +12,7 @@ package com.iutiao.sdk.fragments;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -26,6 +27,7 @@ import android.widget.PopupMenu;
 import com.iutiao.model.User;
 import com.iutiao.sdk.IUTiaoCallback;
 import com.iutiao.sdk.IUTiaoDevActivity;
+import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.holders.ProfileHolder;
@@ -44,6 +46,7 @@ public class ProfileFragment extends BaseFragment {
     private static final String TAG = ProfileFragment.class.getSimpleName();
     private ProfileHolder profileHolder;
     private Handler handler;
+    private AsyncTask<Void, Void, User> userProfileTask;
 
     @Nullable
     @Override
@@ -112,11 +115,12 @@ public class ProfileFragment extends BaseFragment {
             profileHolder.titleBar.setTitle(user.getNickname());
             profileHolder.balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
         }
-        new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
+        userProfileTask =  new UserProfileTask(getActivity(), new IUTiaoCallback<User>() {
             @Override
             public void onSuccess(User user) {
                 profileHolder.titleBar.setTitle(user.getNickname());
-                profileHolder.balanceTv.setText(user.getBalance() + getString(R.string.com_iutiao_balance_suffixes));
+                profileHolder.balanceTv.setText(user.getBalance() + IUTiaoSdk.getApplicationContext().getResources().getString(R.string.com_iutiao_balance_suffixes));
+//                profileHolder.balanceTv.setText(user.getBalance() + "U");
             }
 
             @Override
@@ -138,7 +142,8 @@ public class ProfileFragment extends BaseFragment {
             public void onExecuted() {
                 profileHolder.dismissProgress();
             }
-        }).execute();
+        });
+        userProfileTask.execute();
     }
 
     private void loadAdsImage(final String url) {
@@ -152,6 +157,18 @@ public class ProfileFragment extends BaseFragment {
                 profileHolder.adsIv.setImageDrawable(drawable);
             }
         });
+    }
+
+    public void onDestroyView() {
+        super.onDestroyView();
+        cancelTasks();
+    }
+
+    private void cancelTasks() {
+        if(userProfileTask!=null){
+            userProfileTask.cancel(true);
+            userProfileTask = null ;
+        }
     }
 
     public static ProfileFragment newInstance() {
