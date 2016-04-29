@@ -65,22 +65,23 @@ public final class IUTiaoSdk {
 
     public static final String UPAY_APPKEY_PROPERTY = "UPAY_APPKEY";
 
+
     private static boolean payInitialized = false;
     private static String[] payMethods = {"payssion","upay"};
     private static Map<String, IPayment> payments = new HashMap<String, IPayment>();
     public static IPayment getPayment(String payMethod){
-        if(!payInitialized){
-//            抛出；
+        if(payInitialized){
+            return payments.get(payMethod);
         }
-        return payments.get(payMethod);
+        return null;
     }
     public static String[] getPayMethods(){
-        if(!payInitialized){
-//            抛出；
-        }
-        return payMethods;
+            return payMethods;
     }
 
+    public static boolean isPayInitialized() {
+        return payInitialized;
+    }
     public static boolean isUpayInitialized() {
         return upayInitialized;
     }
