@@ -104,19 +104,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/qiwi" />
+                android:src="@drawable/qiwi"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/tv_yamoney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:src="@drawable/yandex" />
+                android:src="@drawable/yandex"
+                android:visibility="gone"/>
             <ImageView
                 android:id="@+id/tv_upay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/upay" />
+                android:src="@drawable/upay"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

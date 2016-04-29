@@ -36,7 +36,6 @@ import com.iutiao.sdk.R;
 import com.iutiao.sdk.UserManager;
 import com.iutiao.sdk.holders.PaymentHolder;
 import com.iutiao.sdk.payment.IPayment;
-import com.iutiao.sdk.payment.PassionPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.payment.UPayPayment;
@@ -57,6 +56,7 @@ import java.util.UUID;
  * Created by yxy on 15/12/21.
  */
 // TODO: 16/4/28 Code cleanup and refactoring
+// TODO: 16/4/29 从sdk中获取payment
 public class UPayPaymentFragment extends BaseFragment implements PaymentCallback {
     private final static String TAG = UPayPayment.class.getSimpleName();
     private final static int PROFILE_UPDATED = 201;
@@ -268,52 +268,76 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             }
         });
 // TODO: 16/4/22 payment component
-        paymentHolder.qiwiBadge.show();
+        if(IUTiaoSdk.getPayment("payssion")!=null){
+            paymentHolder.qiwiTv.setVisibility(View.VISIBLE);
+            paymentHolder.yamoneyTv.setVisibility(View.VISIBLE);
+            paymentHolder.qiwiBadge.show();
 //        badgeView.hide();
-        paymentHolder.qiwiTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                paymentHolder.hideBadges();
-                paymentHolder.qiwiBadge.toggle();
-                payMethod = "payssion";
-                pmId = "qiwi";
-                payment = new PassionPayment();
-                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
-                isFirstTime = true;
-                initPayItems();
-                setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
-            }
-        });
-        paymentHolder.yamoneyTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                paymentHolder.hideBadges();
-                paymentHolder.yamoneyBadge.toggle();
-                payMethod = "payssion";
-                pmId = "yamoney";
-                payment = new PassionPayment();
-                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
-                isFirstTime = true;
-                initPayItems();
-                setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
-            }
-        });
-        paymentHolder.upayTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                paymentHolder.hideBadges();
-                paymentHolder.upayBadge.toggle();
-                payMethod = "upay";
-                setAmount("0");
-                payment = new UPayPayment();
-                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
-                isFirstTime = true;
-                initPayItems();
-            }
-        });
+            paymentHolder.qiwiTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    configQiwi();
+                }
+            });
+            paymentHolder.yamoneyTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    configYamoney();
+                }
+            });
+        }
+        if(IUTiaoSdk.getPayment("upay")!=null){
+            paymentHolder.upayTv.setVisibility(View.VISIBLE);
+            paymentHolder.upayTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    configUpay();
+                }
+            });
+        }
+        payMethod = IUTiaoSdk.getPayMethods()[0];
+        if(payMethod.equals("upay")){
+            configUpay();
+        }else if(payMethod.equals("payssion")){
+            configQiwi();
+        }
         setCurrentBalance(UserManager.getInstance().getCurrentUser().getBalance());
-        payment = new PassionPayment();
         payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
+    }
+
+    private void configUpay() {
+        paymentHolder.hideBadges();
+        paymentHolder.upayBadge.toggle();
+        payMethod = "upay";
+        setAmount("0");
+        payment = IUTiaoSdk.getPayment(payMethod);
+        payment.setPaymentCallback(UPayPaymentFragment.this);
+        isFirstTime = true;
+        initPayItems();
+    }
+
+    private void configYamoney() {
+        paymentHolder.hideBadges();
+        paymentHolder.yamoneyBadge.toggle();
+        payMethod = "payssion";
+        pmId = "yamoney";
+        payment = IUTiaoSdk.getPayment(payMethod);
+        payment.setPaymentCallback(UPayPaymentFragment.this);
+        isFirstTime = true;
+        initPayItems();
+        setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
+    }
+
+    private void configQiwi() {
+        paymentHolder.hideBadges();
+        paymentHolder.qiwiBadge.toggle();
+        payMethod = "payssion";
+        pmId = "qiwi";
+        payment = IUTiaoSdk.getPayment(payMethod);
+        payment.setPaymentCallback(UPayPaymentFragment.this);
+        isFirstTime = true;
+        initPayItems();
+        setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
     }
 
 

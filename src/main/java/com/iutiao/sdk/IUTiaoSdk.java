@@ -19,6 +19,8 @@ import android.util.Log;
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.iutiao.sdk.payment.IPayment;
+import com.iutiao.sdk.payment.PassionPayment;
 import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.views.FloatView;
 import com.upay.billing.UpayConstant;
@@ -27,6 +29,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -60,6 +64,22 @@ public final class IUTiaoSdk {
     public static final String CURRENCY_PROPERTY = "com.iutiao.sdk.currency";
 
     public static final String UPAY_APPKEY_PROPERTY = "UPAY_APPKEY";
+
+    private static boolean payInitialized = false;
+    private static String[] payMethods = {"payssion","upay"};
+    private static Map<String, IPayment> payments = new HashMap<String, IPayment>();
+    public static IPayment getPayment(String payMethod){
+        if(!payInitialized){
+//            抛出；
+        }
+        return payments.get(payMethod);
+    }
+    public static String[] getPayMethods(){
+        if(!payInitialized){
+//            抛出；
+        }
+        return payMethods;
+    }
 
     public static boolean isUpayInitialized() {
         return upayInitialized;
@@ -137,17 +157,22 @@ public final class IUTiaoSdk {
         // 载入默认的设置
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
 
-        if (!upayInitialized) {
-            UPayPayment uPayPayment = new UPayPayment();
-            uPayPayment.initialize(applicationContext);
+
+        if (!payInitialized) {
+            for (String payMethod : payMethods) {
+                if (payMethod.equals("upay")) {
+                    if (!upayInitialized) {
+                        UPayPayment uPayPayment = new UPayPayment();
+                        uPayPayment.initialize(applicationContext);
+                        payments.put(payMethod, uPayPayment);
+                    }
+                } else if (payMethod.equals("payssion")) {
+                    PassionPayment passionPayment = new PassionPayment();
+                    payments.put(payMethod, passionPayment);
+                }
+            }
+            payInitialized = true;
         }
-//        if(payment没初始化){
-//            创建paymentMap；
-//            读取paymentlist取得需要初始化的payment for{
-//                payment初始化并放入paymentMap;
-//            }
-//            payment 初始化 true;
-//        }
         initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();
