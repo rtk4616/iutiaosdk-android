@@ -171,7 +171,8 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
             @Override
             public void onSuccess(Charge t) {
                 if (chooseUpay()) {
-                    payment = new UPayPayment((PaymentCallback) ChargeFragment.this);
+                    payment = new UPayPayment();
+                    payment.setPaymentCallback((PaymentCallback) ChargeFragment.this);
                     payment.setPaymentArguments(getPaymentArguments());
                 }
                 payment.pay();

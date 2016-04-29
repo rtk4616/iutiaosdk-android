@@ -277,7 +277,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 paymentHolder.qiwiBadge.toggle();
                 payMethod = "payssion";
                 pmId = "qiwi";
-                payment = new PassionPayment((PaymentCallback) UPayPaymentFragment.this);
+                payment = new PassionPayment();
+                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
                 setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
@@ -290,7 +291,8 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 paymentHolder.yamoneyBadge.toggle();
                 payMethod = "payssion";
                 pmId = "yamoney";
-                payment = new PassionPayment((PaymentCallback) UPayPaymentFragment.this);
+                payment = new PassionPayment();
+                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
                 setAmount(String.valueOf(upayItems.get(0).getUcoin() * 10));
@@ -303,13 +305,15 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
                 paymentHolder.upayBadge.toggle();
                 payMethod = "upay";
                 setAmount("0");
-                payment = new UPayPayment((PaymentCallback) UPayPaymentFragment.this);
+                payment = new UPayPayment();
+                payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
                 isFirstTime = true;
                 initPayItems();
             }
         });
         setCurrentBalance(UserManager.getInstance().getCurrentUser().getBalance());
-        payment = new PassionPayment((PaymentCallback) UPayPaymentFragment.this);
+        payment = new PassionPayment();
+        payment.setPaymentCallback((PaymentCallback) UPayPaymentFragment.this);
     }
 
 

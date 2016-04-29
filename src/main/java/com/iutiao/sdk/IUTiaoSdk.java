@@ -19,10 +19,9 @@ import android.util.Log;
 import com.iutiao.IUTiao;
 import com.iutiao.net.RequestOptions;
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
+import com.iutiao.sdk.payment.UPayPayment;
 import com.iutiao.sdk.views.FloatView;
 import com.upay.billing.UpayConstant;
-import com.upay.billing.sdk.Upay;
-import com.upay.billing.sdk.UpayInitCallback;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -139,27 +138,35 @@ public final class IUTiaoSdk {
         IUTiaoSdk.loadDefaultsFromMetadata(IUTiaoSdk.applicationContext);
 
         if (!upayInitialized) {
-            upayInitialize();
+            UPayPayment uPayPayment = new UPayPayment();
+            uPayPayment.initialize(applicationContext);
         }
+//        if(payment没初始化){
+//            创建paymentMap；
+//            读取paymentlist取得需要初始化的payment for{
+//                payment初始化并放入paymentMap;
+//            }
+//            payment 初始化 true;
+//        }
         initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();
     }
 
-    private static void upayInitialize() {
-        // 初始化 upay 支付
-        Upay.initInstance(applicationContext, null, null, null, null, new UpayInitCallback() {
-            @Override
-            public void onInitResult(int i, String s) {
-                if (i == 200) {
-                    setUpayInitialized(true);
-                    Log.i(TAG, String.format("upay initialized successful. result code %d, response %s", i, s));
-                } else {
-                    Log.e(TAG, String.format("upay initialize failed result code %d, response %s", i, s));
-                }
-            }
-        });
-    }
+//    private static void upayInitialize() {
+//        // 初始化 upay 支付
+//        Upay.initInstance(applicationContext, null, null, null, null, new UpayInitCallback() {
+//            @Override
+//            public void onInitResult(int i, String s) {
+//                if (i == 200) {
+//                    setUpayInitialized(true);
+//                    Log.i(TAG, String.format("upay initialized successful. result code %d, response %s", i, s));
+//                } else {
+//                    Log.e(TAG, String.format("upay initialize failed result code %d, response %s", i, s));
+//                }
+//            }
+//        });
+//    }
 
     /*
      * 初始化 request client

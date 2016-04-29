@@ -9,12 +9,16 @@
 
 package com.iutiao.sdk.payment;
 
+import android.content.Context;
+
 import java.util.Map;
 
 /**
  * Created by yxy on 15/11/26.
  */
 public interface IPayment {
+    public void initialize(Context applicationContext);
+    public void setPaymentCallback(PaymentCallback listener);
     public void pay();
     public void setPaymentArguments(Map<String, Object> arguments);
     public void onFinish();

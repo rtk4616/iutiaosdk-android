@@ -76,8 +76,8 @@ public class PassionPayment implements IPayment {
         this.paymentResult = paymentResult;
     }
 
-    public PassionPayment(PaymentCallback listener) {
-        this.listener = listener;
+    public PassionPayment() {
+
     }
 
     public String getPayItem() {
@@ -102,6 +102,16 @@ public class PassionPayment implements IPayment {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public void initialize(Context applicationContext) {
+
+    }
+
+    @Override
+    public void setPaymentCallback(PaymentCallback listener) {
+        this.listener = listener;
     }
 
     @Override

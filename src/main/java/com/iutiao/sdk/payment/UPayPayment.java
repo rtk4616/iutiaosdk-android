@@ -15,9 +15,11 @@ import android.util.Log;
 
 import com.iutiao.model.Charge;
 import com.iutiao.sdk.IUTiaoCallback;
+import com.iutiao.sdk.IUTiaoSdk;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.upay.billing.sdk.Upay;
 import com.upay.billing.sdk.UpayCallback;
+import com.upay.billing.sdk.UpayInitCallback;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -54,9 +56,11 @@ public class UPayPayment implements IPayment {
         this.paymentResult = paymentResult;
     }
 
-    public UPayPayment(PaymentCallback listener) {
+    public UPayPayment() {
+    }
+
+    public void setPaymentCallback(PaymentCallback listener){
         this.listener = listener;
-        upay = Upay.getInstance(null);
     }
 
     public String getPayItem() {
@@ -73,6 +77,23 @@ public class UPayPayment implements IPayment {
 
     public void setOrderid(String orderid) {
         this.orderid = orderid;
+    }
+
+    @Override
+    public void initialize(Context applicationContext) {
+        // 初始化 upay 支付
+        Upay.initInstance(applicationContext, null, null, null, null, new UpayInitCallback() {
+            @Override
+            public void onInitResult(int i, String s) {
+                if (i == 200) {
+                    IUTiaoSdk.setUpayInitialized(true);
+                    Log.i(TAG, String.format("upay initialized successful. result code %d, response %s", i, s));
+                } else {
+                    Log.e(TAG, String.format("upay initialize failed result code %d, response %s", i, s));
+                }
+            }
+        });
+        upay = Upay.getInstance(null);
     }
 
     @Override
