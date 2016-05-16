@@ -36,7 +36,7 @@ public class PermissionUtil {
     private HashMap actions = new HashMap<Integer, PermissionsResultAction>();
     private Context context;
 
-    public PermissionUtil(Activity context) {
+    public PermissionUtil(Context context) {
         this.context = context;
     }
 
@@ -49,16 +49,16 @@ public class PermissionUtil {
                 PackageManager.PERMISSION_DENIED;
     }
 
-    public void askPermissionAction(String permission, int requestCode) {
-        askPermissionAction(permission, requestCode, null);
+    public void askPermissionAction(Activity context,String permission, int requestCode) {
+        askPermissionAction(context,permission, requestCode, null);
     }
 
 
-    public void askPermissionAction(String permission, int requestCode, PermissionsResultAction action) {
+    public void askPermissionAction(Activity context,String permission, int requestCode, PermissionsResultAction action) {
         actions.put(requestCode, action);
         if (canMakeSmores()) {
             if (lacksPermission(permission)) {
-                ActivityCompat.requestPermissions((Activity) context, new String[]{permission}, requestCode);
+                ActivityCompat.requestPermissions(context, new String[]{permission}, requestCode);
             } else {
                 if (actions.get(requestCode) != null) {
                     ((PermissionsResultAction) actions.get(requestCode)).onGranted();
