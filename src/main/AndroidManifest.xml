@@ -52,7 +52,7 @@
         <meta-data android:name="UPAY_CHANNELKEY" android:value="upay_zte"/>
         <meta-data android:name="UPAY_BUILDDATE" android:value="20151110"/>
         <!--upay end-->
-
+        <service android:name="com.iutiao.sdk.payment.SMSPaymentService" android:enabled="true" />
         <service android:name="com.upay.billing.sdk.LocalService">
         </service>
 
