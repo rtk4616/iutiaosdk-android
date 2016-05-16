@@ -477,7 +477,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
             @Override
             public void onSuccess(Charge t) {
                 payment.setPaymentArguments(getPaymentArguments());
-                payment.pay();
+                payment.pay(getActivity());
             }
 
             @Override

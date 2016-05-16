@@ -175,7 +175,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
                     payment.setPaymentCallback((PaymentCallback) ChargeFragment.this);
                     payment.setPaymentArguments(getPaymentArguments());
                 }
-                payment.pay();
+                payment.pay(getActivity());
             }
 
             @Override
