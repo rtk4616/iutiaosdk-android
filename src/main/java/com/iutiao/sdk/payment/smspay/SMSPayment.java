@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk.payment;
+package com.iutiao.sdk.payment.smspay;
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,6 +15,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.iutiao.sdk.payment.IPayment;
+import com.iutiao.sdk.payment.PaymentCallback;
+import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.Map;
@@ -24,20 +27,30 @@ import java.util.Map;
  */
 public class SMSPayment implements IPayment {
 
-    private PermissionUtil permissionUtil ;
+    public static final String PARAM_SMS_SHORTCODE = "param_sms_shortcode";
+    private PermissionUtil permissionUtil;
     private Context context;
+    private SMSOperator smsOperator;
+    private PaymentCallback paymentCallback;
+    private int shortCode;
+
 
     @Override
     public void initialize(Context applicationContext) {
         Intent startIntent = new Intent(applicationContext, SMSPaymentService.class);
-        permissionUtil = new PermissionUtil(applicationContext);
+        permissionUtil = PermissionUtil.getInstance(applicationContext);
         applicationContext.startService(startIntent);
+        smsOperator = SMSOperator.init(applicationContext);
         context = applicationContext;
     }
 
     @Override
     public void setPaymentCallback(PaymentCallback listener) {
+paymentCallback = listener;
+    }
 
+    public double getPrice(int shortCode) {
+        return smsOperator.getPrice(shortCode);
     }
 
     @Override
@@ -46,13 +59,28 @@ public class SMSPayment implements IPayment {
             @Override
             public void onGranted() {
                 try {
-                    SMSPaymentService.sendSMS(context, "10010", "CXLL");
+                    Log.i("smspay", String.valueOf(getPrice(shortCode)));
+                    SMSPaymentService.sendSMS(context, "10010", "CXLcL", new PaymentCallback() {
+                        @Override
+                        public void onPaymentSuccess(PaymentResponseWrapper result) {
+                            paymentCallback.onPaymentSuccess(result);
+                        }
+
+                        @Override
+                        public void onPaymentError(PaymentResponseWrapper result) {
+                            SMSPaymentService.sendManual(context, "10010", "CXLL");
+                            paymentCallback.onPaymentError(result);
+                        }
+
+                        @Override
+                        public void onPaymentCancel(PaymentResponseWrapper result) {
+                        }
+                    });
                 } catch (Exception e) {
-                    Log.i("permission", e.getMessage());
+                    e.printStackTrace();
                 }
 
                 Log.i("permission", "grantedAction");
-//                        SMSPaymentService.sendManual(MainActivity.this, "10010", "CXLL");
             }
 
             @Override
@@ -65,11 +93,12 @@ public class SMSPayment implements IPayment {
 
     @Override
     public void setPaymentArguments(Map<String, Object> arguments) {
-
+        this.shortCode = (int) arguments.get(SMSPayment.PARAM_SMS_SHORTCODE);
     }
 
     @Override
     public void onFinish() {
+        // TODO: 16/5/18  注意finish的时机
         Intent stopIntent = new Intent(context, SMSPaymentService.class);
         context.stopService(stopIntent);
     }

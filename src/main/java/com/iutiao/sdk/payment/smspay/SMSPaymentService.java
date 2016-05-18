@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk.payment;
+package com.iutiao.sdk.payment.smspay;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -25,7 +25,12 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.iutiao.sdk.payment.PaymentCallback;
+import com.iutiao.sdk.payment.PaymentResponseWrapper;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SMSPaymentService extends Service  {
 
@@ -35,8 +40,11 @@ public class SMSPaymentService extends Service  {
     private static String SENT = "SMS_SENT";
     private static String DELIVERED = "SMS_DELIVERED";
 
+    private static PaymentCallback paymentCallback;
 
-    public static void sendSMS(Context context, String phoneNumber, String message) {
+
+    public static void sendSMS(Context context, String phoneNumber, String message,PaymentCallback paymentCallback) {
+        SMSPaymentService.paymentCallback= paymentCallback;
         PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
                 new Intent(SENT), 0);
 
@@ -59,20 +67,19 @@ public class SMSPaymentService extends Service  {
         Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
         sendIntent.setData(Uri.parse("smsto:" + number));
         sendIntent.putExtra("sms_body", message);
-//        sendIntent.setType("vnd.android-dir/mms-sms");
         context.startActivity(sendIntent);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        registerBroadcasts();
         Log.i(TAG, "onCreate() executed");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand() executed");
-        registerBroadcasts();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -98,26 +105,38 @@ public class SMSPaymentService extends Service  {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
+                Map<String,Object> response = new HashMap<String, Object>();
+                PaymentResponseWrapper paymentResponseWrapper;
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
+                        paymentResponseWrapper = new PaymentResponseWrapper(response,null);
+                        paymentCallback.onPaymentSuccess(paymentResponseWrapper);
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         Toast.makeText(getBaseContext(), "Generic failure",
                                 Toast.LENGTH_SHORT).show();
+                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                        paymentCallback.onPaymentError(paymentResponseWrapper);
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
                         Toast.makeText(getBaseContext(), "No service",
                                 Toast.LENGTH_SHORT).show();
+                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                        paymentCallback.onPaymentError(paymentResponseWrapper);
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         Toast.makeText(getBaseContext(), "Null PDU",
                                 Toast.LENGTH_SHORT).show();
+                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                        paymentCallback.onPaymentError(paymentResponseWrapper);
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         Toast.makeText(getBaseContext(), "Radio off",
                                 Toast.LENGTH_SHORT).show();
+                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                        paymentCallback.onPaymentError(paymentResponseWrapper);
                         break;
                 }
             }

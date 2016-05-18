@@ -36,8 +36,17 @@ public class PermissionUtil {
     private HashMap actions = new HashMap<Integer, PermissionsResultAction>();
     private Context context;
 
-    public PermissionUtil(Context context) {
+    private static PermissionUtil permissionUtil;
+
+    private PermissionUtil(Context context) {
         this.context = context;
+    }
+
+    public static PermissionUtil getInstance(Context context){
+        if(permissionUtil==null){
+            permissionUtil = new PermissionUtil(context);
+        }
+        return permissionUtil;
     }
 
     // 判断是否缺少权限(6.0)
