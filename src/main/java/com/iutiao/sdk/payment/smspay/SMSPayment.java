@@ -75,6 +75,11 @@ paymentCallback = listener;
                         @Override
                         public void onPaymentCancel(PaymentResponseWrapper result) {
                         }
+
+                        @Override
+                        public void onProgress() {
+
+                        }
                     });
                 } catch (Exception e) {
                     e.printStackTrace();

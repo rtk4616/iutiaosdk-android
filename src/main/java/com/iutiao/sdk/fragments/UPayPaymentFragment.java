@@ -243,6 +243,11 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         Toast.makeText(getActivity(), "payment canceled", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onProgress() {
+
+    }
+
     public static UPayPaymentFragment newInstance() {
         return new UPayPaymentFragment();
     }
