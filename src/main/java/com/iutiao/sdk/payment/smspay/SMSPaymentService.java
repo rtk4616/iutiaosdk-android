@@ -45,6 +45,7 @@ public class SMSPaymentService extends Service  {
 
     public static void sendSMS(Context context, String phoneNumber, String message,PaymentCallback paymentCallback) {
         SMSPaymentService.paymentCallback= paymentCallback;
+        paymentCallback.onProgress();
         PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
                 new Intent(SENT), 0);
 

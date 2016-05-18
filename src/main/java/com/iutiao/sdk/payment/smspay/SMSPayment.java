@@ -11,6 +11,7 @@ package com.iutiao.sdk.payment.smspay;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class SMSPayment implements IPayment {
     private SMSOperator smsOperator;
     private PaymentCallback paymentCallback;
     private int shortCode;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -64,21 +66,25 @@ paymentCallback = listener;
                         @Override
                         public void onPaymentSuccess(PaymentResponseWrapper result) {
                             paymentCallback.onPaymentSuccess(result);
+                            progressDialog.hide();
                         }
 
                         @Override
                         public void onPaymentError(PaymentResponseWrapper result) {
                             SMSPaymentService.sendManual(context, "10010", "CXLL");
                             paymentCallback.onPaymentError(result);
+                            progressDialog.hide();
                         }
 
                         @Override
                         public void onPaymentCancel(PaymentResponseWrapper result) {
+                            progressDialog.hide();
                         }
 
                         @Override
                         public void onProgress() {
-
+                            progressDialog = new ProgressDialog(context);
+                            progressDialog.show();
                         }
                     });
                 } catch (Exception e) {
