@@ -180,5 +180,11 @@
   {"MCCMNC":"436501","Country":"Tajikistan","Network Operator":"TK Mobile","Short Code":"4446","EUP":"0.99"},
   {"MCCMNC":"436501","Country":"Tajikistan","Network Operator":"TK Mobile","Short Code":"4448","EUP":"2.00"},
   {"MCCMNC":"436501","Country":"Tajikistan","Network Operator":"TK Mobile","Short Code":"4449","EUP":"3.00"},
-  {"MCCMNC":"436501","Country":"Tajikistan","Network Operator":"TK Mobile","Short Code":"4161","EUP":"5.00"}
+  {"MCCMNC":"436501","Country":"Tajikistan","Network Operator":"TK Mobile","Short Code":"4161","EUP":"5.00"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"4445","EUP":"21.71"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"4446","EUP":"33.50"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"4448","EUP":"70.34"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"4449","EUP":"107.32"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"4161","EUP":"173.24"},
+  {"MCCMNC":"100000","Country":"Russia","Network Operator":"Other","Short Code":"7733","EUP":"318.40"}
 ]

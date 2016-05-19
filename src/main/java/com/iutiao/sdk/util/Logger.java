@@ -9,7 +9,6 @@
 
 package com.iutiao.sdk.util;
 
-import android.support.v4.BuildConfig;
 import android.util.Log;
 
 import java.util.Hashtable;
@@ -25,7 +24,7 @@ import java.util.Hashtable;
  * 6.logFlag开关
  */
 public class Logger {
-    private final static boolean logFlag = BuildConfig.DEBUG?true:false;
+    private final static boolean logFlag = true;
 
     public final static String tag = "IUT";
     private final static int logLevel = Log.VERBOSE;

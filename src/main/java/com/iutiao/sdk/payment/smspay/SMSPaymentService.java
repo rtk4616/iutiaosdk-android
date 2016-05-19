@@ -14,12 +14,14 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.util.Log;
@@ -27,24 +29,25 @@ import android.widget.Toast;
 
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
+import com.iutiao.sdk.util.Logger;
+import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SMSPaymentService extends Service  {
-
-    public static final String TAG = "MyService";
-
     private static String RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     private static String SENT = "SMS_SENT";
     private static String DELIVERED = "SMS_DELIVERED";
 
     private static PaymentCallback paymentCallback;
 
+    public static void setPaymentCallback(PaymentCallback paymentCallback) {
+        SMSPaymentService.paymentCallback = paymentCallback;
+    }
 
-    public static void sendSMS(Context context, String phoneNumber, String message,PaymentCallback paymentCallback) {
-        SMSPaymentService.paymentCallback= paymentCallback;
+    public static void sendSMS(Context context, String phoneNumber, String message) {
         paymentCallback.onProgress();
         PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
                 new Intent(SENT), 0);
@@ -60,34 +63,52 @@ public class SMSPaymentService extends Service  {
             } catch (Exception localException) {
                 localException.printStackTrace();
             }
-            Log.i(TAG, "send" + text);
+            Logger.benLog().i("start to send, message:"+text);
         }
     }
 
-    public static void sendManual(Context context, String number, String message) {
-        Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
-        sendIntent.setData(Uri.parse("smsto:" + number));
-        sendIntent.putExtra("sms_body", message);
-        context.startActivity(sendIntent);
+    public static void sendManual(final Context context, final String number, final String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("To pay by sms, check if you have allowed the permission to send sms.");
+        builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+//                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+//                sendIntent.setData(Uri.parse("smsto:" + number));
+//                sendIntent.putExtra("sms_body", message);
+//                context.startActivity(sendIntent);
+                PermissionUtil.getInstance(context).startAppSettings(context);
+            }
+        });
+        builder.setNegativeButton("Send manually", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(Uri.parse("smsto:" + number));
+                sendIntent.putExtra("sms_body", message);
+                context.startActivity(sendIntent);
+            }
+        });
+        builder.show();
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
         registerBroadcasts();
-        Log.i(TAG, "onCreate() executed");
+        Logger.benLog().i("SMSPaymentService onCreate()");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "onStartCommand() executed");
+        Logger.benLog().i("SMSPaymentService onStartCommand()");
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "onDestroy() executed");
+        Logger.benLog().i("SMSPaymentService onDestroy()");
     }
 
     @Nullable
@@ -112,8 +133,6 @@ public class SMSPaymentService extends Service  {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
-                        paymentResponseWrapper = new PaymentResponseWrapper(response,null);
-                        paymentCallback.onPaymentSuccess(paymentResponseWrapper);
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         Toast.makeText(getBaseContext(), "Generic failure",
@@ -150,10 +169,12 @@ public class SMSPaymentService extends Service  {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS delivered",
                                 Toast.LENGTH_SHORT).show();
+                        Logger.benLog().i("SmsReceiver->onDelivered");
                         break;
                     case Activity.RESULT_CANCELED:
                         Toast.makeText(getBaseContext(), "SMS not delivered",
                                 Toast.LENGTH_SHORT).show();
+                        Logger.benLog().i("SmsReceiver->fail delivered");
                         break;
                 }
             }
@@ -161,7 +182,11 @@ public class SMSPaymentService extends Service  {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                Log.i("test", "SmsReceiver->onReceive");
+                Logger.benLog().i("SmsReceiver->onReceive");
+                // TODO: 16/5/19 验证支付结果
+                Map<String,Object> response = new HashMap<String, Object>();
+                PaymentResponseWrapper paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                paymentCallback.onPaymentSuccess(paymentResponseWrapper);
                 Bundle bundle = arg1.getExtras();//获取intent中的内容
                 if (bundle != null) {
                     Object[] pdus = (Object[]) bundle.get("pdus");

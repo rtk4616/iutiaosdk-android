@@ -19,6 +19,7 @@ import android.util.Log;
 import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
+import com.iutiao.sdk.util.Logger;
 import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.Map;
@@ -39,6 +40,7 @@ public class SMSPayment implements IPayment {
 
     @Override
     public void initialize(Context applicationContext) {
+        Logger.benLog().i("SMSPayment initialize, start payment service");
         Intent startIntent = new Intent(applicationContext, SMSPaymentService.class);
         permissionUtil = PermissionUtil.getInstance(applicationContext);
         applicationContext.startService(startIntent);
@@ -48,7 +50,7 @@ public class SMSPayment implements IPayment {
 
     @Override
     public void setPaymentCallback(PaymentCallback listener) {
-paymentCallback = listener;
+        paymentCallback = listener;
     }
 
     public double getPrice(int shortCode) {
@@ -57,46 +59,48 @@ paymentCallback = listener;
 
     @Override
     public void pay(final Activity context) {
+        SMSPaymentService.setPaymentCallback(new PaymentCallback() {
+            @Override
+            public void onPaymentSuccess(PaymentResponseWrapper result) {
+                paymentCallback.onPaymentSuccess(result);
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onPaymentError(PaymentResponseWrapper result) {
+                SMSPaymentService.sendManual(context, "10010", "CXLL");
+                paymentCallback.onPaymentError(result);
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onPaymentCancel(PaymentResponseWrapper result) {
+                progressDialog.hide();
+            }
+
+            @Override
+            public void onProgress() {
+                progressDialog = new ProgressDialog(context);
+                progressDialog.show();
+            }
+        });
         permissionUtil.askPermissionAction(context, Manifest.permission.SEND_SMS, 3, new PermissionUtil.PermissionsResultAction() {
             @Override
             public void onGranted() {
                 try {
                     Log.i("smspay", String.valueOf(getPrice(shortCode)));
-                    SMSPaymentService.sendSMS(context, "10010", "CXLcL", new PaymentCallback() {
-                        @Override
-                        public void onPaymentSuccess(PaymentResponseWrapper result) {
-                            paymentCallback.onPaymentSuccess(result);
-                            progressDialog.hide();
-                        }
-
-                        @Override
-                        public void onPaymentError(PaymentResponseWrapper result) {
-                            SMSPaymentService.sendManual(context, "10010", "CXLL");
-                            paymentCallback.onPaymentError(result);
-                            progressDialog.hide();
-                        }
-
-                        @Override
-                        public void onPaymentCancel(PaymentResponseWrapper result) {
-                            progressDialog.hide();
-                        }
-
-                        @Override
-                        public void onProgress() {
-                            progressDialog = new ProgressDialog(context);
-                            progressDialog.show();
-                        }
-                    });
+                    SMSPaymentService.sendSMS(context, "10010", "CXLL");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                Log.i("permission", "grantedAction");
+                Logger.benLog().i("granted action");
             }
 
             @Override
             public void onDenied() {
-                Log.i("permission", "deniedAction");
+                SMSPaymentService.sendManual(context, "10010", "CXLL");
+                paymentCallback.onPaymentError(null);
+                Logger.benLog().i("denied action");
             }
 
         });
@@ -109,8 +113,5 @@ paymentCallback = listener;
 
     @Override
     public void onFinish() {
-        // TODO: 16/5/18  注意finish的时机
-        Intent stopIntent = new Intent(context, SMSPaymentService.class);
-        context.stopService(stopIntent);
     }
 }

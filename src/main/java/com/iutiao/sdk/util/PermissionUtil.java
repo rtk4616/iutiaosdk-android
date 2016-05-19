@@ -13,7 +13,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -85,12 +87,13 @@ public class PermissionUtil {
 
     }
 
-//    // 启动应用的设置
-//    private void startAppSettings(Context context) {
-//        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//        intent.setData(Uri.parse(PACKAGE_URL_SCHEME + getPackageName()));
-//        context.startActivity(intent);
-//    }
+    // 启动应用的设置
+    public void startAppSettings(Context context) {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", context.getPackageName(), null);
+        intent.setData(uri);
+        context.startActivity(intent);
+    }
 
     /**
      * 启动魅族App权限页
