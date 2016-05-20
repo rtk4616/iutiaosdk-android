@@ -27,6 +27,7 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.util.Logger;
@@ -34,6 +35,7 @@ import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class SMSPaymentService extends Service  {
@@ -42,6 +44,7 @@ public class SMSPaymentService extends Service  {
     private static String DELIVERED = "SMS_DELIVERED";
 
     private static PaymentCallback paymentCallback;
+    public Map<String, Object> responseData = new Hashtable<>();
 
     public static void setPaymentCallback(PaymentCallback paymentCallback) {
         SMSPaymentService.paymentCallback = paymentCallback;
@@ -126,7 +129,6 @@ public class SMSPaymentService extends Service  {
         registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
-                Map<String,Object> response = new HashMap<String, Object>();
                 PaymentResponseWrapper paymentResponseWrapper;
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
@@ -140,7 +142,7 @@ public class SMSPaymentService extends Service  {
                         Toast.makeText(getBaseContext(), "Generic failure",
                                 Toast.LENGTH_SHORT).show();
                         if(paymentCallback!=null){
-                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Generic failure"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
                         break;
@@ -148,7 +150,7 @@ public class SMSPaymentService extends Service  {
                         Toast.makeText(getBaseContext(), "No service",
                                 Toast.LENGTH_SHORT).show();
                         if(paymentCallback!=null){
-                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("No service"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
                         break;
@@ -156,7 +158,7 @@ public class SMSPaymentService extends Service  {
                         Toast.makeText(getBaseContext(), "Null PDU",
                                 Toast.LENGTH_SHORT).show();
                         if(paymentCallback!=null){
-                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Null PDU"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
                         break;
@@ -164,7 +166,7 @@ public class SMSPaymentService extends Service  {
                         Toast.makeText(getBaseContext(), "Radio off",
                                 Toast.LENGTH_SHORT).show();
                         if(paymentCallback!=null){
-                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Radio off"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
                         break;
@@ -193,7 +195,7 @@ public class SMSPaymentService extends Service  {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 Logger.benLog().i("SmsReceiver->onReceive");
-                // TODO: 16/5/19 验证支付结果
+                // TODO: 16/5/19 验证支付结果, 填充response
                 if(paymentCallback!=null){
                     Map<String,Object> response = new HashMap<String, Object>();
                     PaymentResponseWrapper paymentResponseWrapper = new PaymentResponseWrapper(response, null);

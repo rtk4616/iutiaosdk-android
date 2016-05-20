@@ -16,12 +16,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.util.Logger;
 import com.iutiao.sdk.util.PermissionUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -101,7 +103,7 @@ public class SMSPayment implements IPayment {
             @Override
             public void onDenied() {
                 SMSPaymentService.sendManual(context, "10010", "CXLL");
-                paymentCallback.onPaymentError(null);
+                paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(),new IUTiaoSdkException("action to send sms was denied")));
                 Logger.benLog().i("denied action");
             }
 
