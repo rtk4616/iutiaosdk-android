@@ -99,7 +99,9 @@ public class SMSPayment implements IPayment {
             public void onPaymentSuccess(PaymentResponseWrapper result) {
                 isActionResulted = true;
                 paymentCallback.onPaymentSuccess(result);
-                progressDialog.hide();
+                if (progressDialog != null) {
+                    progressDialog.hide();
+                }
             }
 
             @Override
@@ -115,7 +117,9 @@ public class SMSPayment implements IPayment {
             @Override
             public void onPaymentCancel(PaymentResponseWrapper result) {
                 isActionResulted = true;
-                progressDialog.hide();
+                if (progressDialog != null) {
+                    progressDialog.hide();
+                }
             }
 
             @Override
