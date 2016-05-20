@@ -70,7 +70,9 @@ public class SMSPayment implements IPayment {
             public void onPaymentError(PaymentResponseWrapper result) {
                 SMSPaymentService.sendManual(context, "10010", "CXLL");
                 paymentCallback.onPaymentError(result);
-                progressDialog.hide();
+                if(progressDialog!=null){
+                    progressDialog.hide();
+                }
             }
 
             @Override

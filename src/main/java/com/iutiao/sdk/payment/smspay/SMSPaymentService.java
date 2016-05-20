@@ -48,7 +48,6 @@ public class SMSPaymentService extends Service  {
     }
 
     public static void sendSMS(Context context, String phoneNumber, String message) {
-        paymentCallback.onProgress();
         PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
                 new Intent(SENT), 0);
 
@@ -133,30 +132,41 @@ public class SMSPaymentService extends Service  {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
+                        if(paymentCallback!=null){
+                            paymentCallback.onProgress();
+                        }
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         Toast.makeText(getBaseContext(), "Generic failure",
                                 Toast.LENGTH_SHORT).show();
-                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                        paymentCallback.onPaymentError(paymentResponseWrapper);
+                        if(paymentCallback!=null){
+                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentCallback.onPaymentError(paymentResponseWrapper);
+                        }
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
                         Toast.makeText(getBaseContext(), "No service",
                                 Toast.LENGTH_SHORT).show();
-                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                        paymentCallback.onPaymentError(paymentResponseWrapper);
+                        if(paymentCallback!=null){
+                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentCallback.onPaymentError(paymentResponseWrapper);
+                        }
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         Toast.makeText(getBaseContext(), "Null PDU",
                                 Toast.LENGTH_SHORT).show();
-                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                        paymentCallback.onPaymentError(paymentResponseWrapper);
+                        if(paymentCallback!=null){
+                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentCallback.onPaymentError(paymentResponseWrapper);
+                        }
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         Toast.makeText(getBaseContext(), "Radio off",
                                 Toast.LENGTH_SHORT).show();
-                        paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                        paymentCallback.onPaymentError(paymentResponseWrapper);
+                        if(paymentCallback!=null){
+                            paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                            paymentCallback.onPaymentError(paymentResponseWrapper);
+                        }
                         break;
                 }
             }
@@ -184,9 +194,11 @@ public class SMSPaymentService extends Service  {
             public void onReceive(Context arg0, Intent arg1) {
                 Logger.benLog().i("SmsReceiver->onReceive");
                 // TODO: 16/5/19 验证支付结果
-                Map<String,Object> response = new HashMap<String, Object>();
-                PaymentResponseWrapper paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                paymentCallback.onPaymentSuccess(paymentResponseWrapper);
+                if(paymentCallback!=null){
+                    Map<String,Object> response = new HashMap<String, Object>();
+                    PaymentResponseWrapper paymentResponseWrapper = new PaymentResponseWrapper(response, null);
+                    paymentCallback.onPaymentSuccess(paymentResponseWrapper);
+                }
                 Bundle bundle = arg1.getExtras();//获取intent中的内容
                 if (bundle != null) {
                     Object[] pdus = (Object[]) bundle.get("pdus");
