@@ -14,6 +14,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
@@ -25,6 +27,8 @@ import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Ben on 16/5/16.
@@ -32,12 +36,40 @@ import java.util.Map;
 public class SMSPayment implements IPayment {
 
     public static final String PARAM_SMS_SHORTCODE = "param_sms_shortcode";
+    public static final int MSG_PERMISSION_OVERTIME = 0x01;
+    public static final int MSG_DELIVERED_OVERTIME = 0x02;
+    private Timer timer;
     private PermissionUtil permissionUtil;
     private Context context;
     private SMSOperator smsOperator;
     private PaymentCallback paymentCallback;
     private int shortCode;
     private ProgressDialog progressDialog;
+    private boolean isActionExcuted = false;
+    private boolean isActionResulted = false;
+    private Handler timerHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_PERMISSION_OVERTIME:
+                    if (isActionResulted||isActionExcuted) {
+                        break;
+                    }
+                case MSG_DELIVERED_OVERTIME:
+                    if(isActionResulted){
+                        break;
+                    }
+                    if (progressDialog != null) {
+                        progressDialog.hide();
+                    }
+                    if (paymentCallback != null) {
+                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("overtime")));
+                    }
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
 
 
     @Override
@@ -47,6 +79,7 @@ public class SMSPayment implements IPayment {
         permissionUtil = PermissionUtil.getInstance(applicationContext);
         applicationContext.startService(startIntent);
         smsOperator = SMSOperator.init(applicationContext);
+        timer = new Timer(true);
         context = applicationContext;
     }
 
@@ -64,6 +97,7 @@ public class SMSPayment implements IPayment {
         SMSPaymentService.setPaymentCallback(new PaymentCallback() {
             @Override
             public void onPaymentSuccess(PaymentResponseWrapper result) {
+                isActionResulted = true;
                 paymentCallback.onPaymentSuccess(result);
                 progressDialog.hide();
             }
@@ -71,19 +105,28 @@ public class SMSPayment implements IPayment {
             @Override
             public void onPaymentError(PaymentResponseWrapper result) {
                 SMSPaymentService.sendManual(context, "10010", "CXLL");
+                isActionResulted = true;
                 paymentCallback.onPaymentError(result);
-                if(progressDialog!=null){
+                if (progressDialog != null) {
                     progressDialog.hide();
                 }
             }
 
             @Override
             public void onPaymentCancel(PaymentResponseWrapper result) {
+                isActionResulted = true;
                 progressDialog.hide();
             }
 
             @Override
             public void onProgress() {
+                isActionExcuted = true;
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        timerHandler.obtainMessage(MSG_DELIVERED_OVERTIME).sendToTarget();
+                    }
+                }, 6000L);
                 progressDialog = new ProgressDialog(context);
                 progressDialog.show();
             }
@@ -103,11 +146,17 @@ public class SMSPayment implements IPayment {
             @Override
             public void onDenied() {
                 SMSPaymentService.sendManual(context, "10010", "CXLL");
-                paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(),new IUTiaoSdkException("action to send sms was denied")));
+                paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("action to send sms was denied")));
                 Logger.benLog().i("denied action");
             }
 
         });
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                timerHandler.obtainMessage(MSG_PERMISSION_OVERTIME).sendToTarget();
+            }
+        }, 6000L);
     }
 
     @Override
