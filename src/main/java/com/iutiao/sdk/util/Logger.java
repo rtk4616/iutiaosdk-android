@@ -33,7 +33,7 @@ public class Logger {
 
     private static Logger benLog;
 
-    private static final String BEN = "@ben@ ";
+    private static final String IUT = "@iut@ ";
 
     private Logger(String name) {
         mClassName = name;
@@ -60,19 +60,19 @@ public class Logger {
      */
     public static Logger benLog() {
         if (benLog == null) {
-            benLog = new Logger(BEN);
+            benLog = new Logger(IUT);
         }
         return benLog;
     }
     public static Logger zfLog() {
         if (benLog == null) {
-            benLog = new Logger(BEN);
+            benLog = new Logger(IUT);
         }
         return benLog;
     }
     public static Logger ytLog() {
         if (benLog == null) {
-            benLog = new Logger(BEN);
+            benLog = new Logger(IUT);
         }
         return benLog;
     }
