@@ -23,7 +23,7 @@ public class SMSRespParser {
     public static PaymentResponseWrapper parse(String strXmlResp) {
         PaymentResponseWrapper paymentResponseWrapper;
         Map<String, Object> data = new HashMap<>();
-        String[] strXmlResps = strXmlResp.split("\\.", 3);
+        String[] strXmlResps = strXmlResp.split("\\|", 3);
         if (strXmlResps.length != 3) {
             paymentResponseWrapper = new PaymentResponseWrapper(data, new Exception("Format error:" + strXmlResp));
             return paymentResponseWrapper;

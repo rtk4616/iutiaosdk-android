@@ -24,7 +24,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
@@ -34,7 +33,6 @@ import com.iutiao.sdk.util.Logger;
 import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
@@ -195,12 +193,7 @@ public class SMSPaymentService extends Service  {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 Logger.benLog().i("SmsReceiver->onReceive");
-                // TODO: 16/5/19 验证支付结果, 填充response
-                if(paymentCallback!=null){
-                    Map<String,Object> response = new HashMap<String, Object>();
-                    PaymentResponseWrapper paymentResponseWrapper = new PaymentResponseWrapper(response, null);
-                    paymentCallback.onPaymentSuccess(paymentResponseWrapper);
-                }
+                String strXmlResp  = "";
                 Bundle bundle = arg1.getExtras();//获取intent中的内容
                 if (bundle != null) {
                     Object[] pdus = (Object[]) bundle.get("pdus");
@@ -212,9 +205,17 @@ public class SMSPaymentService extends Service  {
                     for (SmsMessage message : messages) {
                         String strFrom = message.getDisplayOriginatingAddress();
                         String strMsg = message.getDisplayMessageBody();
-                        Log.i("test", "From:" + strFrom);
-                        Log.i("test", "Msg:" + strMsg);
+                        strXmlResp = strXmlResp = strMsg;
                     }
+                }
+                if(!strXmlResp.startsWith("ZTE|")) return;// TODO: 16/5/24 prefix
+
+                PaymentResponseWrapper paymentResponseWrapper = SMSRespParser.parse(strXmlResp);
+                if(paymentCallback == null) return;
+                if(paymentResponseWrapper.error!=null){
+                    paymentCallback.onPaymentError(paymentResponseWrapper);
+                }else{
+                    paymentCallback.onPaymentSuccess(paymentResponseWrapper);
                 }
             }
         }, new IntentFilter(RECEIVED));
