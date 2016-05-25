@@ -16,7 +16,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.payment.IPayment;
@@ -36,14 +35,21 @@ import java.util.TimerTask;
 public class SMSPayment implements IPayment {
 
     public static final String PARAM_SMS_SHORTCODE = "param_sms_shortcode";
+    public static final String PARAM_SMS_SKU_ID = "param_sms_sku_id";
+
+    public static final String SHORTCODE_1 = "4446";//0.99
+    public static final String SHORTCODE_3 = "4449";//3
+
+    public static final String RESP_SMS_SKU_ID = "resp_sms_sku_id";
     public static final int MSG_PERMISSION_OVERTIME = 0x01;
     public static final int MSG_DELIVERED_OVERTIME = 0x02;
+    private static final String SMS_PREFIX = "HIBB";
     private Timer timer;
     private PermissionUtil permissionUtil;
     private Context context;
-    private SMSOperator smsOperator;
     private PaymentCallback paymentCallback;
     private int shortCode;
+    private String sku_id;
     private ProgressDialog progressDialog;
     private boolean isActionExcuted = false;
     private boolean isActionResulted = false;
@@ -54,6 +60,13 @@ public class SMSPayment implements IPayment {
                     if (isActionResulted||isActionExcuted) {
                         break;
                     }
+                    if (progressDialog != null) {
+                        progressDialog.hide();
+                    }
+                    if (paymentCallback != null) {
+                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("permission-overtime")));
+                    }
+                    break;
                 case MSG_DELIVERED_OVERTIME:
                     if(isActionResulted){
                         break;
@@ -62,7 +75,7 @@ public class SMSPayment implements IPayment {
                         progressDialog.hide();
                     }
                     if (paymentCallback != null) {
-                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("overtime")));
+                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("deliver-overtime")));
                     }
                     break;
 
@@ -78,7 +91,6 @@ public class SMSPayment implements IPayment {
         Intent startIntent = new Intent(applicationContext, SMSPaymentService.class);
         permissionUtil = PermissionUtil.getInstance(applicationContext);
         applicationContext.startService(startIntent);
-        smsOperator = SMSOperator.init(applicationContext);
         timer = new Timer(true);
         context = applicationContext;
     }
@@ -86,10 +98,6 @@ public class SMSPayment implements IPayment {
     @Override
     public void setPaymentCallback(PaymentCallback listener) {
         paymentCallback = listener;
-    }
-
-    public double getPrice(int shortCode) {
-        return smsOperator.getPrice(shortCode);
     }
 
     @Override
@@ -106,7 +114,7 @@ public class SMSPayment implements IPayment {
 
             @Override
             public void onPaymentError(PaymentResponseWrapper result) {
-                SMSPaymentService.sendManual(context, "10010", "CXLL");
+                SMSPaymentService.sendManual(context, String.valueOf(shortCode), SMS_PREFIX+sku_id);
                 isActionResulted = true;
                 paymentCallback.onPaymentError(result);
                 if (progressDialog != null) {
@@ -125,31 +133,30 @@ public class SMSPayment implements IPayment {
             @Override
             public void onProgress() {
                 isActionExcuted = true;
+                progressDialog = new ProgressDialog(context);
+                progressDialog.show();
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
                         timerHandler.obtainMessage(MSG_DELIVERED_OVERTIME).sendToTarget();
                     }
                 }, 6000L);
-                progressDialog = new ProgressDialog(context);
-                progressDialog.show();
             }
         });
         permissionUtil.askPermissionAction(context, Manifest.permission.SEND_SMS, 3, new PermissionUtil.PermissionsResultAction() {
             @Override
             public void onGranted() {
+                Logger.benLog().i("granted action");
                 try {
-                    Log.i("smspay", String.valueOf(getPrice(shortCode)));
-                    SMSPaymentService.sendSMS(context, "10010", "CXLL");
+                    SMSPaymentService.sendSMS(context, String.valueOf(shortCode), SMS_PREFIX+sku_id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Logger.benLog().i("granted action");
             }
 
             @Override
             public void onDenied() {
-                SMSPaymentService.sendManual(context, "10010", "CXLL");
+                SMSPaymentService.sendManual(context, String.valueOf(shortCode), SMS_PREFIX+sku_id);
                 paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("action to send sms was denied")));
                 Logger.benLog().i("denied action");
             }
@@ -165,7 +172,8 @@ public class SMSPayment implements IPayment {
 
     @Override
     public void setPaymentArguments(Map<String, Object> arguments) {
-        this.shortCode = (int) arguments.get(SMSPayment.PARAM_SMS_SHORTCODE);
+        this.sku_id = (String) arguments.get(SMSPayment.PARAM_SMS_SKU_ID);
+        this.shortCode = Integer.valueOf((String)arguments.get(SMSPayment.PARAM_SMS_SHORTCODE));
     }
 
     @Override

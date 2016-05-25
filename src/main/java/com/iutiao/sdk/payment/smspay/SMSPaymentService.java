@@ -208,10 +208,11 @@ public class SMSPaymentService extends Service  {
                         strXmlResp = strXmlResp = strMsg;
                     }
                 }
-                if(!strXmlResp.startsWith("ZTE|")) return;// TODO: 16/5/24 prefix
+
+                if(!SMSRespParser.isPayResp(strXmlResp)) return;
+                if(paymentCallback == null) return;
 
                 PaymentResponseWrapper paymentResponseWrapper = SMSRespParser.parse(strXmlResp);
-                if(paymentCallback == null) return;
                 if(paymentResponseWrapper.error!=null){
                     paymentCallback.onPaymentError(paymentResponseWrapper);
                 }else{

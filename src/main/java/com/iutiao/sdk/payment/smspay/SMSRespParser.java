@@ -20,10 +20,17 @@ import java.util.Map;
  * SMS response:ZTE.skuId.resultCode
  */
 public class SMSRespParser {
+    public static final String SMS_RESP_PREFIX = "ZTE";
+    public static final String SMS_RESP_SEPARATOR = "\\|";
+    public static final String SMS_RESP_RESULT_CODE_SUCCESS = "0";
+
+    public static boolean isPayResp(String strXmlResp){
+        return strXmlResp.startsWith(SMS_RESP_PREFIX);
+    }
     public static PaymentResponseWrapper parse(String strXmlResp) {
         PaymentResponseWrapper paymentResponseWrapper;
         Map<String, Object> data = new HashMap<>();
-        String[] strXmlResps = strXmlResp.split("\\|", 3);
+        String[] strXmlResps = strXmlResp.split(SMS_RESP_SEPARATOR, 3);
         if (strXmlResps.length != 3) {
             paymentResponseWrapper = new PaymentResponseWrapper(data, new Exception("Format error:" + strXmlResp));
             return paymentResponseWrapper;
@@ -36,7 +43,7 @@ public class SMSRespParser {
             return paymentResponseWrapper;
         }
 
-        if(resultCode.equals("0")){
+        if(resultCode.equals(SMS_RESP_RESULT_CODE_SUCCESS)){
             data.put(SMSPayment.RESP_SMS_SKU_ID, skuId);
             paymentResponseWrapper = new PaymentResponseWrapper(data, null);
             return paymentResponseWrapper;
