@@ -22,7 +22,7 @@ import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PassionPayment;
 import com.iutiao.sdk.payment.UPayPayment;
-import com.iutiao.sdk.status.StatusReporter;
+import com.iutiao.sdk.status.StatusReporterProxy;
 import com.iutiao.sdk.views.FloatView;
 import com.upay.billing.UpayConstant;
 
@@ -180,7 +180,7 @@ public final class IUTiaoSdk {
             }
             payInitialized = true;
         }
-        StatusReporter.init(applicationContext);
+        StatusReporterProxy.init(applicationContext);
         initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();
