@@ -39,6 +39,7 @@ import com.iutiao.sdk.payment.IPayment;
 import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.payment.UPayPayment;
+import com.iutiao.sdk.status.StatusReporterProxy;
 import com.iutiao.sdk.tasks.ChargeTask;
 import com.iutiao.sdk.tasks.UPayItemCollectionTask;
 import com.iutiao.sdk.tasks.UserProfileTask;
@@ -218,6 +219,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         Log.i(TAG, String.format("Payment successful. Item %s purchased, cost %.2f ucoin, current balance are %.2f",
                 getPayItem(), ucoin, balance));
         setCurrentBalance(balance);
+        HashMap<String,String> data = new HashMap<>();
+        data.put("pay_method",payMethod);
+        StatusReporterProxy.sharedInstance().recordEvent("pay_success",data,1,ucoin);
         updateUI();
 //        new Thread(new UpdateUserProfileTask()).start();
     }
@@ -235,11 +239,17 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
     public void onPaymentError(PaymentResponseWrapper result) {
         Log.i(TAG, "payment failed due to " + result.error.toString() + " data " + result.data.toString());
         Toast.makeText(getActivity(), "payment failed due to " + result.error.toString() + " data " + result.data.toString(), Toast.LENGTH_SHORT).show();
+        HashMap<String,String> data = new HashMap<>();
+        data.put("pay_method", payMethod);
+        StatusReporterProxy.sharedInstance().recordEvent("pay_error",data,1);
         updateBalance();
     }
 
     @Override
     public void onPaymentCancel(PaymentResponseWrapper result) {
+        HashMap<String,String> data = new HashMap<>();
+        data.put("pay_method",payMethod);
+        StatusReporterProxy.sharedInstance().recordEvent("pay_cancel",data,1);
         Toast.makeText(getActivity(), "payment canceled", Toast.LENGTH_SHORT).show();
     }
 
@@ -263,6 +273,9 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         paymentHolder.paymentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap<String,String> data = new HashMap<>();
+                data.put("pay_method",payMethod);
+                StatusReporterProxy.sharedInstance().recordEvent("pay_press",data,1);
                 initPaymentArguments();
                 createChargeOrder();
             }
@@ -352,7 +365,7 @@ public class UPayPaymentFragment extends BaseFragment implements PaymentCallback
         initPayItems(); // 初始化 upay 计费代码
         initUI();
         updateUI();
-
+        StatusReporterProxy.sharedInstance().recordEvent("pay_scene",1);
         new Thread(new UpdateUserProfileTask()).start();
     }
 
