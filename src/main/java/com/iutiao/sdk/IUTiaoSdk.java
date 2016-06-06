@@ -176,6 +176,7 @@ public final class IUTiaoSdk {
             }
             payInitialized = true;
         }
+        StatusReporterProxy.init(applicationContext);
         initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();

@@ -10,12 +10,10 @@
 package com.iutiao.sdk.status;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.os.Bundle;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -71,43 +69,6 @@ public class StatusReporterProxy {
         pkgName = context.getPackageName()+"|";
         StatusReporterProxy.sharedInstance().setUserData(context);// If UserData plugin is enabled on your server
         StatusReporterProxy.sharedInstance().enableCrashTracking(context);
-        ((Application) context).registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-                count--;
-                if (count == 0) {
-                    StatusReporterProxy.sharedInstance().recordEvent("start",1);
-                }
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-                if (count == 0) {
-                }
-                count++;
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-            }
-
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-            }
-        });
         return SingletonHolder.instance;
     }
 
@@ -193,9 +154,11 @@ public class StatusReporterProxy {
 
     public void onStart(Activity activity) {
         Countly.sharedInstance().onStart(activity);
+        StatusReporterProxy.sharedInstance().recordEvent("start", 1);
     }
 
     public void onStop() {
+        StatusReporterProxy.sharedInstance().recordEvent("stop",1);
         Countly.sharedInstance().onStop();
     }
 }
