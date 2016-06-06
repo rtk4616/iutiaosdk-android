@@ -9,8 +9,10 @@
 
 package com.iutiao.sdk.payment.smspay;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,7 +21,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.telephony.SmsManager;
@@ -27,26 +31,147 @@ import android.telephony.SmsMessage;
 import android.widget.Toast;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
-import com.iutiao.sdk.payment.PaymentCallback;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
 import com.iutiao.sdk.util.Logger;
 import com.iutiao.sdk.util.PermissionUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class SMSPaymentService extends Service  {
+public class SMSPaymentService extends Service {
+    public static final String RESP_SMS_SKU_ID = "resp_sms_sku_id";
     private static String RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
     private static String SENT = "SMS_SENT";
     private static String DELIVERED = "SMS_DELIVERED";
 
-    private static PaymentCallback paymentCallback;
-    public Map<String, Object> responseData = new Hashtable<>();
+    private static String SMS_SHORTCODE_1 = "4446";
+    private static String SMS_SHORTCODE_3 = "4449";
 
-    public static void setPaymentCallback(PaymentCallback paymentCallback) {
+    private static final String SMS_MESSAGE_PREFIX = "HIBB";
+
+    private static SMSPaymentCallback paymentCallback;
+    private static ProgressDialog progressDialog;
+    public static Map<String, Object> responseData;
+    private static PermissionUtil permissionUtil;
+
+    public static final int MSG_PERMISSION_OVERTIME = 0x01;
+    public static final int MSG_DELIVERED_OVERTIME = 0x02;
+    private static Handler timerHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            dimissProgress();
+            switch (msg.what) {
+                case MSG_PERMISSION_OVERTIME:
+                    if (paymentCallback != null) {
+                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("permission-overtime")));
+                    }
+                    break;
+                case MSG_DELIVERED_OVERTIME:
+                    if (progressDialog != null) {
+                        progressDialog.hide();
+                    }
+                    if (paymentCallback != null) {
+                        paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("deliver-overtime")));
+                    }
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
+    private static Timer timer = new Timer();
+    private static TimerTask permissionTime;
+    private static TimerTask deliverTime;
+
+    public static void setPaymentCallback(SMSPaymentCallback paymentCallback) {
         SMSPaymentService.paymentCallback = paymentCallback;
     }
+
+    public static void init(Context applicationContext) {
+        Logger.benLog().i("SMSPayment initialize, start payment service");
+        Intent startIntent = new Intent(applicationContext, SMSPaymentService.class);
+        applicationContext.startService(startIntent);
+        permissionUtil = PermissionUtil.getInstance(applicationContext);
+    }
+
+    public static void addAmount1(final Activity activity) {
+        showProgress(activity);
+        permissionUtil.askPermissionAction(activity, Manifest.permission.SEND_SMS, 3, new PermissionUtil.PermissionsResultAction() {
+            @Override
+            public void onGranted() {
+                Logger.benLog().i("granted action");
+                try {
+                    responseData = new Hashtable<>();
+                    sendSMS(activity, "15692008232", "ZTE|com.iutiao.sdkdemo|4446|0");
+//                    sendSMS(activity, SMS_SHORTCODE_1, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onDenied() {
+                dimissProgress();
+                sendManual(activity, SMS_SHORTCODE_1, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("action to send sms was denied")));
+                Logger.benLog().i("denied action");
+            }
+
+        });
+        if (permissionTime != null) {
+            permissionTime.cancel();
+        }
+        permissionTime = new PermissionTime();
+        timer.schedule(permissionTime, 6000L);
+
+    }
+
+    private static void showProgress(Activity activity) {
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private static void dimissProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.hide();
+        }
+    }
+
+    public static void addAmount3(final Activity activity) {
+        showProgress(activity);
+        permissionUtil.askPermissionAction(activity, Manifest.permission.SEND_SMS, 3, new PermissionUtil.PermissionsResultAction() {
+            @Override
+            public void onGranted() {
+                Logger.benLog().i("granted action");
+                try {
+                    responseData = new Hashtable<>();
+                    sendSMS(activity, "15692008232", "ZTE|com.iutiao.sdkdemo|4449|0");
+//                    sendSMS(activity, SMS_SHORTCODE_3, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onDenied() {
+                dimissProgress();
+                sendManual(activity, SMS_SHORTCODE_3, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                paymentCallback.onPaymentError(new PaymentResponseWrapper(new HashMap<String, Object>(), new IUTiaoSdkException("action to send sms was denied")));
+                Logger.benLog().i("denied action");
+            }
+
+        });
+        if (permissionTime != null) {
+            permissionTime.cancel();
+        }
+        permissionTime = new PermissionTime();
+        timer.schedule(permissionTime, 6000L);
+    }
+
 
     public static void sendSMS(Context context, String phoneNumber, String message) {
         PendingIntent sentPI = PendingIntent.getBroadcast(context, 0,
@@ -63,7 +188,7 @@ public class SMSPaymentService extends Service  {
             } catch (Exception localException) {
                 localException.printStackTrace();
             }
-            Logger.benLog().i("start to send, message:"+text);
+            Logger.benLog().i("start to send, message:" + text);
         }
     }
 
@@ -128,18 +253,25 @@ public class SMSPaymentService extends Service  {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 PaymentResponseWrapper paymentResponseWrapper;
+                permissionTime.cancel();
                 switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         Toast.makeText(getBaseContext(), "SMS sent",
                                 Toast.LENGTH_SHORT).show();
-                        if(paymentCallback!=null){
-                            paymentCallback.onProgress();
+                        if (progressDialog!=null){
+                            progressDialog.show();
                         }
+                        if (deliverTime != null) {
+                            deliverTime.cancel();
+                        }
+                        deliverTime = new DeliveredTime();
+                        timer.schedule(deliverTime, 6000L);
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         Toast.makeText(getBaseContext(), "Generic failure",
                                 Toast.LENGTH_SHORT).show();
-                        if(paymentCallback!=null){
+                        dimissProgress();
+                        if (paymentCallback != null) {
                             paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Generic failure"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
@@ -147,7 +279,8 @@ public class SMSPaymentService extends Service  {
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
                         Toast.makeText(getBaseContext(), "No service",
                                 Toast.LENGTH_SHORT).show();
-                        if(paymentCallback!=null){
+                        dimissProgress();
+                        if (paymentCallback != null) {
                             paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("No service"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
@@ -155,7 +288,8 @@ public class SMSPaymentService extends Service  {
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         Toast.makeText(getBaseContext(), "Null PDU",
                                 Toast.LENGTH_SHORT).show();
-                        if(paymentCallback!=null){
+                        dimissProgress();
+                        if (paymentCallback != null) {
                             paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Null PDU"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
@@ -163,7 +297,8 @@ public class SMSPaymentService extends Service  {
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         Toast.makeText(getBaseContext(), "Radio off",
                                 Toast.LENGTH_SHORT).show();
-                        if(paymentCallback!=null){
+                        dimissProgress();
+                        if (paymentCallback != null) {
                             paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Radio off"));
                             paymentCallback.onPaymentError(paymentResponseWrapper);
                         }
@@ -185,6 +320,12 @@ public class SMSPaymentService extends Service  {
                         Toast.makeText(getBaseContext(), "SMS not delivered",
                                 Toast.LENGTH_SHORT).show();
                         Logger.benLog().i("SmsReceiver->fail delivered");
+                        dimissProgress();
+                        if (paymentCallback != null) {
+                            PaymentResponseWrapper paymentResponseWrapper;
+                            paymentResponseWrapper = new PaymentResponseWrapper(responseData, new IUTiaoSdkException("Radio off"));
+                            paymentCallback.onPaymentError(paymentResponseWrapper);
+                        }
                         break;
                 }
             }
@@ -193,7 +334,8 @@ public class SMSPaymentService extends Service  {
             @Override
             public void onReceive(Context arg0, Intent arg1) {
                 Logger.benLog().i("SmsReceiver->onReceive");
-                String strXmlResp  = "";
+                deliverTime.cancel();
+                String strXmlResp = "";
                 Bundle bundle = arg1.getExtras();//获取intent中的内容
                 if (bundle != null) {
                     Object[] pdus = (Object[]) bundle.get("pdus");
@@ -209,16 +351,36 @@ public class SMSPaymentService extends Service  {
                     }
                 }
 
-                if(!SMSRespParser.isPayResp(strXmlResp)) return;
-                if(paymentCallback == null) return;
+                if (!SMSRespParser.isPayResp(strXmlResp, getPackageName())) return;
+                if (paymentCallback == null) return;
 
                 PaymentResponseWrapper paymentResponseWrapper = SMSRespParser.parse(strXmlResp);
-                if(paymentResponseWrapper.error!=null){
+                if (paymentResponseWrapper.error != null) {
                     paymentCallback.onPaymentError(paymentResponseWrapper);
-                }else{
-                    paymentCallback.onPaymentSuccess(paymentResponseWrapper);
+                } else {
+                    if (paymentResponseWrapper.data.get(SMSPaymentService.RESP_SMS_SKU_ID).equals(SMS_SHORTCODE_1)){
+                        paymentCallback.onAddAmount1(paymentResponseWrapper);
+                    }
+                    if (paymentResponseWrapper.data.get(SMSPaymentService.RESP_SMS_SKU_ID).equals(SMS_SHORTCODE_3)){
+                        paymentCallback.onAddAmount3(paymentResponseWrapper);
+                    }
                 }
+                dimissProgress();
             }
         }, new IntentFilter(RECEIVED));
+    }
+
+    static class PermissionTime extends TimerTask {
+        @Override
+        public void run() {
+            timerHandler.obtainMessage(MSG_PERMISSION_OVERTIME).sendToTarget();
+        }
+    }
+
+    class DeliveredTime extends TimerTask {
+        @Override
+        public void run() {
+            timerHandler.obtainMessage(MSG_DELIVERED_OVERTIME).sendToTarget();
+        }
     }
 }
