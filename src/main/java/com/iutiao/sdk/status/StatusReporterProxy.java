@@ -15,6 +15,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+import com.iutiao.sdk.IUTiaoSdk;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -25,8 +27,8 @@ import ly.count.android.sdk.Countly;
  * Created by Ben on 16/6/1.
  */
 public class StatusReporterProxy {
-    private static final String serverUrl = "http://sentry.iutiao.com";
-    private static final String appKey = "8a12ae84fa1a03cfef086c4fb2a509f96f5704f1";
+    private static String serverUrl = "http://sentry.iutiao.com";// TODO: 16/6/6 change to real server
+    private static String appKey = "8a12ae84fa1a03cfef086c4fb2a509f96f5704f1";
     private static String pkgName = null;
 
     private static final String CRASH_PARAM_PKG_NAME = "PKG_NAME";
@@ -54,9 +56,12 @@ public class StatusReporterProxy {
     private static final String USER_DATA_NETWORK_TYPR = "USER_DATA_NETWORK_TYPR";
     private static final String USER_DATA_COUNTRY = "USER_DATA_COUNTRY";
 
-    private static int count = 0;
-
     private StatusReporterProxy() {
+    }
+
+    public static void setSandBox() {
+        serverUrl = "http://sentry.iutiao.com";
+        appKey = "8a12ae84fa1a03cfef086c4fb2a509f96f5704f1";
     }
 
     private static class SingletonHolder {
@@ -64,9 +69,12 @@ public class StatusReporterProxy {
     }
 
     public static StatusReporterProxy init(Context context) {
+        if(IUTiaoSdk.isSandbox()){
+            StatusReporterProxy.setSandBox();
+        }
         Countly.sharedInstance()
                 .init(context, serverUrl, appKey);
-        pkgName = context.getPackageName()+"|";
+        pkgName = context.getPackageName() + "|";
         StatusReporterProxy.sharedInstance().setUserData(context);// If UserData plugin is enabled on your server
         StatusReporterProxy.sharedInstance().enableCrashTracking(context);
         return SingletonHolder.instance;
@@ -79,25 +87,28 @@ public class StatusReporterProxy {
     public void setLoggingEnabled(boolean enableLogging) {
         Countly.sharedInstance().setLoggingEnabled(true);
     }
+
     public void recordEvent(String key) {
         this.recordEvent(key, (Map) null, 1, 0.0D);
     }
+
     public void recordEvent(String key, int count) {
-        Countly.sharedInstance().recordEvent(pkgName+key, count);
+        Countly.sharedInstance().recordEvent(pkgName + key, count);
     }
 
     public void recordEvent(String key, int count, double sum) {
-        Countly.sharedInstance().recordEvent(pkgName+key, count, sum);
+        Countly.sharedInstance().recordEvent(pkgName + key, count, sum);
     }
 
     public void recordEvent(String key, Map<String, String> segmentation, int count) {
-        Countly.sharedInstance().recordEvent(pkgName+key, segmentation, count);
+        Countly.sharedInstance().recordEvent(pkgName + key, segmentation, count);
     }
 
     public void recordEvent(String key, Map<String, String> segmentation, int count, double sum) {
-        Countly.sharedInstance().recordEvent(pkgName+key, segmentation, count, sum);
+        Countly.sharedInstance().recordEvent(pkgName + key, segmentation, count, sum);
     }
-    public void setUserData(Context context){
+
+    public void setUserData(Context context) {
         HashMap<String, String> data = new HashMap<String, String>();
         //providing any custom key values to store with user
         HashMap<String, String> custom = new HashMap<String, String>();
@@ -111,12 +122,12 @@ public class StatusReporterProxy {
 
     public void enableCrashTracking(Context context) {
         HashMap<String, String> data = new HashMap<String, String>();
-        collectDeviceInfo(context,data);
+        collectDeviceInfo(context, data);
         Countly.sharedInstance().setCustomCrashSegments(data);
         Countly.sharedInstance().enableCrashReporting();
     }
 
-    private void collectDeviceInfo(Context context,HashMap<String, String> infos) {
+    private void collectDeviceInfo(Context context, HashMap<String, String> infos) {
         PackageManager pm = context.getPackageManager();
         PackageInfo pi = null;
         try {
@@ -137,7 +148,7 @@ public class StatusReporterProxy {
         infos.put(CRASH_PARAM_FINGERPRIINT, Build.FINGERPRINT);
         infos.put(CRASH_PARAM_RADIOVERSION, Build.getRadioVersion());
         infos.put(CRASH_PARAM_HARDWARE, Build.HARDWARE);
-        infos.put(CRASH_PARAM_ID,Build.ID);
+        infos.put(CRASH_PARAM_ID, Build.ID);
         infos.put(CRASH_PARAM_MANUFACTURER, Build.MANUFACTURER);
         infos.put(CRASH_PARAM_MODEL, Build.MODEL);
         infos.put(CRASH_PARAM_PRODUCT, Build.PRODUCT);
@@ -158,7 +169,7 @@ public class StatusReporterProxy {
     }
 
     public void onStop() {
-        StatusReporterProxy.sharedInstance().recordEvent("stop",1);
+        StatusReporterProxy.sharedInstance().recordEvent("stop", 1);
         Countly.sharedInstance().onStop();
     }
 }
