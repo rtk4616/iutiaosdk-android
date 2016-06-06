@@ -105,8 +105,7 @@ public class SMSPaymentService extends Service {
                 Logger.benLog().i("granted action");
                 try {
                     responseData = new Hashtable<>();
-                    sendSMS(activity, "15692008232", "ZTE|com.iutiao.sdkdemo|4446|0");
-//                    sendSMS(activity, SMS_SHORTCODE_1, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                    sendSMS(activity, SMS_SHORTCODE_1, SMS_MESSAGE_PREFIX + activity.getPackageName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -149,8 +148,7 @@ public class SMSPaymentService extends Service {
                 Logger.benLog().i("granted action");
                 try {
                     responseData = new Hashtable<>();
-                    sendSMS(activity, "15692008232", "ZTE|com.iutiao.sdkdemo|4449|0");
-//                    sendSMS(activity, SMS_SHORTCODE_3, SMS_MESSAGE_PREFIX + activity.getPackageName());
+                    sendSMS(activity, SMS_SHORTCODE_3, SMS_MESSAGE_PREFIX + activity.getPackageName());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
