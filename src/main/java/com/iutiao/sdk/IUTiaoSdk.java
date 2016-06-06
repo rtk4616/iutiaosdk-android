@@ -68,7 +68,7 @@ public final class IUTiaoSdk {
 
 
     private static boolean payInitialized = false;
-    private static String[] payMethods = {"payssion","upay","sms"};
+    private static String[] payMethods = {"payssion","upay"};
     private static Map<String, IPayment> payments = new HashMap<String, IPayment>();
     public static IPayment getPayment(String payMethod){
         if(payInitialized){
@@ -172,15 +172,10 @@ public final class IUTiaoSdk {
                     PassionPayment passionPayment = new PassionPayment();
                     passionPayment.initialize(applicationContext);
                     payments.put(payMethod, passionPayment);
-                }else if(payMethod.equals("sms")){
-//                    SMSPayment smsPayment = new SMSPayment();
-//                    smsPayment.initialize(applicationContext);
-//                    payments.put(payMethod, smsPayment);
                 }
             }
             payInitialized = true;
         }
-        StatusReporterProxy.init(applicationContext);
         initFloatView();
         sdkInitialized = true;
         iutiaoClientInitialize();

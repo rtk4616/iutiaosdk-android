@@ -175,7 +175,7 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
                     payment.setPaymentCallback((PaymentCallback) ChargeFragment.this);
                     payment.setPaymentArguments(getPaymentArguments());
                 }
-                payment.pay();
+                payment.pay(getActivity());
             }
 
             @Override
@@ -249,5 +249,10 @@ public class ChargeFragment extends BaseFragment implements PaymentCallback, Vie
     @Override
     public void onPaymentCancel(PaymentResponseWrapper result) {
         Toast.makeText(getActivity(), "payment canceled", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onProgress() {
+
     }
 }

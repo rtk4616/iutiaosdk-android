@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -139,7 +138,7 @@ public class FloatView extends RelativeLayout {
     private boolean isMoving(MotionEvent event) {
         float x = event.getX() - touchStartX;
         float y = event.getY() - touchStartY;
-        if(FloatMath.sqrt(x * x + y * y)>20){
+        if(Math.sqrt(x * x + y * y)>20){
             return true;
         }
         else {

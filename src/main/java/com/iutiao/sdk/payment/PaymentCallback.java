@@ -16,4 +16,5 @@ public interface PaymentCallback {
     void onPaymentSuccess(PaymentResponseWrapper result);
     void onPaymentError(PaymentResponseWrapper result);
     void onPaymentCancel(PaymentResponseWrapper result);
+    void onProgress();
 }

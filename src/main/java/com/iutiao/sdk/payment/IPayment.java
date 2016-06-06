@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk.payment;
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 public interface IPayment {
     public void initialize(Context applicationContext);
     public void setPaymentCallback(PaymentCallback listener);
-    public void pay();
+    public void pay(Activity context);
     public void setPaymentArguments(Map<String, Object> arguments);
     public void onFinish();
 }
