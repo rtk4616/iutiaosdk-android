@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -95,6 +96,19 @@ public final class IUTiaoSdk {
     public static boolean isSandbox() {
         return sandbox;
     }
+
+    public static void onCreate(Activity activity) {
+        StatusReporterProxy.onCreate(activity);
+    }
+
+    public static void onStart(Activity activity) {
+        StatusReporterProxy.sharedInstance().onStart(activity);
+    }
+
+    public static void onStop(Activity activity) {
+        StatusReporterProxy.sharedInstance().onStop();
+    }
+
 
     public enum CURRENCIES {
         rub
