@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.iutiao.sdk.IUTiaoDevActivity;
 import com.iutiao.sdk.R;
-import com.iutiao.sdk.util.DisplayUtil;
+import com.iutiao.sdk.utils.DisplayUtil;
 import com.payssion.android.sdk.PayssionActivity;
 
 public class FloatView extends RelativeLayout {

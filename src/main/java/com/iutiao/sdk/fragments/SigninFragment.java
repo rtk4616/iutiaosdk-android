@@ -18,7 +18,7 @@ import com.iutiao.sdk.Validate;
 import com.iutiao.sdk.holders.SignInHolder;
 import com.iutiao.sdk.login.LoginManager;
 import com.iutiao.sdk.tasks.SigninTask;
-import com.iutiao.sdk.util.IUTPreferencesUtils;
+import com.iutiao.sdk.utils.IUTPreferencesUtils;
 
 import java.util.HashMap;
 

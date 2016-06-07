@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk.status;
+package com.iutiao.sdk.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

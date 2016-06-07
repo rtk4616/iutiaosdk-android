@@ -13,13 +13,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.iutiao.exception.APIConnectionException;
 import com.iutiao.exception.APIException;
 import com.iutiao.exception.UTiaoException;
-import com.iutiao.model.AppOrder;
 import com.iutiao.model.User;
-import com.iutiao.sdk.login.LoginManager;
-import com.iutiao.sdk.util.CacheSharedPreference;
+import com.iutiao.sdk.utils.CacheSharedPreference;
 
 import java.util.HashMap;
 import java.util.Map;

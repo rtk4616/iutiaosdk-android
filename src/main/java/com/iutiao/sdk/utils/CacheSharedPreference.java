@@ -7,11 +7,9 @@
  *
  */
 
-package com.iutiao.sdk.util;
+package com.iutiao.sdk.utils;
 
 import android.content.SharedPreferences;
-
-import com.iutiao.sdk.Validate;
 
 /**
  * Created by yxy on 15/12/3.

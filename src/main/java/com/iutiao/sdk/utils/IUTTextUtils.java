@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk.util;
+package com.iutiao.sdk.utils;
 
 /**
  * Created by yxy on 15/12/3.

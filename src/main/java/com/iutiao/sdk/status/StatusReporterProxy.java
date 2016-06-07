@@ -16,6 +16,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 
 import com.iutiao.sdk.IUTiaoSdk;
+import com.iutiao.sdk.utils.NetWorkUtil;
 
 import java.util.HashMap;
 import java.util.Locale;

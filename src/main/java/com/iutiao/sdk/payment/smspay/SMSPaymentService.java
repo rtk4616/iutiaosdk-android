@@ -32,8 +32,8 @@ import android.widget.Toast;
 
 import com.iutiao.sdk.exceptions.IUTiaoSdkException;
 import com.iutiao.sdk.payment.PaymentResponseWrapper;
-import com.iutiao.sdk.util.Logger;
-import com.iutiao.sdk.util.PermissionUtil;
+import com.iutiao.sdk.utils.Logger;
+import com.iutiao.sdk.utils.PermissionUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -12,12 +12,10 @@ package com.iutiao.sdk;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.iutiao.exception.APIConnectionException;
 import com.iutiao.exception.UTiaoException;
 import com.iutiao.model.AppOrder;
-import com.iutiao.model.UTiaoObject;
 import com.iutiao.sdk.model.OrderInfo;
-import com.iutiao.sdk.util.CacheSharedPreference;
+import com.iutiao.sdk.utils.CacheSharedPreference;
 
 import java.util.concurrent.Executor;
 

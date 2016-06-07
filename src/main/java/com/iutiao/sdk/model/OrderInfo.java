@@ -9,7 +9,7 @@
 
 package com.iutiao.sdk.model;
 
-import com.iutiao.sdk.util.IUTTextUtils;
+import com.iutiao.sdk.utils.IUTTextUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;

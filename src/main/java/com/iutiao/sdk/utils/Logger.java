@@ -7,7 +7,7 @@
  *
  */
 
-package com.iutiao.sdk.util;
+package com.iutiao.sdk.utils;
 
 import android.util.Log;
 
