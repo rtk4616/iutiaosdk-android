@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import com.payssion.android.sdk.PayssionActivity;
 
 public class FloatView extends RelativeLayout {
     // TODO: 16/3/28 onTouchEvent交给GestureDetector处理，更简洁灵敏
-    // TODO: 16/3/28 封装调试模式才打印的Log工具
     private Context mContext;
     private View rootView;
     private ImageView ivArrowInLeft;
@@ -96,7 +94,7 @@ public class FloatView extends RelativeLayout {
         //获取相对屏幕的坐标，即以屏幕左上角为原点
         x = event.getRawX();
         y = event.getRawY() - 25;   //25是系统状态栏的高度
-        Log.i("currP", "currX" + x + "====currY" + y);
+//        Logger.benLog().i("currP", "currX" + x + "====currY" + y);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //获取相对View的坐标，即以此View左上角为原点
@@ -139,7 +137,7 @@ public class FloatView extends RelativeLayout {
     private boolean isMoving(MotionEvent event) {
         float x = event.getX() - touchStartX;
         float y = event.getY() - touchStartY;
-        if(FloatMath.sqrt(x * x + y * y)>20){
+        if(Math.sqrt(x * x + y * y)>20){
             return true;
         }
         else {
