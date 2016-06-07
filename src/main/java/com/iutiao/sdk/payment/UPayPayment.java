@@ -9,6 +9,7 @@
 
 package com.iutiao.sdk.payment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -97,7 +98,7 @@ public class UPayPayment implements IPayment {
     }
 
     @Override
-    public void pay() {
+    public void pay(Activity context) {
 
         tradeNotified = false;
         // 启动 upay 扣费界面

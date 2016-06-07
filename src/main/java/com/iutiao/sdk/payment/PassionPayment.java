@@ -115,7 +115,7 @@ public class PassionPayment implements IPayment {
     }
 
     @Override
-    public void pay() {
+    public void pay(Activity context) {
             Log.i(TAG, String.format("Payment[passion]. trying to reload %s, orderid %s ", getAmount(), getOrderId()));
             Intent intent = new Intent(getActivity(), PayssionActivity.class);
             intent.putExtra(PayssionActivity.ACTION_REQUEST,
